@@ -1,4 +1,5 @@
 import { movementClip } from "./animation";
+import { jellyParkourProject } from "./jelly-parkour";
 import { baseMap } from "./maps";
 import {
   createProject,
@@ -12,6 +13,7 @@ export type StudioTemplate =
   | "aurora"
   | "baseplate"
   | "obby"
+  | "jelly"
   | "animation"
   | "scripts"
   | "empty";
@@ -42,6 +44,13 @@ export const studioTemplates: {
     description: "20 plataformas, checkpoints e desafios.",
     badge: "PARKOUR",
     art: "obby",
+  },
+  {
+    id: "jelly",
+    name: "Jelly Jump",
+    description: "Gelatina jogável, 11 ilhas elásticas e impulso de salto.",
+    badge: "PARKOUR DE GELATINA",
+    art: "jelly",
   },
   {
     id: "animation",
@@ -238,6 +247,7 @@ export function auroraProject(): Project {
 export function templateProject(id: StudioTemplate): Project {
   if (id === "aurora") return auroraProject();
   if (id === "obby") return parkourProject();
+  if (id === "jelly") return jellyParkourProject();
   if (id === "scripts") return scriptingProject();
   const p = baseMap("grass");
   if (id === "empty") {

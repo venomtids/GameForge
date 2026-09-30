@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import type { Node3D } from "./model";
+import { jellyBox, jellyMaterial } from "./jelly-material";
 export interface Limbs {
   visual: THREE.Group;
   lean: THREE.Group;
@@ -30,7 +31,9 @@ function box(
   mat: THREE.MeshStandardMaterial,
 ) {
   const m = new THREE.Mesh(
-    new THREE.BoxGeometry(size[0], size[1], size[2]),
+    mat.userData.jelly
+      ? jellyBox(size as [number, number, number])
+      : new THREE.BoxGeometry(size[0], size[1], size[2]),
     mat,
   );
   m.position.set(position[0], position[1], position[2]);
@@ -44,11 +47,22 @@ export function humanoid(n: Node3D) {
     materials: THREE.MeshStandardMaterial[] = [];
   root.add(lean);
   lean.add(visual);
-  const tecido = material(n.color, materials),
-    pele = material(n.actor.skin, materials),
-    calca = material("#425463", materials),
-    escuro = material("#2b333a", materials),
-    cabelo = material("#2a2320", materials);
+  const gelatin = n.deform.type === "jelly";
+  const soft = (color: string) => {
+    const m = jellyMaterial(color);
+    materials.push(m);
+    return m;
+  };
+  const tecido = gelatin ? soft(n.color) : material(n.color, materials),
+    pele = gelatin ? soft(n.actor.skin) : material(n.actor.skin, materials),
+    calca = gelatin ? soft(n.color) : material("#425463", materials),
+    escuro = material("#253a43", materials),
+    cabelo = gelatin ? soft(n.actor.skin) : material("#2a2320", materials);
+  if (gelatin) {
+    // Fit the jelly avatar's feet/head inside its stable controller collider.
+    visual.scale.y = 1 / 1.555;
+    visual.position.y = -0.1825 / 1.555;
+  }
 
   // tronco
   visual.add(box([0.44, 0.16, 0.28], [0, 0.02, 0], calca)); // quadril
@@ -63,7 +77,9 @@ export function humanoid(n: Node3D) {
   head.add(box([0.34, 0.16, 0.06], [0, 0.28, 0.16], cabelo)); // nuca
   for (const x of [-0.08, 0.08]) {
     head.add(box([0.06, 0.05, 0.02], [x, 0.26, -0.155], escuro)); // olhos
-    head.add(box([0.03, 0.02, 0.02], [x, 0.24, -0.16], material("#ffffff", materials)));
+    head.add(
+      box([0.03, 0.02, 0.02], [x, 0.24, -0.16], material("#ffffff", materials)),
+    );
   }
   head.add(box([0.1, 0.02, 0.02], [0, 0.16, -0.15], escuro)); // boca
   visual.add(head);
@@ -87,7 +103,9 @@ export function humanoid(n: Node3D) {
     const knee = new THREE.Group();
     knee.position.set(0, -0.28, 0);
     knee.add(box([0.17, 0.24, 0.19], [0, -0.12, 0], calca));
-    knee.add(box([0.19, 0.09, 0.28], [0, -0.27, -0.05], escuro)); // pé
+    knee.add(
+      box([0.19, 0.09, 0.28], [0, -0.27, -0.05], gelatin ? tecido : escuro),
+    ); // pé
     hip.add(knee);
     visual.add(hip);
     return { hip, knee };
@@ -146,10 +164,8 @@ export function animateHumanoid(
   if (andando) {
     const destino = Math.atan2(-vx, -vz);
     h.heading +=
-      Math.atan2(
-        Math.sin(destino - h.heading),
-        Math.cos(destino - h.heading),
-      ) * Math.min(1, dt * 10);
+      Math.atan2(Math.sin(destino - h.heading), Math.cos(destino - h.heading)) *
+      Math.min(1, dt * 10);
   }
   h.visual.rotation.y = h.heading;
   const passo = Math.min(1, velocidade / Math.max(1.2, n.speed || 5)),
@@ -175,7 +191,8 @@ export function animateHumanoid(
     h.leftLeg.rotation.x = swingE;
     h.rightLeg.rotation.x = swingD;
     // joelho dobra quando a perna vai para trás
-    h.leftKnee.rotation.x = -Math.max(0, swingE) * 1.05 - (correndo ? 0.2 : 0.06);
+    h.leftKnee.rotation.x =
+      -Math.max(0, swingE) * 1.05 - (correndo ? 0.2 : 0.06);
     h.rightKnee.rotation.x =
       -Math.max(0, swingD) * 1.05 - (correndo ? 0.2 : 0.06);
     h.leftArm.rotation.x = suave(h.leftArm.rotation.x, -swingE * 0.78, blend);
@@ -185,7 +202,11 @@ export function animateHumanoid(
     h.leftArm.rotation.z = suave(h.leftArm.rotation.z, 0.1, blend);
     h.rightArm.rotation.z = suave(h.rightArm.rotation.z, -0.1, blend);
     h.head.rotation.x = suave(h.head.rotation.x, correndo ? 0.08 : 0.02, blend);
-    h.lean.rotation.x = suave(h.lean.rotation.x, correndo ? -0.16 : -0.05, blend);
+    h.lean.rotation.x = suave(
+      h.lean.rotation.x,
+      correndo ? -0.16 : -0.05,
+      blend,
+    );
     h.visual.rotation.z = seno * 0.045 * passo;
     h.lean.position.y =
       Math.abs(seno) * (correndo ? 0.05 : 0.028) * passo + h.land * 0.05;
@@ -223,8 +244,9 @@ export interface FpsArms extends THREE.Group {
   userData: {
     phase: number;
     lanterna: THREE.Group;
-    esquerda: { braco: THREE.Group; mao: THREE.Mesh };
-    direita: { braco: THREE.Group; mao: THREE.Mesh };
+    esquerda: { braco: THREE.Group; mao: THREE.Mesh; antebraco: THREE.Mesh };
+    direita: { braco: THREE.Group; mao: THREE.Mesh; antebraco: THREE.Mesh };
+    palette?: string;
   };
 }
 /** Braços em primeira pessoa com lanterna na mão direita. */
@@ -249,7 +271,7 @@ export function fpsArms() {
     const mao = box([0.1, 0.1, 0.14], [0, -0.01, -0.36], pele);
     mao.renderOrder = 1001;
     braco.add(antebraco, mao);
-    return { braco, mao };
+    return { braco, mao, antebraco };
   };
   const esquerda = build(-1),
     direita = build(1);
@@ -271,6 +293,33 @@ export function fpsArms() {
     prop: null,
   } as FpsArms["userData"];
   return group;
+}
+/** Match the view model to a gelatin actor without recoloring held props. */
+export function styleArms(arms: FpsArms, n: Node3D, deformation = 1) {
+  const jelly = n.deform.type === "jelly",
+    signature = `${jelly}:${n.color}:${n.actor.skin}`;
+  const data = arms.userData;
+  if (signature !== data.palette) {
+    data.palette = signature;
+    for (const side of [data.esquerda, data.direita])
+      for (const [mesh, color] of [
+        [side.mao, n.actor.skin],
+        [side.antebraco, n.color],
+      ] as const) {
+        const m = mesh.material as THREE.MeshStandardMaterial;
+        m.color.set(color);
+        m.roughness = jelly ? 0.18 : 0.7;
+        m.transparent = jelly;
+        m.opacity = jelly ? 0.86 : 1;
+        m.needsUpdate = true;
+      }
+  }
+  for (const side of [data.esquerda, data.direita])
+    side.braco.scale.set(
+      jelly ? 1 / Math.sqrt(deformation) : 1,
+      jelly ? deformation : 1,
+      1,
+    );
 }
 /** Modelos prontos de "coisa na mao": a engine entrega a forma, o jogo escolhe qual. */
 export function handProp(kind: string) {
@@ -301,31 +350,88 @@ export function handProp(kind: string) {
   };
   const caixa = (s: [number, number, number]) => new THREE.BoxGeometry(...s);
   if (kind === "chave") {
-    peca(new THREE.CylinderGeometry(0.014, 0.014, 0.26, 6), "#ffe08a", [0, 0, 0], [Math.PI / 2, 0, 0], 0.6);
-    peca(new THREE.TorusGeometry(0.05, 0.014, 6, 12), "#ffe08a", [0, 0, 0.15], [0, 0, 0], 0.6);
-    peca(caixa([0.012, 0.05, 0.03]), "#ffe08a", [0.02, 0, -0.11], undefined, 0.6);
+    peca(
+      new THREE.CylinderGeometry(0.014, 0.014, 0.26, 6),
+      "#ffe08a",
+      [0, 0, 0],
+      [Math.PI / 2, 0, 0],
+      0.6,
+    );
+    peca(
+      new THREE.TorusGeometry(0.05, 0.014, 6, 12),
+      "#ffe08a",
+      [0, 0, 0.15],
+      [0, 0, 0],
+      0.6,
+    );
+    peca(
+      caixa([0.012, 0.05, 0.03]),
+      "#ffe08a",
+      [0.02, 0, -0.11],
+      undefined,
+      0.6,
+    );
   } else if (kind === "gazua") {
     peca(caixa([0.03, 0.012, 0.3]), "#cfd6dd", [0, 0, 0], undefined, 0.7);
-    peca(caixa([0.03, 0.012, 0.12]), "#cfd6dd", [0, 0.02, -0.16], [0, 0.9, 0], 0.7);
-    peca(caixa([0.03, 0.012, 0.09]), "#cfd6dd", [0, 0.02, 0.15], [0, 2.4, 0], 0.7);
+    peca(
+      caixa([0.03, 0.012, 0.12]),
+      "#cfd6dd",
+      [0, 0.02, -0.16],
+      [0, 0.9, 0],
+      0.7,
+    );
+    peca(
+      caixa([0.03, 0.012, 0.09]),
+      "#cfd6dd",
+      [0, 0.02, 0.15],
+      [0, 2.4, 0],
+      0.7,
+    );
   } else if (kind === "crucifixo") {
     peca(caixa([0.03, 0.26, 0.03]), "#d8b46a", [0, 0.05, 0], undefined, 0.65);
     peca(caixa([0.16, 0.03, 0.03]), "#d8b46a", [0, 0.14, 0], undefined, 0.65);
   } else if (kind === "pilha") {
-    peca(new THREE.CylinderGeometry(0.035, 0.035, 0.16, 10), "#3f4a52", [0, 0, 0], [Math.PI / 2, 0, 0]);
-    peca(new THREE.CylinderGeometry(0.018, 0.018, 0.02, 8), "#c9a24a", [0, 0, -0.09], [Math.PI / 2, 0, 0], 0.7);
+    peca(
+      new THREE.CylinderGeometry(0.035, 0.035, 0.16, 10),
+      "#3f4a52",
+      [0, 0, 0],
+      [Math.PI / 2, 0, 0],
+    );
+    peca(
+      new THREE.CylinderGeometry(0.018, 0.018, 0.02, 8),
+      "#c9a24a",
+      [0, 0, -0.09],
+      [Math.PI / 2, 0, 0],
+      0.7,
+    );
   } else if (kind === "curativo") {
     peca(caixa([0.14, 0.06, 0.1]), "#e8e4dc", [0, 0, 0]);
     peca(caixa([0.09, 0.02, 0.03]), "#c8503f", [0, 0.033, 0]);
     peca(caixa([0.03, 0.02, 0.08]), "#c8503f", [0, 0.033, 0]);
   } else if (kind === "moeda") {
-    peca(new THREE.CylinderGeometry(0.06, 0.06, 0.014, 14), "#f2c85a", [0, 0, 0], [Math.PI / 2, 0, 0], 0.6);
+    peca(
+      new THREE.CylinderGeometry(0.06, 0.06, 0.014, 14),
+      "#f2c85a",
+      [0, 0, 0],
+      [Math.PI / 2, 0, 0],
+      0.6,
+    );
   } else if (kind === "radio") {
     peca(caixa([0.16, 0.1, 0.08]), "#2f3a44", [0, 0, 0]);
     peca(caixa([0.1, 0.05, 0.01]), "#8fe6c8", [0, 0.01, -0.045]);
   } else if (kind === "vitamina") {
-    peca(new THREE.CylinderGeometry(0.045, 0.045, 0.14, 10), "#e0783c", [0, 0, 0], [Math.PI / 2, 0, 0]);
-    peca(new THREE.CylinderGeometry(0.03, 0.03, 0.03, 10), "#f4f1e6", [0, 0, -0.075], [Math.PI / 2, 0, 0]);
+    peca(
+      new THREE.CylinderGeometry(0.045, 0.045, 0.14, 10),
+      "#e0783c",
+      [0, 0, 0],
+      [Math.PI / 2, 0, 0],
+    );
+    peca(
+      new THREE.CylinderGeometry(0.03, 0.03, 0.03, 10),
+      "#f4f1e6",
+      [0, 0, -0.075],
+      [Math.PI / 2, 0, 0],
+    );
   } else return null;
   return grupo;
 }

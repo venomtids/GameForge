@@ -1,4 +1,4 @@
-GAMEFORGE STUDIO 0.8.0 — WINDOWS x64
+GAMEFORGE STUDIO 0.8.1 — WINDOWS x64
 
 Requisitos: Windows 10/11 (64 bits, Intel/AMD), aceleração gráfica/WebGL2,
 4 GB de RAM recomendados e aproximadamente 600 MB livres em disco.
@@ -6,7 +6,7 @@ Não é necessário instalar Node.js, Python ou ferramentas de desenvolvimento.
 
 1. Guarde cópias dos seus projetos .gameforge.json antes de atualizar.
 2. Feche o GameForge Studio.
-3. Execute GameForge-Studio-0.8.0-Windows-x64-Setup.exe.
+3. Execute GameForge-Studio-0.8.1-Windows-x64-Setup.exe.
 4. Escolha a pasta e conclua o assistente (instalação no usuário atual).
 5. Abra o atalho GameForge Studio na área de trabalho ou no menu Iniciar.
 
@@ -14,7 +14,10 @@ IMPORTANTE: o instalador não tem assinatura digital. O Windows pode mostrar
 um alerta de reputação/SmartScreen. Verifique a origem e o SHA-256 incluído.
 Não desative o antivírus nem ignore alertas de malware.
 
-Comece com Ilha Aurora, Baseplate, Skyline Obby ou Motion Lab em Projetos.
+Comece com Jelly Jump, Ilha Aurora, Baseplate, Skyline Obby ou Motion Lab em Projetos.
+Jelly Jump: WASD move, Espaço pula, Shift corre e R retorna ao checkpoint.
+Na Toolbox, busque gelatina para adicionar o jogador articulado e plataformas.
+No celular, use as setas, pulo, corrida e o botão de retorno ao checkpoint.
 Ctrl+K busca comandos. Ctrl+S salva um arquivo portátil. F5 executa, F8 para.
 Ctrl/Shift+clique seleciona vários objetos; Ctrl+G agrupa.
 A aba Animação cria keyframes. A aba Scripts oferece Lua 5.3 e JavaScript.
@@ -29,7 +32,7 @@ nem oferece multiplayer, hospedagem ou serviços de monetização.
 Scripts de terceiros devem ser revisados antes de permitir sua execução.
 
 Para verificar o instalador no PowerShell:
-Get-FileHash .\GameForge-Studio-0.8.0-Windows-x64-Setup.exe -Algorithm SHA256
+Get-FileHash .\GameForge-Studio-0.8.1-Windows-x64-Setup.exe -Algorithm SHA256
 Compare o resultado com SHA256SUMS.txt.
 
-Código-fonte, guias e limites técnicos: README.md, docs/GUIA-STUDIO-0.8.md.
+Código-fonte, guias e limites técnicos: README.md, docs/GUIA-STUDIO-0.8.md e docs/GELATINA-0.8.1.md.

@@ -6,6 +6,7 @@ for (const [id, file] of [
   ["aurora", "Ilha-Aurora"],
   ["animation", "Motion-Lab"],
   ["baseplate", "Baseplate"],
+  ["jelly", "Jelly-Jump-Gelatina"],
 ] as const) {
   const project = templateProject(id);
   await writeFile(

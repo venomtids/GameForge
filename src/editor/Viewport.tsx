@@ -194,7 +194,13 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
     scene.add(box);
     const keys = new Set<string>();
     const ui = new GameUI(host, world, (p) => current.current.onSetPaused(p));
-    const touch = new TouchInput(host, keys, scripts.pressed, scripts.released);
+    const touch = new TouchInput(
+      host,
+      keys,
+      scripts.pressed,
+      scripts.released,
+      (key) => world.queueAction(key),
+    );
     api.current = {
       world,
       rig,
@@ -274,7 +280,10 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
           e.preventDefault();
           if (!e.repeat || ![" ", "r"].includes(e.key))
             keys.add(e.key.toLowerCase());
-          if (!e.repeat) scripts.pressed.add(e.key.toLowerCase());
+          if (!e.repeat) {
+            scripts.pressed.add(e.key.toLowerCase());
+            if (!current.current.paused) world.queueAction(e.key.toLowerCase());
+          }
         }
       }
     };
@@ -282,7 +291,10 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
         keys.delete(e.key.toLowerCase());
         scripts.released.add(e.key.toLowerCase());
       },
-      blur = () => keys.clear();
+      blur = () => {
+        keys.clear();
+        world.cancelInputActions();
+      };
     const unlock = () => {
       if (
         document.pointerLockElement !== renderer.domElement &&
@@ -712,6 +724,7 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
     if (a && (!props.playing || props.paused)) {
       a.rig.release();
       a.keys.clear();
+      a.world.cancelInputActions();
     }
   }, [props.paused, props.playing]);
   return (

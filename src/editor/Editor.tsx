@@ -1,3 +1,4 @@
+import { STUDIO_VERSION } from "../engine/version";
 import { serializeProject } from "../engine/serialization";
 import AnimationPanel from "./AnimationPanel";
 import CommandPalette, { type StudioCommand } from "./CommandPalette";
@@ -655,7 +656,7 @@ export default function Editor() {
     setPlaying(true);
     setPaused(false);
     log(
-      "Runtime 0.8 • WASD + Espaço • Shift corre • R retorna ao checkpoint • controles de toque em telas pequenas",
+      `Runtime ${STUDIO_VERSION} • WASD + Espaço • Shift corre • R retorna ao checkpoint • controles de toque em telas pequenas`,
     );
   }
   function togglePlay() {
@@ -1267,7 +1268,11 @@ export default function Editor() {
     ...(
       [
         ["animation", "Editor de animação e keyframes", <Film size={16} />],
-        ["toolbox", "Toolbox · 60 modelos prontos", <Package size={16} />],
+        [
+          "toolbox",
+          `Toolbox · ${Object.keys(prefabNames).length} modelos prontos`,
+          <Package size={16} />,
+        ],
         ["scripts", "Editor de scripts Lua e JavaScript", <Code2 size={16} />],
         ["terrain", "Esculpir e pintar terreno", <Layers3 size={16} />],
         ["ui", "Criar interface 2D do jogo", <LayoutDashboard size={16} />],
@@ -2166,7 +2171,10 @@ export default function Editor() {
             {dock && tab === "toolbox" && (
               <div className="toolbox-panel">
                 <header className="toolbox-search">
-                  <strong>60 modelos · luz, personagens e física</strong>
+                  <strong>
+                    {Object.keys(prefabNames).length} modelos · luz, personagens
+                    e gelatina
+                  </strong>
                   <input
                     aria-label="Buscar no Toolbox"
                     placeholder="Buscar modelo…"
@@ -2804,7 +2812,8 @@ export default function Editor() {
           <span className="status-separator" />
           {window.gameforgeDesktop ? <Monitor size={12} /> : <Box size={12} />}
           <span>
-            {window.gameforgeDesktop ? "Desktop" : "Prévia web"} · v0.8
+            {window.gameforgeDesktop ? "Desktop" : "Prévia web"} · v
+            {STUDIO_VERSION}
           </span>
         </div>
         <div>
@@ -3164,6 +3173,16 @@ export default function Editor() {
                     <Box size={25} />
                     <strong>Ilha Aurora</strong>
                     <span>Mundo flutuante · cristais · personagem</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      load(templateProject("jelly"));
+                      setModal(null);
+                    }}
+                  >
+                    <Package size={25} />
+                    <strong>Jelly Jump</strong>
+                    <span>Parkour de gelatina · jogador articulado</span>
                   </button>
                   <button
                     onClick={() => {

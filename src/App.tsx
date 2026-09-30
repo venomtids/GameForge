@@ -1,3 +1,4 @@
+import { STUDIO_VERSION } from "./engine/version";
 import {
   Component,
   lazy,
@@ -84,7 +85,7 @@ export default function App() {
           <strong>
             gameforge<span>STUDIO</span>
           </strong>
-          <span className="version-badge">0.8</span>
+          <span className="version-badge">{STUDIO_VERSION}</span>
         </a>
         <nav className="main-nav">
           <button
@@ -196,7 +197,7 @@ export default function App() {
             ×
           </button>
           <Hexagon size={27} />
-          <h3>GameForge Studio 0.8</h3>
+          <h3>GameForge Studio {STUDIO_VERSION}</h3>
           <p>
             Seu estúdio independente de criação: editor 3D, física, Lua e
             JavaScript, terreno, interfaces, keyframes e projetos locais. Base

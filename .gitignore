@@ -12,3 +12,6 @@ public/player.html
 
 # Legacy generated demo: retained in the supplied ZIP, rebuilt from project sources.
 examples/*.html
+
+# Generated user deliverables (source ZIPs and exported games).
+entregas/

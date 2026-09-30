@@ -58,6 +58,8 @@ export function category(k: string) {
       "humanoidPlayer",
       "ragdoll",
       "jelly",
+      "jellyPlayer",
+      "jellyPlatform",
       "botPatrol",
       "botFollow",
       "botAttack",

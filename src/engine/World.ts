@@ -1,6 +1,8 @@
 import { sampleAnimation } from "./animation";
 import { humanoid, animateHumanoid } from "./Humanoid";
 import { PhysicalRig } from "./PhysicalRig";
+import { JellyCharacter } from "./JellyCharacter";
+import { jellyBox, jellyMaterial } from "./jelly-material";
 import { BotController } from "./BotController";
 import {
   advancedGeometry,
@@ -49,6 +51,7 @@ export class World {
   motions = new Map<string, { x: number; z: number; speed: number }>();
   turns = new Map<string, number>();
   physicalRigs = new Map<string, PhysicalRig>();
+  jellyCharacters = new Map<string, JellyCharacter>();
   health = new Map<string, number>();
   botOrigins = new Map<string, THREE.Vector3>();
   bots = new BotController();
@@ -88,7 +91,9 @@ export class World {
   options = controls({});
   private accumulator = 0;
   private lastJump = -100;
+  private lastGelBounce = -100;
   private jumpQueuedUntil = -100;
+  private respawnRequested = false;
   elapsed = 0;
   collected = 0;
   total = 0;
@@ -141,20 +146,25 @@ export class World {
           : new THREE.Mesh(
               n.behavior === "collectible"
                 ? new THREE.OctahedronGeometry(0.5)
-                : (advancedGeometry(n) ?? geometry(n.kind)),
-              new THREE.MeshStandardMaterial({
-                color:
-                  n.kind === "terrain" || n.textureId ? "#ffffff" : n.color,
-                vertexColors: n.kind === "terrain",
-                map: this.textureFor(n.textureId, n.scale),
-                transparent: !!n.textureId,
-                alphaTest: n.textureId ? 0.1 : 0,
-                roughness: n.roughness,
-                metalness: n.metalness,
-                flatShading: n.kind === "cone",
-                emissive: n.behavior === "collectible" ? n.color : "#000000",
-                emissiveIntensity: n.behavior === "collectible" ? 0.25 : 0,
-              }),
+                : n.deform.type === "jelly" && n.kind === "box"
+                  ? jellyBox()
+                  : (advancedGeometry(n) ?? geometry(n.kind)),
+              n.deform.type === "jelly"
+                ? jellyMaterial(n.color)
+                : new THREE.MeshStandardMaterial({
+                    color:
+                      n.kind === "terrain" || n.textureId ? "#ffffff" : n.color,
+                    vertexColors: n.kind === "terrain",
+                    map: this.textureFor(n.textureId, n.scale),
+                    transparent: !!n.textureId,
+                    alphaTest: n.textureId ? 0.1 : 0,
+                    roughness: n.roughness,
+                    metalness: n.metalness,
+                    flatShading: n.kind === "cone",
+                    emissive:
+                      n.behavior === "collectible" ? n.color : "#000000",
+                    emissiveIntensity: n.behavior === "collectible" ? 0.25 : 0,
+                  }),
             );
       obj.name = n.name;
       obj.userData.nodeId = n.id;
@@ -238,8 +248,16 @@ export class World {
       }
       this.addBody(n);
     }
-    for (const n of data.nodes)
-      if (n.deform.type !== "none") this.activateRig(n.id, n.deform.type);
+    // Reserve the player's rig before environment rigs can exhaust the budget.
+    for (const n of [...data.nodes].sort(
+      (a, b) => Number(b.id === this.playerId) - Number(a.id === this.playerId),
+    ))
+      if (
+        n.deform.type !== "none" &&
+        this.active.has(n.id) &&
+        this.bodies.has(n.id)
+      )
+        this.activateRig(n.id, n.deform.type);
   }
   /** Cria (ou recria) o corpo físico de um nó conforme physics/mass/friction/restitution. */
   addBody(n: Node3D) {
@@ -287,9 +305,21 @@ export class World {
     body.updateMassProperties();
     this.bodies.set(n.id, body);
     this.physics.addBody(body);
+    const jelly = this.jellyCharacters.get(n.id);
+    if (jelly) {
+      if (n.physics === "dynamic") {
+        jelly.body = body;
+        jelly.reset();
+      } else {
+        jelly.dispose();
+        this.jellyCharacters.delete(n.id);
+      }
+    }
     return body;
   }
   private dropBody(id: string) {
+    this.jellyCharacters.get(id)?.dispose();
+    this.jellyCharacters.delete(id);
     const body = this.bodies.get(id);
     if (body) this.physics?.removeBody(body);
     this.bodies.delete(id);
@@ -686,12 +716,18 @@ export class World {
     ) {
       n.physics = patch.physics;
       this.addBody(n);
+      if (n.physics === "dynamic" && n.deform.type === "jelly")
+        this.activateRig(n.id, "jelly");
     }
     if (moved) o.updateMatrixWorld(true);
   }
   private normalizeBody(n: Node3D) {
     if (n.physics === "none") this.dropBody(n.id);
-    else this.addBody(n);
+    else {
+      this.addBody(n);
+      if (n.physics === "dynamic" && n.deform.type === "jelly")
+        this.activateRig(n.id, "jelly");
+    }
   }
   private syncBody(id: string) {
     const body = this.bodies.get(id),
@@ -736,31 +772,72 @@ export class World {
   }
   activateRig(id: string, type: "ragdoll" | "jelly") {
     if (!this.physics || this.physicalRigs.has(id)) return;
-    if (this.physicalRigs.size >= 12) {
-      this.onEvent("Limite: 12 rigs físicos por cena.");
+    const n = this.configs.find((n) => n.id === id),
+      o = this.objects.get(id),
+      original = this.bodies.get(id);
+    if (!n || !o || n.kind === "terrain" || n.kind === "group") return;
+    if (type === "jelly" && this.jellyCharacters.has(id)) return;
+    if (
+      this.physicalRigs.size +
+        this.jellyCharacters.size -
+        Number(this.jellyCharacters.has(id)) >=
+      12
+    ) {
+      this.onEvent("Limite: 12 rigs elásticos/físicos por cena.");
       return;
     }
-    const n = this.configs.find((n) => n.id === id),
-      o = this.objects.get(id);
-    if (!n || !o || n.kind === "terrain" || n.kind === "group") return;
+    this.jellyCharacters.get(id)?.dispose();
+    this.jellyCharacters.delete(id);
+    if (
+      type === "jelly" &&
+      original &&
+      n.physics === "dynamic" &&
+      (n.actor.humanoid || n.behavior === "player")
+    ) {
+      this.jellyCharacters.set(id, new JellyCharacter(n, o, original));
+      return;
+    }
+    const used = new Set(
+      [...this.physicalRigs.values()].map((r) => r.collisionGroup),
+    );
+    let group = 2;
+    while (used.has(group)) group <<= 1;
     const rig = new PhysicalRig(
       n,
       o,
       this.physics,
       this.root,
       type,
-      this.bodies.get(id),
+      original,
+      group,
     );
     this.physicalRigs.set(id, rig);
     this.bodies.set(id, rig.anchor);
   }
   restoreRig(id: string) {
     const rig = this.physicalRigs.get(id);
-    if (!rig) return;
+    if (!rig) {
+      this.jellyCharacters.get(id)?.reset();
+      return;
+    }
     const pos = rig.object.getWorldPosition(new THREE.Vector3());
     rig.dispose(true);
     if (rig.original) {
-      rig.original.position.set(pos.x, pos.y + rig.node.scale[1] * 0.4, pos.z);
+      if (!rig.anchored)
+        rig.original.position.set(
+          pos.x,
+          pos.y + rig.node.scale[1] * 0.4,
+          pos.z,
+        );
+      else {
+        const restored = new THREE.Vector3(
+          rig.original.position.x,
+          rig.original.position.y,
+          rig.original.position.z,
+        );
+        if (rig.object.parent) rig.object.parent.worldToLocal(restored);
+        rig.object.position.copy(restored);
+      }
       rig.original.velocity.setZero();
       rig.original.angularVelocity.setZero();
       rig.original.aabbNeedsUpdate = true;
@@ -781,7 +858,13 @@ export class World {
     body.velocity.setZero();
     body.angularVelocity.setZero();
     body.wakeUp();
+    const config = this.configs.find((n) => n.id === this.playerId);
+    if (config?.deform.type === "jelly" && !this.jellyCharacters.has(config.id))
+      this.activateRig(config.id, "jelly");
+    if (this.playerId) this.jellyCharacters.get(this.playerId)?.reset();
     this.jumpQueuedUntil = -100;
+    this.lastGelBounce = -100;
+    this.respawnRequested = false;
     this.deaths++;
     this.lastGround = -100;
     this.onEvent(
@@ -858,15 +941,38 @@ export class World {
     }
     if (this.physics) this.physics.broadphase.dirty = true;
   }
+  /** Latch short keyboard/touch actions at the event, not at the next RAF. */
+  queueAction(key: string) {
+    if (!this.playing || !this.physics || this.completed || this.inputFrozen)
+      return;
+    if (key === "r") this.respawnRequested = true;
+    if (
+      key === " " &&
+      this.playerId &&
+      !this.physicalRigs.has(this.playerId) &&
+      (this.health.get(this.playerId) ?? 100) > 0
+    )
+      this.jumpQueuedUntil = this.elapsed + 0.12;
+  }
+  cancelInputActions() {
+    this.jumpQueuedUntil = -100;
+    this.respawnRequested = false;
+  }
   update(dt: number, keys: Set<string>, yaw = 0) {
     if (!Number.isFinite(dt) || dt <= 0) return;
     this.advanceTweens(dt);
     this.lightingTick();
     if (!this.playing || !this.physics || this.completed) return;
+    // Direct callers still get the same buffering as DOM/touch event callers.
+    for (const key of [" ", "r"])
+      if (keys.has(key)) {
+        this.queueAction(key);
+        keys.delete(key);
+      }
     this.accumulator += Math.min(dt, 0.1);
     const step =
       1 /
-      (this.physicalRigs.size
+      (this.physicalRigs.size || this.jellyCharacters.size
         ? Math.max(120, this.options.physicsHz)
         : this.options.physicsHz);
     while (this.accumulator + 1e-10 >= step && !this.completed) {
@@ -882,8 +988,8 @@ export class World {
     if (player && this.voxels)
       this.voxels.syncColliders(this.physics, player.position);
     if (this.inputFrozen) keys = new Set();
-    if (keys.has("r") && this.playerId) {
-      keys.delete("r");
+    if (this.respawnRequested && this.playerId) {
+      this.respawnRequested = false;
       this.respawn();
       player = this.bodies.get(this.playerId)!;
     }
@@ -910,15 +1016,7 @@ export class World {
         ((-dx * Math.sin(yaw) + dz * Math.cos(yaw)) / length) * speed;
       if (this.grounded(player) && this.elapsed - this.lastJump > 0.12)
         this.lastGround = this.elapsed;
-      if (keys.has("r")) {
-        keys.delete("r");
-        this.respawn();
-      }
-      if (dx || dz || keys.has(" ")) player.wakeUp();
-      if (keys.has(" ")) {
-        this.jumpQueuedUntil = this.elapsed + 0.12;
-        keys.delete(" ");
-      }
+      if (dx || dz || this.jumpQueuedUntil >= this.elapsed) player.wakeUp();
       if (
         this.jumpQueuedUntil >= this.elapsed &&
         this.elapsed - this.lastGround < 0.1
@@ -954,9 +1052,23 @@ export class World {
       }
     }
 
+    const incomingY = player?.velocity.y ?? 0;
     for (const rig of this.physicalRigs.values()) rig.beforeStep(dt);
     this.physics.step(dt);
-    for (const rig of this.physicalRigs.values()) rig.sync();
+    for (const rig of this.physicalRigs.values()) {
+      rig.afterStep();
+      rig.sync();
+    }
+    if (
+      player &&
+      !this.inputFrozen &&
+      (this.health.get(this.playerId!) ?? 100) > 0
+    )
+      this.reboundFromJelly(player, incomingY);
+    if (player && player.position.y < -18) {
+      this.respawn();
+      player = this.playerId ? this.bodies.get(this.playerId) : undefined;
+    }
     // Copy world-space physics transforms back into the local scene hierarchy.
     for (const n of this.configs) {
       const o = this.objects.get(n.id)!,
@@ -1001,6 +1113,8 @@ export class World {
           b.wakeUp();
         }
       }
+      const jelly = this.jellyCharacters.get(n.id);
+      jelly?.resetPose();
       if (n.actor.humanoid)
         animateHumanoid(
           o,
@@ -1011,6 +1125,7 @@ export class World {
           b ? this.grounded(b) : true,
           b?.velocity.y ?? 0,
         );
+      if (jelly && b) jelly.update(dt, this.grounded(b));
       if (
         n.behavior === "collectible" &&
         this.active.has(n.id) &&
@@ -1102,6 +1217,43 @@ export class World {
           }
         }
       }
+    }
+  }
+  private reboundFromJelly(player: CANNON.Body, incomingY: number) {
+    if (
+      incomingY >= -1 ||
+      this.elapsed - this.lastGelBounce < 0.22 ||
+      !this.physics
+    )
+      return;
+    for (const c of this.physics.contacts) {
+      if (!c.enabled) continue;
+      const support =
+        c.bi === player && c.ni.y < -0.5
+          ? c.bj
+          : c.bj === player && c.ni.y > 0.5
+            ? c.bi
+            : null;
+      if (!support) continue;
+      const rig = [...this.physicalRigs.values()].find(
+        (r) => r.anchored && r.original === support,
+      );
+      if (!rig || rig.node.restitution < 0.4) continue;
+      const elasticity = rig.node.restitution;
+      player.velocity.y = Math.min(
+        this.options.jumpSpeed * 1.45,
+        Math.max(
+          this.options.jumpSpeed * (0.65 + elasticity * 0.5),
+          -incomingY * elasticity,
+        ),
+      );
+      player.wakeUp();
+      this.lastGelBounce = this.lastJump = this.elapsed;
+      this.lastGround = this.jumpQueuedUntil = -100;
+      this.onEvent(
+        "Impulso elástico! Continue na direção da próxima gelatina.",
+      );
+      break;
     }
   }
   applyScript(id: string, state: any) {
@@ -1372,6 +1524,8 @@ export class World {
       if (o) {
         this.physicalRigs.get(c.id)?.dispose();
         this.physicalRigs.delete(c.id);
+        this.jellyCharacters.get(c.id)?.dispose();
+        this.jellyCharacters.delete(c.id);
         this.disposeLight(c.id);
         this.flickers.delete(c.id);
         this.tweens = this.tweens.filter((t) => t.id !== c.id);
@@ -1399,6 +1553,8 @@ export class World {
     this.turns.clear();
     for (const rig of this.physicalRigs.values()) rig.dispose();
     this.physicalRigs.clear();
+    for (const jelly of this.jellyCharacters.values()) jelly.dispose();
+    this.jellyCharacters.clear();
     this.health.clear();
     this.botOrigins.clear();
     this.audio.stopAll();
@@ -1423,7 +1579,9 @@ export class World {
     this.physics = null;
     this.accumulator = 0;
     this.lastJump = -100;
+    this.lastGelBounce = -100;
     this.jumpQueuedUntil = -100;
+    this.respawnRequested = false;
     this.elapsed = 0;
     this.deaths = 0;
     this.completed = false;

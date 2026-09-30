@@ -36,6 +36,10 @@ for (const file of [
     installPath,
     "resources/Projetos/Studio-0.8/Ilha-Aurora.gameforge.json",
   ),
+  path.join(
+    installPath,
+    "resources/Projetos/Studio-0.8/Jelly-Jump-Gelatina.gameforge.json",
+  ),
 ])
   await access(file);
 if (!process.env.GITHUB_ENV)
@@ -46,7 +50,7 @@ await appendFile(process.env.GITHUB_ENV, `GAMEFORGE_TEST_EXE=${executable}\n`);
 await mkdir("test-results", { recursive: true });
 await writeFile(
   "test-results/windows-install08.txt",
-  "PASS NSIS silent installation, executable, app.asar, third-party licenses and bundled examples.\n",
+  "PASS NSIS silent installation, executable, app.asar, third-party licenses and bundled Aurora/Jelly Jump examples.\n",
 );
 console.log(
   "PASS NSIS installed executable and packaged resources; native test will launch the INSTALLED app.",

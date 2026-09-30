@@ -1,7 +1,9 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import type { Node3D } from "./model";
-/** Bounded experimental articulated / spring-mass rig. 6 jointed bodies or 8 mass points. */
+import { JellyCage } from "./JellyCage";
+import { jellyBox, jellyMaterial } from "./jelly-material";
+/** Bounded articulated / elastic cage rig. 6 jointed bodies or 8 mass points. */
 export class PhysicalRig {
   bodies: CANNON.Body[] = [];
   constraints: CANNON.Constraint[] = [];
@@ -12,6 +14,12 @@ export class PhysicalRig {
   type: "ragdoll" | "jelly";
   original: CANNON.Body | undefined;
   rest: THREE.Vector3[] = [];
+  jelly?: JellyCage;
+  anchored = false;
+  private weights: number[] = [];
+  private originalType: CANNON.Body["type"] = CANNON.Body.STATIC;
+  private originalPosition?: CANNON.Vec3;
+  private p = new THREE.Vector3();
   constructor(
     public node: Node3D,
     public object: THREE.Object3D,
@@ -19,17 +27,28 @@ export class PhysicalRig {
     scene: THREE.Object3D,
     type: "ragdoll" | "jelly",
     original?: CANNON.Body,
+    public collisionGroup = 2,
   ) {
     this.type = type;
     this.original = original;
-    if (original) physics.removeBody(original);
+    this.anchored = type === "jelly" && node.physics === "static" && !!original;
+    if (original) {
+      this.originalType = original.type;
+      this.originalPosition = original.position.clone();
+      if (!this.anchored) physics.removeBody(original);
+    }
     object.updateWorldMatrix(true, false);
     const position = object.getWorldPosition(new THREE.Vector3()),
       rotation = object.getWorldQuaternion(new THREE.Quaternion()),
-      scale = object.getWorldScale(new THREE.Vector3()).clampScalar(0.25, 8);
+      scale = object
+        .getWorldScale(new THREE.Vector3())
+        .clampScalar(0.25, this.anchored ? 200 : 8);
     object.visible = false;
     scene.add(this.visual);
-    const material = new CANNON.Material({ friction: 0.45, restitution: 0.05 });
+    const material = new CANNON.Material({
+      friction: node.friction,
+      restitution: node.restitution,
+    });
     const body = (offset: THREE.Vector3, shape: CANNON.Shape, mass: number) => {
       const p = offset.clone().applyQuaternion(rotation).add(position);
       const b = new CANNON.Body({
@@ -47,7 +66,7 @@ export class PhysicalRig {
         angularDamping: 0.3,
         allowSleep: false,
       });
-      if (original) b.velocity.copy(original.velocity);
+      if (original && !this.anchored) b.velocity.copy(original.velocity);
       this.bodies.push(b);
       this.rest.push(p.clone());
       physics.addBody(b);
@@ -126,11 +145,15 @@ export class PhysicalRig {
                 z * scale.z * 0.5,
               ),
               new CANNON.Sphere(Math.min(scale.x, scale.y, scale.z) * 0.1),
-              Math.max(1, node.mass) / 8,
+              this.anchored && y < 0
+                ? 0
+                : Math.max(0.1, node.mass) / (this.anchored ? 4 : 8),
             );
       for (const b of this.bodies) {
-        b.collisionFilterGroup = 2;
-        b.collisionFilterMask = 1;
+        b.collisionFilterGroup = collisionGroup;
+        b.collisionFilterMask = this.anchored ? 0 : ~collisionGroup;
+        b.fixedRotation = true;
+        b.updateMassProperties();
       }
       for (let i = 0; i < 8; i++)
         for (let j = i + 1; j < 8; j++)
@@ -143,25 +166,30 @@ export class PhysicalRig {
               damping: node.deform.damping,
             }),
           );
-      const g = new THREE.BoxGeometry(1, 1, 1),
-        a = g.getAttribute("position");
-      for (let i = 0; i < a.count; i++)
-        this.map.push(
-          (a.getX(i) > 0 ? 1 : 0) +
-            (a.getY(i) > 0 ? 2 : 0) +
-            (a.getZ(i) > 0 ? 4 : 0),
-        );
-      const mesh = new THREE.Mesh(
-        g,
-        new THREE.MeshStandardMaterial({
-          color: node.color,
-          roughness: 0.2,
-          metalness: 0.05,
-          transparent: true,
-          opacity: 0.72,
-          side: THREE.DoubleSide,
-        }),
+      this.jelly = new JellyCage(
+        node,
+        this.bodies,
+        this.springs,
+        this.rest,
+        rotation,
+        scale,
+        this.anchored ? original : undefined,
       );
+      const g = jellyBox(),
+        a = g.getAttribute("position");
+      // Trilinear cage skinning: rounded/subdivided faces, not eight snapped vertices.
+      for (let i = 0; i < a.count; i++) {
+        const x = a.getX(i) + 0.5,
+          y = a.getY(i) + 0.5,
+          z = a.getZ(i) + 0.5;
+        for (let corner = 0; corner < 8; corner++)
+          this.weights.push(
+            (corner & 1 ? x : 1 - x) *
+              (corner & 2 ? y : 1 - y) *
+              (corner & 4 ? z : 1 - z),
+          );
+      }
+      const mesh = new THREE.Mesh(g, jellyMaterial(node.color));
       this.meshes.push(mesh);
       this.visual.add(mesh);
     }
@@ -173,14 +201,12 @@ export class PhysicalRig {
     this.sync();
   }
   get anchor() {
-    return this.bodies[0];
+    return this.anchored ? this.original! : this.bodies[0];
   }
   beforeStep(dt = 1 / 120) {
-    for (const s of this.springs) {
-      const mass = Math.min(s.bodyA.mass, s.bodyB.mass);
-      s.stiffness = Math.min(this.node.deform.stiffness, mass / (14 * dt * dt));
-      s.damping = Math.min(this.node.deform.damping, mass / (14 * dt));
-      s.applyForce();
+    if (this.jelly) {
+      this.jelly.beforeStep(dt, this.physics);
+      return;
     }
     for (const b of this.bodies) {
       for (const k of ["x", "y", "z"] as const) {
@@ -192,6 +218,9 @@ export class PhysicalRig {
         );
       }
     }
+  }
+  afterStep() {
+    this.jelly?.afterStep();
   }
   sync() {
     if (this.type === "ragdoll")
@@ -207,16 +236,23 @@ export class PhysicalRig {
       });
     else {
       const a = this.meshes[0].geometry.getAttribute("position");
-      this.map.forEach((j, i) => {
-        const p = this.bodies[j].position;
-        a.setXYZ(i, p.x, p.y, p.z);
-      });
+      for (let i = 0; i < a.count; i++) {
+        this.p.set(0, 0, 0);
+        for (let j = 0; j < 8; j++) {
+          const b = this.bodies[j].position,
+            w = this.weights[i * 8 + j];
+          this.p.x += b.x * w;
+          this.p.y += b.y * w;
+          this.p.z += b.z * w;
+        }
+        a.setXYZ(i, this.p.x, this.p.y, this.p.z);
+      }
       a.needsUpdate = true;
       this.meshes[0].geometry.computeVertexNormals();
       this.meshes[0].geometry.computeBoundingSphere();
     }
     const p =
-      this.type === "ragdoll"
+      this.type === "ragdoll" || this.anchored
         ? new THREE.Vector3(
             this.anchor.position.x,
             this.anchor.position.y,
@@ -235,12 +271,18 @@ export class PhysicalRig {
     this.object.position.copy(p);
   }
   impulse(x: number, y: number, z: number) {
-    for (const b of this.bodies) {
+    const totalMass = this.bodies.reduce((sum, b) => sum + b.mass, 0);
+    const bounded =
+      this.type === "jelly"
+        ? Math.min(1, (totalMass * 12) / (Math.hypot(x, y, z) || 1))
+        : 1;
+    const dynamic = this.bodies.filter((b) => b.mass > 0);
+    for (const b of dynamic) {
       b.applyImpulse(
         new CANNON.Vec3(
-          x / this.bodies.length,
-          y / this.bodies.length,
-          z / this.bodies.length,
+          (x * bounded) / dynamic.length,
+          (y * bounded) / dynamic.length,
+          (z * bounded) / dynamic.length,
         ),
       );
       b.wakeUp();
@@ -254,9 +296,18 @@ export class PhysicalRig {
       (m.material as THREE.Material).dispose();
     }
     this.visual.removeFromParent();
+    if (this.anchored && this.original) {
+      this.original.type = this.originalType;
+      if (this.originalPosition)
+        this.original.position.copy(this.originalPosition);
+      this.original.velocity.setZero();
+      this.original.updateMassProperties();
+      this.original.aabbNeedsUpdate = true;
+      if (!restore) this.physics.removeBody(this.original);
+    }
     if (restore) {
       this.object.visible = true;
-      if (this.original) this.physics.addBody(this.original);
+      if (this.original && !this.anchored) this.physics.addBody(this.original);
     }
     this.springs = [];
   }

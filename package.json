@@ -1,7 +1,7 @@
 {
   "name": "gameforge-studio",
   "private": true,
-  "version": "0.8.0",
+  "version": "0.8.1",
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
@@ -33,7 +33,8 @@
     "build:player": "vite build --config vite.player.config.ts",
     "predev": "npm run build:player",
     "test:desktop:studio08": "node tests/studio08-desktop.mjs",
-    "test:export:studio08": "node tests/studio08-export.mjs"
+    "test:export:studio08": "node tests/studio08-export.mjs",
+    "test:jelly": "node tests/jelly-browser.mjs"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

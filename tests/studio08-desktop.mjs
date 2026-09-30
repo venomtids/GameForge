@@ -123,6 +123,58 @@ try {
     "PASS untrusted IPC window rejection and native payload byte limit",
   );
 
+  stage = "native gelatin parkour and player";
+  await page.getByRole("button", { name: "Novo", exact: true }).click();
+  await page.getByRole("button", { name: /^Jelly Jump/ }).click();
+  await expect(page.locator(".project-identity strong")).toHaveText(
+    "Jelly Jump · Parkour de gelatina",
+  );
+  await page.getByRole("button", { name: /^Salvar/ }).click();
+  await expect
+    .poll(async () => JSON.parse(await fs.readFile(file, "utf8")).name)
+    .toBe("Jelly Jump · Parkour de gelatina");
+  const gelProject = JSON.parse(await fs.readFile(file, "utf8")),
+    gelPlayer = gelProject.scenes[0].nodes.find(
+      (n) => n.id === gelProject.settings.playerId,
+    );
+  assert.equal(gelPlayer.deform.type, "jelly");
+  assert.equal(gelPlayer.actor.humanoid, true);
+  assert.equal(
+    gelProject.scenes[0].nodes.filter(
+      (n) => n.physics === "static" && n.deform.type === "jelly",
+    ).length,
+    11,
+  );
+  const gelViewportNav = page.getByRole("button", {
+    name: "Viewport",
+    exact: true,
+  });
+  if (await gelViewportNav.isVisible()) await gelViewportNav.click();
+  await page.keyboard.press("F5");
+  await expect(page.locator(".runtime-hud")).toContainText("Cristais 0 / 5");
+  await page.waitForTimeout(1000);
+  await page.keyboard.down("w");
+  await page.waitForTimeout(200);
+  await page.keyboard.up("w");
+  await page.keyboard.press("Space");
+  await page.keyboard.press("r");
+  await expect(page.locator(".runtime-hud")).toContainText("1 quedas");
+  await expect(page.locator(".runtime-hud")).toContainText("Vida: 100");
+  await page.screenshot({ path: "test-results/jelly-windows.png" });
+  await page.keyboard.press("F8");
+  await expect(page.locator(".play-border")).not.toBeVisible();
+  await page.getByRole("button", { name: /^Salvar/ }).click();
+  await expect
+    .poll(async () =>
+      JSON.stringify(
+        JSON.parse(await fs.readFile(file, "utf8")).scenes[0].nodes,
+      ),
+    )
+    .toBe(JSON.stringify(gelProject.scenes[0].nodes));
+  console.log(
+    "PASS installed Windows gelatin player/parkour, input/R, persistence and stop restoration",
+  );
+
   stage = "native animation/runtime";
   await page.getByRole("button", { name: "Novo", exact: true }).click();
   await page.getByRole("button", { name: /^Motion Lab/ }).click();
@@ -197,7 +249,7 @@ try {
   );
   await fs.writeFile(
     "test-results/windows-native08.txt",
-    "PASS Electron production renderer, IPC isolation, byte limits, atomic backups, UTF-8, offline export, animation runtime and shutdown autosave.\n",
+    "PASS Electron production renderer, IPC isolation, byte limits, atomic backups, UTF-8, offline export, gelatin player/parkour/input, animation runtime and shutdown autosave.\n",
   );
   console.log("ALL STUDIO 0.8 DESKTOP TESTS PASSED");
 } catch (error) {

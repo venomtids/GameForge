@@ -2830,3 +2830,8 @@ textarea {
   outline: 1px solid #b4e99188;
   outline-offset: -1px;
 }
+
+.art-jelly {
+  background: radial-gradient(ellipse at 28% 28%, #83bbaa33, transparent 65%),
+    linear-gradient(130deg, #233743, #343051);
+}

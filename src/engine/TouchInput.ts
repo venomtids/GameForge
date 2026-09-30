@@ -10,11 +10,12 @@ export class TouchInput {
     private keys: Set<string>,
     private pressed: Set<string>,
     private released: Set<string>,
+    private onAction?: (key: string) => void,
   ) {
     this.root.className = "touch-game-controls";
     this.root.setAttribute("aria-label", "Controles de toque do jogador");
     this.root.style.cssText =
-      "position:absolute;inset:auto 0 max(26px,env(safe-area-inset-bottom)) 0;z-index:24;display:none;justify-content:space-between;align-items:end;padding:0 18px;pointer-events:none;user-select:none";
+      "position:absolute;inset:auto 0 max(26px,env(safe-area-inset-bottom)) 0;z-index:24;display:none;justify-content:space-between;align-items:end;padding:0 16px;pointer-events:none;user-select:none";
     const pad = document.createElement("div"),
       actions = document.createElement("div");
     pad.style.cssText =
@@ -43,6 +44,7 @@ export class TouchInput {
         this.held.set(e.pointerId, key);
         this.keys.add(key);
         this.pressed.add(key);
+        this.onAction?.(key);
         element.style.background = "#659a72db";
       };
       const up = (e: PointerEvent) => {
@@ -72,6 +74,7 @@ export class TouchInput {
     button("Mover para direita", "d", "→", pad, "2 / 3");
     button("Correr", "shift", "»", actions);
     button("Pular", " ", "↟", actions);
+    button("Retornar ao checkpoint", "r", "↺", actions);
     host.append(this.root);
     const blur = () => this.release();
     window.addEventListener("blur", blur);

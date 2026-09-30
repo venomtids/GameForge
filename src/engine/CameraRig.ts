@@ -1,4 +1,4 @@
-import { fpsArms, animateArms, setHandProp } from "./Humanoid";
+import { fpsArms, animateArms, styleArms, setHandProp } from "./Humanoid";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { controls, type Project, type CameraMode } from "./model";
@@ -278,7 +278,12 @@ export class CameraRig {
     if (this.arms.visible && config) {
       const b = world.playerId ? world.bodies.get(world.playerId) : null,
         velocity = b ? Math.hypot(b.velocity.x, b.velocity.z) : 0;
-      animateArms(this.arms, dt, velocity, !!b);
+      styleArms(
+        this.arms,
+        config,
+        world.jellyCharacters.get(config.id)?.deformation ?? 1,
+      );
+      animateArms(this.arms, dt, velocity, b ? world.grounded(b) : false);
       const dados = this.arms.userData as any;
       if (dados?.lanterna) dados.lanterna.visible = !!torch.enabled;
       this.arms.traverse((o) => {
@@ -328,7 +333,13 @@ export class CameraRig {
         this.perspective.fov = 55;
         this.perspective.updateProjectionMatrix();
         this.camera.position.lerp(
-          p.clone().add(new THREE.Vector3(6, 6.5, 8)),
+          p
+            .clone()
+            .add(
+              config?.deform.type === "jelly"
+                ? new THREE.Vector3(0, 5.6, 8)
+                : new THREE.Vector3(6, 6.5, 8),
+            ),
           1 - Math.exp(-this.options.followSpeed * dt),
         );
         this.controls.target.copy(p);

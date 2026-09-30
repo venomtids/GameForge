@@ -59,6 +59,7 @@ try {
     keys,
     scripts.pressed,
     scripts.released,
+    (key) => world.queueAction(key),
   );
   let paused = false,
     allowed = false;
@@ -67,7 +68,10 @@ try {
     rig.paused = p;
     scripts.paused = p;
     keys.clear();
-    if (p) rig.release();
+    if (p) {
+      rig.release();
+      world.cancelInputActions();
+    }
     document.getElementById("overlay")!.style.display = p ? "grid" : "none";
   };
   const ui = new GameUI(document.body, world, setPause);
@@ -138,7 +142,10 @@ try {
       e.preventDefault();
       if (!e.repeat || ![" ", "r"].includes(e.key))
         keys.add(e.key.toLowerCase());
-      if (!e.repeat) scripts.pressed.add(e.key.toLowerCase());
+      if (!e.repeat) {
+        scripts.pressed.add(e.key.toLowerCase());
+        if (!paused) world.queueAction(e.key.toLowerCase());
+      }
     }
   });
   window.addEventListener("keyup", (e) => {
@@ -214,7 +221,7 @@ try {
     world.refresh();
     ui.update(true, paused);
     document.getElementById("score")!.textContent =
-      `${world.completed ? "Concluído! " : ""}Cristais: ${world.collected}/${world.total} · ${world.elapsed.toFixed(1)} s · ${world.checkpointName}${world.configs.find((n) => n.id === world.playerId)?.actor.humanoid ? " · Vida: " + Math.ceil(world.health.get(world.playerId!) ?? 100) + " · R renascer" : ""}`;
+      `${world.completed ? "Concluído! " : ""}Cristais: ${world.collected}/${world.total} · ${world.elapsed.toFixed(1)} s · ${world.checkpointName} · ${world.deaths} quedas${world.configs.find((n) => n.id === world.playerId)?.actor.humanoid ? " · Vida: " + Math.ceil(world.health.get(world.playerId!) ?? 100) + " · R renascer" : ""}`;
     configureLighting(
       scene,
       renderer,

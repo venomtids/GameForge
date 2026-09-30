@@ -1,3 +1,4 @@
+import { STUDIO_VERSION } from "../engine/version";
 import { useEffect, useState } from "react";
 import {
   ArrowUpRight,
@@ -55,6 +56,48 @@ function TemplateArt({ kind }: { kind: string }) {
               strokeWidth="6"
             />
             <path d="M102 71L111 56L121 71L111 85Z" fill="#a2eef0" />
+          </>
+        ) : kind === "jelly" ? (
+          <>
+            {[0, 1, 2, 3].map((i) => (
+              <g
+                key={i}
+                transform={`translate(${42 + i * 38}, ${91 - i * 13})`}
+              >
+                <path
+                  d="M0 -3Q0 -8 6 -11L20 -18Q25 -21 31 -17L42 -10Q47 -6 42 -2L25 8Q20 11 14 7Z"
+                  fill={["#8ee6bd", "#f2b4d9", "#b1a2ed", "#ffd38e"][i]}
+                  opacity=".9"
+                />
+                <path
+                  d="M0 -3V5Q0 8 14 15L25 16L44 5V-4L25 8L14 7Z"
+                  fill="#698cab"
+                  opacity=".65"
+                />
+                <path
+                  d="M9 -8L21 -15L31 -10"
+                  stroke="white"
+                  strokeWidth="2"
+                  opacity=".5"
+                />
+              </g>
+            ))}
+            <g transform="translate(111 26)">
+              <rect x="0" y="0" width="18" height="19" rx="7" fill="#b6f9d7" />
+              <rect x="1" y="21" width="16" height="22" rx="6" fill="#8ee6bd" />
+              <path
+                d="M-2 25L-10 34M20 25L29 16M5 43L0 54M13 43L19 52"
+                stroke="#8ee6bd"
+                strokeWidth="7"
+                strokeLinecap="round"
+              />
+              <path
+                d="M5 8V10M12 8V10"
+                stroke="#315158"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </g>
           </>
         ) : kind === "obby" ? (
           <>
@@ -227,7 +270,7 @@ export default function ProjectLibrary({
       >
         <header className="library-heading">
           <div className="library-logo">
-            <Box size={19} /> GAMEFORGE <span>STUDIO 0.8</span>
+            <Box size={19} /> GAMEFORGE <span>STUDIO {STUDIO_VERSION}</span>
           </div>
           <button onClick={onClose} aria-label="Fechar biblioteca">
             <X size={20} />
@@ -253,7 +296,9 @@ export default function ProjectLibrary({
             <h3>
               <Plus size={16} /> Criar um projeto
             </h3>
-            <span>6 pontos de partida · totalmente editáveis</span>
+            <span>
+              {studioTemplates.length} pontos de partida · totalmente editáveis
+            </span>
           </div>
           <div className="template-grid">
             {studioTemplates.map((t) => (

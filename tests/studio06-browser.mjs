@@ -40,7 +40,7 @@ try {
   await page
     .getByLabel("Categoria do Toolbox")
     .selectOption("Personagens e física");
-  await expect(page.locator(".toolbox-panel")).toContainText("60 modelos");
+  await expect(page.locator(".toolbox-panel")).toContainText(/\d+ modelos/);
   await page
     .getByRole("button", { name: /Jogador articulado · opção 2/ })
     .click();

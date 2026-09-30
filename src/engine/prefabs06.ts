@@ -3,7 +3,9 @@ import { actorDefaults, deformDefaults } from "./features06";
 export const prefab06Names = {
   humanoidPlayer: "Jogador articulado · opção 2",
   ragdoll: "Ragdoll físico",
-  jelly: "Gelatina física",
+  jelly: "Gelatina física · corpo macio",
+  jellyPlayer: "Jogador de gelatina · articulado e jogável",
+  jellyPlatform: "Plataforma de gelatina · elástica",
   botPatrol: "Bot · patrulha",
   botFollow: "Bot · seguir",
   botAttack: "Bot · atacar",
@@ -27,6 +29,50 @@ export function prefab06(kind: Prefab06): Node3D[] {
         speed: 6,
         actor,
         color: "#69a6ad",
+      }),
+    ];
+  if (kind === "jellyPlayer")
+    return [
+      makeNode("box", {
+        name: "Jogador de gelatina",
+        position: [0, 2, 0],
+        scale: [0.86, 1.8, 0.7],
+        physics: "dynamic",
+        behavior: "player",
+        mass: 12,
+        restitution: 0,
+        friction: 0,
+        speed: 6.2,
+        color: "#75e5bd",
+        actor: { ...actor, skin: "#9cf5d2" },
+        deform: {
+          ...deformDefaults,
+          type: "jelly",
+          stiffness: 110,
+          damping: 3.5,
+          volume: 0.95,
+        },
+      }),
+    ];
+  if (kind === "jellyPlatform")
+    return [
+      makeNode("box", {
+        name: "Plataforma de gelatina",
+        position: [0, 0.5, 0],
+        scale: [4, 1, 4],
+        physics: "static",
+        mass: 24,
+        restitution: 0.08,
+        friction: 0.75,
+        color: "#91dab2",
+        deform: {
+          ...deformDefaults,
+          type: "jelly",
+          stiffness: 160,
+          damping: 6,
+          volume: 0.95,
+          maxStretch: 1.4,
+        },
       }),
     ];
   if (kind === "ragdoll")

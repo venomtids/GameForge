@@ -1,0 +1,3440 @@
+{
+  "format": "gameforge",
+  "version": 7,
+  "name": "Jelly Jump · Parkour de gelatina",
+  "activeScene": "jelly-jump",
+  "scenes": [
+    {
+      "id": "jelly-jump",
+      "name": "Jelly Jump · 11 ilhas elásticas",
+      "nodes": [
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-0",
+          "name": "01 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.6,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            8,
+            1.2,
+            8
+          ],
+          "color": "#90e7bd",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "de460390-5e60-4269-8658-8e9cc627464a",
+          "name": "Base cristalina 1",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -1.3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6.88,
+            0.2,
+            6.88
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cd2bbdfb-a57a-4099-97a9-6d891121e45a",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3.55,
+            0.38,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#90e7bd",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "7eed4f3c-9d0e-4468-94c7-79a9700be3e7",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.55,
+            0.38,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#90e7bd",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-1",
+          "name": "02 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.35,
+            -6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1.2,
+            4
+          ],
+          "color": "#f5b6d4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "17eacf80-70e4-4767-a0b1-2fba651fffc0",
+          "name": "Base cristalina 2",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -1.05,
+            -6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.44,
+            0.2,
+            3.44
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-2",
+          "name": "03 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.5,
+            0.050000000000000044,
+            -10
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.8,
+            1.2,
+            3.8
+          ],
+          "color": "#afa7ee",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "33ef2ed9-92a7-4457-acc7-33a7b7923255",
+          "name": "Base cristalina 3",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.5,
+            -0.65,
+            -10
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.268,
+            0.2,
+            3.268
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-crystal-2",
+          "name": "Doce de luz 3",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.5,
+            1.65,
+            -10
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.7,
+            0.5
+          ],
+          "color": "#ffe5a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-3",
+          "name": "04 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1.2,
+            0.4,
+            -14
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.8,
+            1.2,
+            3.8
+          ],
+          "color": "#87d9eb",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "640cf983-8b5f-42fb-b77b-f698cf725842",
+          "name": "Base cristalina 4",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1.2,
+            -0.30000000000000004,
+            -14
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.268,
+            0.2,
+            3.268
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-4",
+          "name": "05 · Base segura de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0.7500000000000001,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6,
+            1.2,
+            6
+          ],
+          "color": "#91efc4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "83a32a80-3dc9-4f3c-86b0-9db839aad02c",
+          "name": "Base cristalina 5",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0.050000000000000044,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            5.16,
+            0.2,
+            5.16
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-crystal-4",
+          "name": "Doce de luz 5",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            2.35,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.7,
+            0.5
+          ],
+          "color": "#ffe5a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-checkpoint-1",
+          "name": "Checkpoint 1 · Jelly Jump",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.365,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.03,
+            2.5
+          ],
+          "color": "#b1ffe1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "checkpoint",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "edd4c65d-5231-4598-90b6-ba2b61bdb5a7",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.55,
+            1.73,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#91efc4",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9e3d1800-db65-4ddc-a8a4-11ed04b52e36",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.55,
+            1.73,
+            -18
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#91efc4",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-5",
+          "name": "06 · Gelatina de impulso",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            0.9500000000000001,
+            -23
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1.2,
+            4
+          ],
+          "color": "#ffd08a",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.85,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "f2b5705b-3f44-40b0-9a60-cf19831591da",
+          "name": "Base cristalina 6",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            0.25,
+            -23
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.44,
+            0.2,
+            3.44
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cf49db12-3303-481c-9dc5-92c6ef0603de",
+          "name": "Bolha de impulso",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1.05,
+            1.9300000000000002,
+            -23
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#ffd08a",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "6f73b572-3488-4752-a147-3b839cf7e74b",
+          "name": "Bolha de impulso",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.05,
+            1.9300000000000002,
+            -23
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#ffd08a",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-6",
+          "name": "07 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            1.4499999999999997,
+            -28
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.4,
+            1.2,
+            4.4
+          ],
+          "color": "#afa7ee",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c628e676-3fd8-4afb-a27e-d41f2d8b3192",
+          "name": "Base cristalina 7",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            0.7499999999999998,
+            -28
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.7840000000000003,
+            0.2,
+            3.7840000000000003
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-crystal-6",
+          "name": "Doce de luz 7",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            3.05,
+            -28
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.7,
+            0.5
+          ],
+          "color": "#ffe5a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-7",
+          "name": "08 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -0.4,
+            1.65,
+            -32.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4,
+            1.2,
+            4
+          ],
+          "color": "#87d9eb",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c6c57f91-5a20-4cac-b3e2-6829946dae5e",
+          "name": "Base cristalina 8",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -0.4,
+            0.95,
+            -32.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.44,
+            0.2,
+            3.44
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-8",
+          "name": "09 · Base segura de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.5,
+            2,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6,
+            1.2,
+            6
+          ],
+          "color": "#91efc4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "66a63426-227e-4246-8e2e-6d6c3f2d058a",
+          "name": "Base cristalina 9",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.5,
+            1.3,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            5.16,
+            0.2,
+            5.16
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-checkpoint-2",
+          "name": "Checkpoint 2 · Jelly Jump",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.5,
+            2.615,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.03,
+            2.5
+          ],
+          "color": "#b1ffe1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "checkpoint",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2f20b4fd-1810-4296-80b4-6ea6cbd491d4",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5.05,
+            2.98,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#91efc4",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "09035b52-6df8-4b0c-8f8c-2239b32ffd2a",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.04999999999999982,
+            2.98,
+            -37
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#91efc4",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-9",
+          "name": "10 · Ilha de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            2.25,
+            -42
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.5,
+            1.2,
+            5
+          ],
+          "color": "#f5b6d4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a5934c2b-d69d-4d95-917e-06608faad944",
+          "name": "Base cristalina 10",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            1.55,
+            -42
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.01,
+            0.2,
+            4.3
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-crystal-9",
+          "name": "Doce de luz 10",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            3.85,
+            -42
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.7,
+            0.5
+          ],
+          "color": "#ffe5a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 160,
+            "damping": 6,
+            "volume": 0.95,
+            "maxStretch": 1.4
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.75,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-stage-10",
+          "name": "11 · Chegada açucarada",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.3,
+            2.4,
+            -47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            8,
+            1.2,
+            7
+          ],
+          "color": "#afa7ee",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 24,
+          "restitution": 0.05,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e6d38227-a7af-46a3-b9a2-115bfd78cbb8",
+          "name": "Base cristalina 11",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.3,
+            1.7,
+            -47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6.88,
+            0.2,
+            6.02
+          ],
+          "color": "#526888",
+          "roughness": 0.25,
+          "metalness": 0.25,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-crystal-10",
+          "name": "Doce de luz 11",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.3,
+            4,
+            -47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.5,
+            0.7,
+            0.5
+          ],
+          "color": "#ffe5a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "69992b45-e5a3-42e7-bdf0-db4bf7ccc82f",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.25,
+            3.38,
+            -47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#afa7ee",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "581723d7-8a89-4b45-8ec1-723783dbfa57",
+          "name": "Bolha de açúcar",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            4.85,
+            3.38,
+            -47
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            0.6,
+            0.45
+          ],
+          "color": "#afa7ee",
+          "roughness": 0.15,
+          "metalness": 0.15,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9bcafb80-0f38-4657-9848-ba9fb6469c2f",
+          "name": "Portal · pilar de açúcar",
+          "kind": "capsule",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -0.7,
+            4.4,
+            -48.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            2.5,
+            0.45
+          ],
+          "color": "#f5bcdf",
+          "roughness": 0.2,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "1077a071-11cc-4e9a-8346-53f20559607d",
+          "name": "Portal · pilar de açúcar",
+          "kind": "capsule",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.3,
+            4.4,
+            -48.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            2.5,
+            0.45
+          ],
+          "color": "#f5bcdf",
+          "roughness": 0.2,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "fa0eca9c-458b-4543-8713-8e684ea2fb45",
+          "name": "Portal · arco de chegada",
+          "kind": "torus",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.3,
+            5.7,
+            -48.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.2,
+            2.1,
+            0.4
+          ],
+          "color": "#ffe3ab",
+          "roughness": 0.2,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 100,
+            "damping": 3,
+            "volume": 0.85,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-finish",
+          "name": "Chegada · cinco doces de luz",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.3,
+            3.02,
+            -48.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.04,
+            3
+          ],
+          "color": "#ffe0a1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "finish",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": true,
+            "skin": "#9cf5d2",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "jelly",
+            "stiffness": 110,
+            "damping": 3.5,
+            "volume": 0.95,
+            "maxStretch": 1.65
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "jelly-player",
+          "name": "Jogador de gelatina",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.4,
+            1.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.86,
+            1.8,
+            0.7
+          ],
+          "color": "#75e5bd",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 12,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 6.2,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "moveMultiplier": 1,
+    "sprintMultiplier": 1.5,
+    "jumpSpeed": 7.5,
+    "mouseSensitivity": 1.5,
+    "orbitSpeed": 1.5,
+    "panSpeed": 2.5,
+    "flySpeed": 12,
+    "editorLook": 1.5,
+    "zoomSpeed": 1.5,
+    "followSpeed": 8,
+    "fov": 78,
+    "physicsHz": 120,
+    "solverIterations": 18,
+    "background": "#465d7e",
+    "gravity": -9.81,
+    "sky": {
+      "enabled": true,
+      "clouds": true,
+      "sunElevation": 36,
+      "sunAzimuth": 135
+    },
+    "gameCamera": "third",
+    "shadows": {
+      "enabled": true,
+      "filter": "soft",
+      "resolution": 1024,
+      "coverage": 32,
+      "intensity": 0.65,
+      "bias": -0.0003,
+      "normalBias": 0.025,
+      "softness": 2,
+      "sunPower": 2.4,
+      "ambientPower": 1.5,
+      "follow": true
+    },
+    "playerId": "jelly-player"
+  }
+}

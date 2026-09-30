@@ -54,11 +54,17 @@ export interface DeformSettings {
   type: "none" | "ragdoll" | "jelly";
   stiffness: number;
   damping: number;
+  /** Shape/volume recovery; optional for compatibility with old projects. */
+  volume?: number;
+  /** Maximum spring length relative to its rest length. */
+  maxStretch?: number;
 }
 export const deformDefaults: DeformSettings = {
   type: "none",
-  stiffness: 80,
+  stiffness: 100,
   damping: 3,
+  volume: 0.85,
+  maxStretch: 1.65,
 };
 const finite = (v: unknown, a: number, b: number) =>
   typeof v === "number" && Number.isFinite(v) && v >= a && v <= b;
@@ -117,8 +123,16 @@ export function validateDeform(v: any): DeformSettings {
     v &&
       ["none", "ragdoll", "jelly"].includes(v.type) &&
       finite(v.stiffness, 20, 180) &&
-      finite(v.damping, 0.5, 8),
+      finite(v.damping, 0.5, 8) &&
+      (v.volume === undefined || finite(v.volume, 0, 1)) &&
+      (v.maxStretch === undefined || finite(v.maxStretch, 1.1, 2.5)),
     "Física articulada/deformável inválida.",
   );
-  return { type: v.type, stiffness: v.stiffness, damping: v.damping };
+  return {
+    type: v.type,
+    stiffness: v.stiffness,
+    damping: v.damping,
+    ...(v.volume === undefined ? {} : { volume: v.volume }),
+    ...(v.maxStretch === undefined ? {} : { maxStretch: v.maxStretch }),
+  };
 }

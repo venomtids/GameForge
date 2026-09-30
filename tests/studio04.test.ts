@@ -20,9 +20,9 @@ import {
 } from "../src/engine/design";
 import { diagnose } from "../src/engine/diagnostics";
 import { World } from "../src/engine/World";
-test("40 modelos originais / 60 totais, hierarquias e colisores válidos", () => {
+test("40 modelos originais / 62 totais, hierarquias e colisores válidos", () => {
   assert.equal(Object.keys(extraNames).length, 40);
-  assert.equal(Object.keys(prefabNames).length, 60);
+  assert.equal(Object.keys(prefabNames).length, 62);
   for (const k of Object.keys(prefabNames)) {
     const p = createProject();
     p.scenes[0].nodes = prefab(k as Prefab);
