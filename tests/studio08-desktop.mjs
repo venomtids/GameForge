@@ -3,6 +3,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 import assert from "node:assert/strict";
+import { writeFileSync, mkdirSync } from "node:fs";
+let stage = "launch",
+  nativePage;
+process.on("uncaughtExceptionMonitor", (error) => {
+  const detail = `${stage}: ${error.stack ?? error}`;
+  console.error(
+    `::error title=Electron smoke test::${detail.replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A")}`,
+  );
+  mkdirSync("test-results", { recursive: true });
+  writeFileSync("test-results/windows-native08-failure.txt", detail);
+});
 const temporary = await fs.mkdtemp(
   path.join(os.tmpdir(), "gameforge-native08-"),
 );
@@ -17,7 +28,7 @@ const app = await electron.launch({
   ],
 });
 try {
-  const page = await app.firstWindow(),
+  const page = (nativePage = await app.firstWindow()),
     errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await expect(page.locator(".viewport canvas")).toBeVisible({
@@ -29,6 +40,7 @@ try {
     await page.evaluate(() => typeof window.gameforgeDesktop.autosave),
     "function",
   );
+  stage = "native save/open/backup";
   const file = path.join(temporary, "native.gameforge.json");
   await app.evaluate(({ dialog }, file) => {
     dialog.showSaveDialog = async () => ({ canceled: false, filePath: file });
@@ -61,6 +73,7 @@ try {
     "PASS native filesystem, UTF-8, isolated preload and atomic .bak",
   );
 
+  stage = "native offline export";
   const htmlFile = path.join(temporary, "offline.html");
   await app.evaluate(({ dialog }, file) => {
     dialog.showSaveDialog = async () => ({ canceled: false, filePath: file });
@@ -74,24 +87,27 @@ try {
   assert.ok(html.includes("project-data"));
   console.log("PASS production file:// offline runtime export");
 
-  const security = await app.evaluate(async ({ BrowserWindow }, appPath) => {
-    const path = require("node:path");
-    const rogue = new BrowserWindow({
-      show: false,
-      webPreferences: {
-        preload: path.join(appPath, "desktop/preload.cjs"),
-        contextIsolation: true,
-        sandbox: true,
-        nodeIntegration: false,
-      },
-    });
-    await rogue.loadURL("about:blank");
-    const answer = await rogue.webContents.executeJavaScript(
-      'window.gameforgeDesktop.open().then(() => "ALLOWED", error => error.message)',
-    );
-    rogue.destroy();
-    return answer;
-  }, appPath);
+  stage = "untrusted IPC window";
+  const security = await app.evaluate(
+    async ({ BrowserWindow }, preload) => {
+      const rogue = new BrowserWindow({
+        show: false,
+        webPreferences: {
+          preload,
+          contextIsolation: true,
+          sandbox: true,
+          nodeIntegration: false,
+        },
+      });
+      await rogue.loadURL("about:blank");
+      const answer = await rogue.webContents.executeJavaScript(
+        'window.gameforgeDesktop.open().then(() => "ALLOWED", error => error.message)',
+      );
+      rogue.destroy();
+      return answer;
+    },
+    path.join(appPath, "desktop/preload.cjs"),
+  );
   assert.match(security, /Origem IPC inválida/);
   const invalid = await page.evaluate(() =>
     window.gameforgeDesktop.autosave("x".repeat(8_000_001)).then(
@@ -104,6 +120,7 @@ try {
     "PASS untrusted IPC window rejection and native payload byte limit",
   );
 
+  stage = "native animation/runtime";
   await page.getByRole("button", { name: "Novo", exact: true }).click();
   await page.getByRole("button", { name: /^Motion Lab/ }).click();
   await expect(page.locator(".project-identity strong")).toHaveText(
@@ -128,14 +145,10 @@ try {
       .textContent.includes("Salvo neste dispositivo"),
   );
   await page.evaluate(() => window.dispatchEvent(new Event("beforeunload")));
-  const autosaved = await app.evaluate(async ({ app }) =>
-    require("node:fs/promises").readFile(
-      require("node:path").join(
-        app.getPath("userData"),
-        "autosave.gameforge.json",
-      ),
-      "utf8",
-    ),
+  const userData = await app.evaluate(({ app }) => app.getPath("userData"));
+  const autosaved = await fs.readFile(
+    path.join(userData, "autosave.gameforge.json"),
+    "utf8",
   );
   assert.equal(JSON.parse(autosaved).name, "Motion Lab");
   assert.deepEqual(errors, []);
@@ -147,6 +160,11 @@ try {
     "PASS Electron production renderer, IPC isolation, byte limits, atomic backups, UTF-8, offline export, animation runtime and shutdown autosave.\n",
   );
   console.log("ALL STUDIO 0.8 DESKTOP TESTS PASSED");
+} catch (error) {
+  await nativePage
+    ?.screenshot({ path: "test-results/studio08-windows-failure.png" })
+    .catch(() => {});
+  throw error;
 } finally {
   await app.close();
   await fs.rm(temporary, { recursive: true, force: true });
