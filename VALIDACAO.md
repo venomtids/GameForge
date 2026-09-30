@@ -19,11 +19,22 @@ Os testes novos da engine incluem schema/animação, curvas e loops, colisores c
 
 ## Windows / instalador
 
-A compilação local do Electron foi impedida pelo acesso aos hosts de binários. Portanto, **os testes de Node/navegador não certificam o aplicativo Windows**.
+**Passou em Windows CI — instalação e aplicativo instalado:**
 
-O workflow `.github/workflows/windows.yml` executa uma compilação real em `windows-latest`, seguida de `test:desktop:studio08` usando o renderer de produção. Verifica isolamento do preload, abrir/salvar em disco, backup `.bak`, UTF-8, exportação `file://`, rejeição de janela IPC não confiável/payload maior que 8 MB, timeline/runtime e flush de autosave. Os diálogos de arquivo são simulados; o sistema de arquivos e o Electron são reais.
+- [Run 36748313262](https://github.com/venomtids/GameForge/actions/runs/36748313262), commit `89e686bd281c92fc539c58e03866995f4afe9094`, conclusão `success`.
+- Electron 44.4.3 / NSIS x64: `.exe` gerado, checksum calculado e instalação silenciosa concluída.
+- Verificados executável, `app.asar`, licenças e projetos de exemplo no destino instalado.
+- Playwright abriu o **executável instalado** e confirmou isolamento do preload, abrir/salvar com filesystem real, `.bak`, UTF-8, exportação `file://`, IPC recusado de janela não confiável/payload acima de 8 MB, timeline/runtime, CodeMirror carregado sob demanda, Worker JavaScript e flush de autosave. Apenas os diálogos de arquivo são simulados.
+- O teste em caminho temporário Windows encontrou e permitiu corrigir a comparação de URLs: IPC agora usa a URL canônica do primeiro documento carregado pela engine, mantendo validação de sender/frame e bloqueio de navegação.
+- [Artefato Windows](https://github.com/venomtids/GameForge/actions/runs/36748313262/artifacts/11113203349), 103.734.693 bytes (ZIP), inclui instalador, `SHA256SUMS.txt` e instruções.
 
-O instalador só é publicado pelo workflow depois desse smoke test. Confira a execução no GitHub Actions; uma configuração ou teste escrito não equivale a uma execução bem-sucedida.
+A aquisição de binários locais foi bloqueada pelos hosts de download; a compilação e a instalação ocorreram na VM Windows. A rede do sandbox também bloqueia o download do artefato: os arquivos de instalação são entregues por link GitHub, não disfarçados como anexos inexistentes.
+
+## Validações adicionais
+
+- `node tests/scripts-safety.mjs`: passou; budget Lua de 50.000 instruções, watchdog JavaScript e erro de sintaxe.
+- `npm run test:export:studio08`: passou; downloads reais JSON/HTML, nome com acentos/Japonês/emoji, reprodução por `file://` com rede desligada, nenhum request HTTP, toque, pausa/retorno/reinício.
+- `node tests/studio07-browser.mjs`: passou; luz/spot, sombras/lanterna/volume, comandos de áudio/tween/heal e inicialização do hotel com HUD, salas e luzes. A lanterna é verificada durante a simulação: inimigos aleatórios podem matar o jogador parado e desligá-la corretamente no final.
 
 ## Limitações da validação
 

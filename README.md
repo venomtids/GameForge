@@ -33,7 +33,9 @@ O alvo é **Windows 10/11 x64 (Intel/AMD)**. O pacote é um instalador Electron/
 
 `GameForge-Studio-0.8.0-Windows-x64-Setup.exe`
 
-**Disponibilidade:** o arquivo só existe após uma compilação Windows concluída. A configuração de empacotamento não é, por si só, um instalador. O fluxo [Instalador Windows](https://github.com/venomtids/GameForge/actions) compila a branch de trabalho e publica o `.exe`, `SHA256SUMS.txt` e instruções como artefato. Confira se a execução ficou verde antes de baixar.
+**Instalador gerado e validado em Windows CI:** [download da prévia Windows](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.0). O pacote inclui SHA-256 e instruções. Como alternativa, o [artefato da compilação validada](https://github.com/venomtids/GameForge/actions/runs/36748313262/artifacts/11113203349) contém o mesmo tipo de instalador (login GitHub; retenção de 30 dias).
+
+A validação instalou o NSIS silenciosamente e testou o **executável instalado**, não apenas o código-fonte. [Execução completa](https://github.com/venomtids/GameForge/actions/runs/36748313262).
 
 - Feche a engine e guarde backups antes de atualizar. Instale no mesmo usuário/pasta da versão anterior.
 - O usuário final **não precisa de Node.js/Python**. Recomendação: 4 GB de RAM, WebGL2/aceleração gráfica e 600 MB livres.
@@ -60,6 +62,7 @@ npm run typecheck
 npm run build               # player single-file + editor de produção
 npm run preview             # produção local
 npm run test:studio08        # fluxos do Studio; servidor dev precisa estar aberto
+npm run test:export:studio08 # downloads + jogo file:// offline, Unicode e toque
 npm run test:update          # regressões/scripts; servidor dev precisa estar aberto
 npm run examples:studio08    # recria os projetos de exemplo 0.8
 ```
@@ -87,7 +90,7 @@ $env:GAMEFORGE_TEST_APP = "dist/desktop-app"
 npm run test:desktop:studio08
 ```
 
-O CI Windows executa esses passos e só publica o instalador se os testes nativos passarem. São testes automatizados em uma VM, com diálogos de arquivo simulados e sistema de arquivos real — não uma certificação em todo hardware Windows.
+O CI Windows instala o NSIS em uma pasta temporária, verifica os recursos e testa o executável instalado antes de publicar. São testes automatizados em uma VM, com diálogos de arquivo simulados e sistema de arquivos real — não uma certificação em todo hardware Windows.
 
 ## Projetos, compatibilidade e limites
 
@@ -102,3 +105,13 @@ O CI Windows executa esses passos e só publica o instalador se os testes nativo
 - Scripts executam em Worker com limites de tempo/instruções, mas **não constituem sandbox auditada**. Só permita código de confiança. A permissão nunca é herdada automaticamente de um arquivo.
 
 Exemplos 0.8 em `examples/studio08/`. Documentação original, conservada como histórico: [docs/archive/README-0.7.md](docs/archive/README-0.7.md). Licenças de terceiros e fonte Inter: [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+
+## Interface
+
+![Editor desktop](docs/screenshots/studio08-desktop.png)
+
+![Biblioteca de projetos](docs/screenshots/studio08-library.png)
+
+Interface estreita, com painéis em gavetas (390 px):
+
+<img src="docs/screenshots/studio08-mobile.png" width="390" alt="Studio 0.8 em tela estreita" />
