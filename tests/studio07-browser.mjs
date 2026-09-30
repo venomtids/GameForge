@@ -49,9 +49,7 @@ try {
   // ---------------------------------------------------------------- Toolbox
   await page.getByRole("button", { name: "Toolbox", exact: true }).click();
   await expect(page.locator(".toolbox-panel")).toContainText("60 modelos");
-  await page
-    .getByLabel("Categoria do Toolbox")
-    .selectOption("Iluminação");
+  await page.getByLabel("Categoria do Toolbox").selectOption("Iluminação");
   await expect(page.locator(".toolbox-panel")).toContainText(
     "Lâmpada piscante",
   );
@@ -75,7 +73,9 @@ try {
     Math.abs(lampada.light.flicker - 0.4) > 0.0001 ||
     Math.abs(lampada.light.flickerSpeed - 9) > 0.0001
   )
-    throw Error("Inspetor de luz não persistiu: " + JSON.stringify(lampada.light));
+    throw Error(
+      "Inspetor de luz não persistiu: " + JSON.stringify(lampada.light),
+    );
   await page.screenshot({ path: "test-results/studio07-luz.png" });
 
   // ------------------------------------------- Lanterna e áudio (Mundo 0.7)
@@ -210,7 +210,9 @@ try {
   if (runtime.vida !== 65)
     throw Error("engine.heal não curou: " + runtime.vida);
   if (runtime.lanterna.enabled !== false || runtime.lanterna.intensity !== 28)
-    throw Error("engine.torch não aplicou: " + JSON.stringify(runtime.lanterna));
+    throw Error(
+      "engine.torch não aplicou: " + JSON.stringify(runtime.lanterna),
+    );
 
   // ------------------------------------- Jogo PORTAS rodando dentro da engine
   const jogo = await page.evaluate(async () => {
@@ -250,16 +252,21 @@ try {
     };
     const host = new ScriptHost(world, (s) => logs.push(s));
     host.start();
+    let lanternaLigou = false;
     const passo = async (teclas) => {
       host.update(1 / 30, teclas);
       world.update(1 / 30, teclas, performance.now() / 1000);
       ui.update(true, false);
+      lanternaLigou ||= world.torch.enabled;
       await new Promise((r) => setTimeout(r, 6));
     };
     for (let i = 0; i < 20; i++) await passo(new Set());
     await passo(new Set(["e"])); // entra no elevador e começa as 100 portas
-    for (let i = 0; i < 300; i++) await passo(new Set(i % 60 === 0 ? ["w"] : []));
-    const sala1 = [...world.objects.keys()].filter((id) => id.startsWith("s1."));
+    for (let i = 0; i < 300; i++)
+      await passo(new Set(i % 60 === 0 ? ["w"] : []));
+    const sala1 = [...world.objects.keys()].filter((id) =>
+      id.startsWith("s1."),
+    );
     renderer.setSize(560, 340);
     renderer.domElement.style.position = "absolute";
     renderer.domElement.style.right = "12px";
@@ -282,6 +289,7 @@ try {
       sala1: sala1.length,
       luzes: world.lights.size,
       lanterna: world.torch.enabled,
+      lanternaLigou,
       comodos: world.objects.size,
       volume: projeto.settings.volume ?? null,
       playerX: world.objects.get(world.playerId)?.position.x ?? null,
@@ -294,7 +302,9 @@ try {
   if (jogo.inicio !== false)
     throw Error("Tela inicial não saiu depois de começar");
   if (jogo.luzes < 1) throw Error("Nenhuma luz no hotel");
-  if (!jogo.lanterna) throw Error("Lanterna do jogador não ligou");
+  // Random hotel enemies can kill the idle test player; death correctly switches the torch off.
+  if (!jogo.lanternaLigou)
+    throw Error("Lanterna do jogador nunca ligou: " + JSON.stringify(jogo));
   if (!jogo.played.includes("elevador"))
     throw Error("Som de início não tocou: " + JSON.stringify(jogo.played));
   if (!jogo.loops.some((l) => l.startsWith("vento")))
@@ -314,7 +324,12 @@ try {
     "| heal:",
     runtime.vida,
   );
-  console.log("  sons:", runtime.played.join(","), "| loops:", runtime.loops.map(([n]) => n).join(","));
+  console.log(
+    "  sons:",
+    runtime.played.join(","),
+    "| loops:",
+    runtime.loops.map(([n]) => n).join(","),
+  );
   console.log(
     "  jogo:",
     jogo.porta,

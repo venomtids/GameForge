@@ -8,7 +8,6 @@ const {
 } = require("electron");
 const path = require("node:path");
 const fs = require("node:fs/promises");
-const { pathToFileURL } = require("node:url");
 const {
   atomicWrite,
   atomicWriteSync,
@@ -19,6 +18,7 @@ const {
 } = require("./storage.cjs");
 const dev = process.argv.includes("--dev");
 let mainWindow,
+  rendererDocumentURL = null,
   rendererReady = false,
   pendingProject = projectArgument(process.argv.slice(1));
 let lastProjectDirectory,
@@ -27,9 +27,15 @@ let lastProjectDirectory,
   autosaveGeneration = 0;
 const entry = path.resolve(__dirname, "../dist/index.html");
 const trusted = (event) => {
-  const expected = dev ? "http://127.0.0.1:5173/" : pathToFileURL(entry).href;
+  // Chromium canonicalizes Windows 8.3 paths, case and file URLs differently from Node.
+  // Bind IPC to the first document OUR loadFile loaded, not a reconstructed URL.
+  // All subsequent navigation and popup windows are denied below.
+  const expected = dev ? "http://127.0.0.1:5173/" : rendererDocumentURL;
   if (
     !mainWindow ||
+    mainWindow.isDestroyed() ||
+    !expected ||
+    !event.senderFrame ||
     event.sender !== mainWindow.webContents ||
     event.senderFrame !== mainWindow.webContents.mainFrame ||
     event.senderFrame.url.split(/[?#]/)[0] !== expected
@@ -107,6 +113,10 @@ else {
       if (state.maximized) mainWindow.maximize();
       mainWindow.once("ready-to-show", () => mainWindow.show());
       mainWindow.webContents.setWindowOpenHandler(() => ({ action: "deny" }));
+      mainWindow.webContents.once("did-navigate", (_event, url) => {
+        if (!dev && new URL(url).protocol === "file:")
+          rendererDocumentURL = url.split(/[?#]/)[0];
+      });
       mainWindow.webContents.on("will-navigate", (event) =>
         event.preventDefault(),
       );
