@@ -27,8 +27,8 @@ jobs:
         run: npm test
       - name: Build e instalador NSIS
         run: npm run desktop:win
-      - name: Preparar Electron para smoke test nativo
-        run: npm run desktop:setup
+      - name: Instalar NSIS e verificar recursos distribuídos
+        run: node scripts/verify-windows-install.mjs
       - name: Validar aplicativo Windows, IPC, backup e exportação
         run: npm run test:desktop:studio08
         env:

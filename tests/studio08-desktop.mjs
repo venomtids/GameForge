@@ -20,8 +20,11 @@ const temporary = await fs.mkdtemp(
 await fs.mkdir("test-results", { recursive: true });
 const appPath = path.resolve(process.env.GAMEFORGE_TEST_APP ?? ".");
 const app = await electron.launch({
+  ...(process.env.GAMEFORGE_TEST_EXE
+    ? { executablePath: path.resolve(process.env.GAMEFORGE_TEST_EXE) }
+    : {}),
   args: [
-    appPath,
+    ...(process.env.GAMEFORGE_TEST_EXE ? [] : [appPath]),
     "--no-sandbox",
     "--enable-unsafe-swiftshader",
     `--user-data-dir=${path.join(temporary, "profile")}`,
@@ -154,7 +157,9 @@ try {
     .selectOption("javascript");
   await page
     .getByRole("textbox", { name: "Código do script", exact: true })
-    .fill('function start(){engine.log("native worker ok");}');
+    .fill(
+      'function start(){engine.log("native worker ok");} function update(dt, time, input){}',
+    );
   await page
     .getByRole("button", { name: "Aplicar script", exact: true })
     .click();
