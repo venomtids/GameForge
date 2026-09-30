@@ -30,6 +30,12 @@ Os testes novos da engine incluem schema/animação, curvas e loops, colisores c
 
 A aquisição de binários locais foi bloqueada pelos hosts de download; a compilação e a instalação ocorreram na VM Windows. A rede do sandbox também bloqueia o download do artefato: os arquivos de instalação são entregues por link GitHub, não disfarçados como anexos inexistentes.
 
+## Publicação final
+
+[Run 36749138083](https://github.com/venomtids/GameForge/actions/runs/36749138083) também passou, repetindo build, instalação e testes nativos, e publicou a [prévia `studio-v0.8.0`](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.0) no commit `4ed8f6f500be17b7f31357eef669325e4a698e21`.
+
+O asset `GameForge-Studio-0.8.0-Windows-x64-Setup.exe` está publicado com 103.732.242 bytes. Digest SHA-256 do GitHub: `54cf511620fa007d542c34145d10616f3a97fab5ee0dc491e5a174f100cdd382`. O hash também é fornecido em `SHA256SUMS.txt`.
+
 ## Validações adicionais
 
 - `node tests/scripts-safety.mjs`: passou; budget Lua de 50.000 instruções, watchdog JavaScript e erro de sintaxe.
