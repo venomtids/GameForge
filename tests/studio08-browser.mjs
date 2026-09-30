@@ -145,7 +145,7 @@ try {
   await page
     .getByRole("button", { name: "Meus projetos", exact: true })
     .click();
-  await expect(page.locator(".template-card")).toHaveCount(6);
+  await expect(page.locator(".template-card")).toHaveCount(7);
   await page.screenshot({ path: "test-results/studio08-projects.png" });
   await page
     .locator(".template-card")

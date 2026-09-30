@@ -124,6 +124,14 @@ try {
   );
 
   stage = "native gelatin parkour and player";
+  // The export stage pointed the mocked save dialog at offline.html.
+  // Project persistence must now target the original JSON file again.
+  await app.evaluate(({ dialog }, destination) => {
+    dialog.showSaveDialog = async () => ({
+      canceled: false,
+      filePath: destination,
+    });
+  }, file);
   await page.getByRole("button", { name: "Novo", exact: true }).click();
   await page.getByRole("button", { name: /^Jelly Jump/ }).click();
   await expect(page.locator(".project-identity strong")).toHaveText(
