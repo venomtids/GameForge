@@ -1,0 +1,3339 @@
+{
+  "format": "gameforge",
+  "version": 7,
+  "name": "Ilha Aurora",
+  "activeScene": "ecd919b7-f40e-41cb-89c1-f33b87fb9d29",
+  "scenes": [
+    {
+      "id": "ecd919b7-f40e-41cb-89c1-f33b87fb9d29",
+      "name": "Aurora · Mundo principal",
+      "nodes": [
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.6,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "16b69744-a67d-4566-81ab-8ef6a52d2ac9",
+          "name": "Aurora · ilha central",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            18,
+            1.4,
+            18
+          ],
+          "color": "#679d7b",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d218037d-7446-4788-bba5-41e5fa880d4f",
+          "name": "Camada de pedra",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -1.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            16.8,
+            1.2,
+            16.8
+          ],
+          "color": "#547485",
+          "roughness": 1,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "4f8746c7-da78-4309-962b-29d10406bef1",
+          "name": "Base da ilha flutuante",
+          "kind": "cone",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -4.9,
+            0
+          ],
+          "rotation": [
+            180,
+            0,
+            0
+          ],
+          "scale": [
+            16,
+            6.6,
+            16
+          ],
+          "color": "#47606e",
+          "roughness": 1,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "f957a7aa-1fd1-4397-beb8-c3b93a0f8476",
+          "name": "Caminho · 1",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0.03,
+            5.3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "7f6233bf-517f-48c3-8a14-0a49d8abdbf8",
+          "name": "Caminho · 2",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.39524973137652475,
+            0.03,
+            3.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "71103ea9-4330-4dee-ad28-532c0bbdfb5c",
+          "name": "Caminho · 3",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.6524273601770584,
+            0.03,
+            2.3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "78c24c65-3491-44fa-98d4-a5c44365e28e",
+          "name": "Caminho · 4",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.6816933416147366,
+            0.03,
+            0.7999999999999998
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cff9d59c-6052-458b-abf9-2f08a32e247d",
+          "name": "Caminho · 5",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.4728242263858056,
+            0.03,
+            -0.7000000000000002
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d594766e-7e6e-4941-acb4-b1923d1349ae",
+          "name": "Caminho · 6",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.09878400564190705,
+            0.03,
+            -2.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ce686451-a397-4470-b940-6fb4c3bf21d5",
+          "name": "Caminho · 7",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -0.30976431030639645,
+            0.03,
+            -3.7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.35,
+            0.09,
+            1.05
+          ],
+          "color": "#dfdcc1",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "dcd965d8-f6bb-48ab-9e7f-6c62c84ca9cc",
+          "name": "Pinheiro 1",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5.5,
+            0,
+            1.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "8b06f1bc-30a6-4a4a-bc01-8e0d61e67551",
+          "name": "Tronco",
+          "kind": "cylinder",
+          "parent": "dcd965d8-f6bb-48ab-9e7f-6c62c84ca9cc",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            1.3,
+            0.4
+          ],
+          "color": "#8b7160",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9cf5191b-e7f1-4fd4-9f4c-4745a70830b2",
+          "name": "Copa inferior",
+          "kind": "cone",
+          "parent": "dcd965d8-f6bb-48ab-9e7f-6c62c84ca9cc",
+          "visible": true,
+          "position": [
+            0,
+            1.9,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            2.7,
+            2.4
+          ],
+          "color": "#4b947e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d441bc45-9e5c-432c-b6aa-2476ac111185",
+          "name": "Copa superior",
+          "kind": "cone",
+          "parent": "dcd965d8-f6bb-48ab-9e7f-6c62c84ca9cc",
+          "visible": true,
+          "position": [
+            0,
+            2.8,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.7,
+            2.2,
+            1.7
+          ],
+          "color": "#8ac8a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ddb6336d-c509-4952-8e36-a7511d321490",
+          "name": "Pinheiro 2",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5.5,
+            0,
+            -4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2d3f6158-7954-451c-88fa-6898021a437d",
+          "name": "Tronco",
+          "kind": "cylinder",
+          "parent": "ddb6336d-c509-4952-8e36-a7511d321490",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            1.3,
+            0.4
+          ],
+          "color": "#8b7160",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ea89ff16-4146-42df-bd52-40971dd89a41",
+          "name": "Copa inferior",
+          "kind": "cone",
+          "parent": "ddb6336d-c509-4952-8e36-a7511d321490",
+          "visible": true,
+          "position": [
+            0,
+            2.1849999999999996,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            3.105,
+            2.4
+          ],
+          "color": "#67b395",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ff907d21-c2fe-4ce2-8ab9-09ebea0fd4b2",
+          "name": "Copa superior",
+          "kind": "cone",
+          "parent": "ddb6336d-c509-4952-8e36-a7511d321490",
+          "visible": true,
+          "position": [
+            0,
+            3.2199999999999998,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.7,
+            2.53,
+            1.7
+          ],
+          "color": "#8ac8a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a2d89c6c-c0e6-4652-9745-2248a7b0b5ee",
+          "name": "Pinheiro 3",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            5.6,
+            0,
+            -3.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "eb0f1057-16bf-4bfd-a2d7-4be697fe1f45",
+          "name": "Tronco",
+          "kind": "cylinder",
+          "parent": "a2d89c6c-c0e6-4652-9745-2248a7b0b5ee",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            1.3,
+            0.4
+          ],
+          "color": "#8b7160",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b1337029-643b-45d7-9928-9ff23fdab519",
+          "name": "Copa inferior",
+          "kind": "cone",
+          "parent": "a2d89c6c-c0e6-4652-9745-2248a7b0b5ee",
+          "visible": true,
+          "position": [
+            0,
+            2.4699999999999998,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            3.5100000000000002,
+            2.4
+          ],
+          "color": "#4b947e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "5482bf6f-16d7-49fb-8fa7-4ac84615eda4",
+          "name": "Copa superior",
+          "kind": "cone",
+          "parent": "a2d89c6c-c0e6-4652-9745-2248a7b0b5ee",
+          "visible": true,
+          "position": [
+            0,
+            3.6399999999999997,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.7,
+            2.8600000000000003,
+            1.7
+          ],
+          "color": "#8ac8a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "bf0def3d-6fab-498d-939a-f70572cac7e9",
+          "name": "Pinheiro 4",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            5.5,
+            0,
+            3.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "f194f946-0169-4137-919f-bd9b9f865b6f",
+          "name": "Tronco",
+          "kind": "cylinder",
+          "parent": "bf0def3d-6fab-498d-939a-f70572cac7e9",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            1.3,
+            0.4
+          ],
+          "color": "#8b7160",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2adcd63a-b527-4e0c-bf1a-ca144dda5f4c",
+          "name": "Copa inferior",
+          "kind": "cone",
+          "parent": "bf0def3d-6fab-498d-939a-f70572cac7e9",
+          "visible": true,
+          "position": [
+            0,
+            1.9,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            2.7,
+            2.4
+          ],
+          "color": "#67b395",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e3d822ad-751d-4030-8beb-0860bc983533",
+          "name": "Copa superior",
+          "kind": "cone",
+          "parent": "bf0def3d-6fab-498d-939a-f70572cac7e9",
+          "visible": true,
+          "position": [
+            0,
+            2.8,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.7,
+            2.2,
+            1.7
+          ],
+          "color": "#8ac8a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "dfafab7b-9e54-47a4-9428-a308853d0e85",
+          "name": "Pinheiro 5",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3.5,
+            0,
+            5.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "13f6c98d-2a34-4c4c-b6e3-714795a66fa6",
+          "name": "Tronco",
+          "kind": "cylinder",
+          "parent": "dfafab7b-9e54-47a4-9428-a308853d0e85",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            1.3,
+            0.4
+          ],
+          "color": "#8b7160",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2343efd8-e569-482b-a64f-f73e145400cb",
+          "name": "Copa inferior",
+          "kind": "cone",
+          "parent": "dfafab7b-9e54-47a4-9428-a308853d0e85",
+          "visible": true,
+          "position": [
+            0,
+            2.1849999999999996,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            3.105,
+            2.4
+          ],
+          "color": "#4b947e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d59bc31e-a616-4234-9789-faef9020a602",
+          "name": "Copa superior",
+          "kind": "cone",
+          "parent": "dfafab7b-9e54-47a4-9428-a308853d0e85",
+          "visible": true,
+          "position": [
+            0,
+            3.2199999999999998,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.7,
+            2.53,
+            1.7
+          ],
+          "color": "#8ac8a0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e819bf4f-5fe4-4f64-bf7e-eb11f41d17b9",
+          "name": "Cristal 1",
+          "kind": "star",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3.5,
+            0.6,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            15
+          ],
+          "scale": [
+            0.65,
+            0.9,
+            0.65
+          ],
+          "color": "#8ee8ee",
+          "roughness": 0.2,
+          "metalness": 0.4,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b57d0539-873f-465b-bb19-c2cef76f9dfe",
+          "name": "Cristal 2",
+          "kind": "star",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.5,
+            0.6,
+            1.5
+          ],
+          "rotation": [
+            0,
+            0,
+            15
+          ],
+          "scale": [
+            0.65,
+            0.9,
+            0.65
+          ],
+          "color": "#8ee8ee",
+          "roughness": 0.2,
+          "metalness": 0.4,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2fafce91-cffb-4445-8d00-1601204dc575",
+          "name": "Cristal 3",
+          "kind": "star",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -4.2,
+            0.6,
+            3.5
+          ],
+          "rotation": [
+            0,
+            0,
+            15
+          ],
+          "scale": [
+            0.65,
+            0.9,
+            0.65
+          ],
+          "color": "#8ee8ee",
+          "roughness": 0.2,
+          "metalness": 0.4,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d4fc35a4-b9ff-475c-b3b9-90a8bfc0366e",
+          "name": "Cristal 4",
+          "kind": "star",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.5,
+            0.6,
+            -4
+          ],
+          "rotation": [
+            0,
+            0,
+            15
+          ],
+          "scale": [
+            0.65,
+            0.9,
+            0.65
+          ],
+          "color": "#8ee8ee",
+          "roughness": 0.2,
+          "metalness": 0.4,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b71b1b2c-2d8f-42b1-8f0c-bc0c7a58eda7",
+          "name": "Portal · chegada",
+          "kind": "arch",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.9,
+            -5.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            3.6,
+            0.65
+          ],
+          "color": "#dbbd80",
+          "roughness": 0.6,
+          "metalness": 0.25,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "128c5ef4-bd3b-4d5c-acdb-44f1d3beb8a2",
+          "name": "Energia do portal",
+          "kind": "torus",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.8,
+            -5.7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.4,
+            2.8,
+            0.4
+          ],
+          "color": "#9befe0",
+          "roughness": 0.15,
+          "metalness": 0.6,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "finish",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c91cc5e5-1f4c-41bd-a67d-f241ab65d73d",
+          "name": "Pedra 1",
+          "kind": "rock",
+          "parent": null,
+          "visible": true,
+          "position": [
+            7,
+            0.3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.1,
+            0.75,
+            0.9
+          ],
+          "color": "#9baea6",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "51c7f9e2-25c6-46df-b67d-7c9c13e38835",
+          "name": "Pedra 2",
+          "kind": "rock",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.5365042813367156,
+            0.3,
+            6.5242736017705845
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.1,
+            0.75,
+            0.9
+          ],
+          "color": "#9baea6",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "677ad9ce-47c2-410a-99f4-3a33d4b25494",
+          "name": "Pedra 3",
+          "kind": "rock",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5.161756008788718,
+            0.3,
+            4.728242263858057
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.1,
+            0.75,
+            0.9
+          ],
+          "color": "#9baea6",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e73d5c39-4ad5-46fe-b9bd-7e127c4598ec",
+          "name": "Pedra 4",
+          "kind": "rock",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -6.277308914339031,
+            0.3,
+            -3.0976431030639646
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.1,
+            0.75,
+            0.9
+          ],
+          "color": "#9baea6",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "1103fa18-bd3a-4108-983a-8993cd70fe7e",
+          "name": "Pedra 5",
+          "kind": "rock",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.6124928840761248,
+            0.3,
+            -6.973152261850885
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.1,
+            0.75,
+            0.9
+          ],
+          "color": "#9baea6",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": {
+            "name": "Movimento",
+            "duration": 4,
+            "loop": true,
+            "autoplay": true,
+            "interpolation": "smooth",
+            "frames": [
+              {
+                "time": 0,
+                "position": [
+                  2.7,
+                  1.8,
+                  -2.5
+                ],
+                "rotation": [
+                  15,
+                  25,
+                  15
+                ],
+                "scale": [
+                  0.6,
+                  0.6,
+                  0.6
+                ]
+              },
+              {
+                "time": 2,
+                "position": [
+                  2.7,
+                  3.8,
+                  -2.5
+                ],
+                "rotation": [
+                  15,
+                  25,
+                  15
+                ],
+                "scale": [
+                  0.6,
+                  0.6,
+                  0.6
+                ]
+              },
+              {
+                "time": 4,
+                "position": [
+                  2.7,
+                  1.8,
+                  -2.5
+                ],
+                "rotation": [
+                  15,
+                  25,
+                  15
+                ],
+                "scale": [
+                  0.6,
+                  0.6,
+                  0.6
+                ]
+              }
+            ]
+          },
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "8271a595-3a4e-42a4-a883-0983f2e3a13c",
+          "name": "Relíquia · keyframes",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            1.8,
+            -2.5
+          ],
+          "rotation": [
+            15,
+            25,
+            15
+          ],
+          "scale": [
+            0.6,
+            0.6,
+            0.6
+          ],
+          "color": "#dfb67a",
+          "roughness": 0.6,
+          "metalness": 0.45,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": true,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e2c3d09f-12e6-4308-a3a0-1dd6041f74ff",
+          "name": "Explorador",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.2,
+            5.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.8,
+            1.8,
+            0.65
+          ],
+          "color": "#69a6ad",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 15,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 6,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "moveMultiplier": 1,
+    "sprintMultiplier": 1.5,
+    "jumpSpeed": 6.5,
+    "mouseSensitivity": 1.5,
+    "orbitSpeed": 1.5,
+    "panSpeed": 2.5,
+    "flySpeed": 12,
+    "editorLook": 1.5,
+    "zoomSpeed": 1.5,
+    "followSpeed": 8,
+    "fov": 78,
+    "physicsHz": 120,
+    "solverIterations": 15,
+    "background": "#344b60",
+    "gravity": -9.81,
+    "sky": {
+      "enabled": true,
+      "clouds": true,
+      "sunElevation": 44,
+      "sunAzimuth": 135
+    },
+    "gameCamera": "third",
+    "shadows": {
+      "enabled": true,
+      "filter": "soft",
+      "resolution": 1024,
+      "coverage": 35,
+      "intensity": 0.7,
+      "bias": -0.0003,
+      "normalBias": 0.02,
+      "softness": 2,
+      "sunPower": 2.5,
+      "ambientPower": 1.2,
+      "follow": true
+    },
+    "playerId": "e2c3d09f-12e6-4308-a3a0-1dd6041f74ff"
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "appId": "com.gameforge.studio",
+  "productName": "GameForge Studio",
+  "electronVersion": "44.4.3",
+  "directories": {
+    "app": "dist/desktop-app",
+    "output": "dist/windows",
+    "buildResources": "packaging"
+  },
+  "files": [
+    "dist/**/*",
+    "desktop/**/*",
+    "package.json",
+    "!node_modules{,/**/*}",
+    "!**/node_modules{,/**/*}"
+  ],
+  "asar": true,
+  "npmRebuild": false,
+  "compression": "maximum",
+  "electronLanguages": ["en-US", "pt-BR"],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "packaging/gameforge.ico",
+    "artifactName": "GameForge-Studio-${version}-Windows-x64-Setup.${ext}",
+    "signExecutable": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "GameForge Studio",
+    "installerLanguages": ["pt_BR"],
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false,
+    "installerIcon": "packaging/gameforge.ico",
+    "uninstallerIcon": "packaging/gameforge.ico",
+    "include": "packaging/windows-installer.nsh"
+  },
+  "extraResources": [
+    {
+      "from": "THIRD-PARTY-NOTICES.txt",
+      "to": "THIRD-PARTY-NOTICES.txt"
+    },
+    {
+      "from": "examples/portas-hotel/Hotel-Portas.gameforge.json",
+      "to": "Projetos/Portas-Hotel-100-Portas.gameforge.json"
+    },
+    {
+      "from": "examples/laboratorio06/Laboratorio-0.6.gameforge.json",
+      "to": "Projetos/Laboratorio-0.6.gameforge.json"
+    },
+    {
+      "from": "examples/bosque-vivo/Bosque-Vivo-v0.5.gameforge.json",
+      "to": "Projetos/Bosque-Vivo-v0.5.gameforge.json"
+    },
+    {
+      "from": "examples/studio08",
+      "to": "Projetos/Studio-0.8"
+    },
+    {
+      "from": "packaging/LEIA-ME-WINDOWS.txt",
+      "to": "LEIA-ME-WINDOWS.txt"
+    }
+  ],
+  "fileAssociations": [
+    {
+      "ext": "gameforge",
+      "name": "Projeto GameForge",
+      "description": "Projeto editável do GameForge Studio",
+      "role": "Editor",
+      "icon": "packaging/gameforge.ico"
+    }
+  ]
+}

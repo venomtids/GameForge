@@ -1,0 +1,4047 @@
+{
+  "format": "gameforge",
+  "version": 4,
+  "name": "Ateliê 0.4 · Design, Lua e física",
+  "activeScene": "f6e24138-7f11-4baf-903a-c40535950e13",
+  "settings": {
+    "moveMultiplier": 1,
+    "sprintMultiplier": 1.5,
+    "jumpSpeed": 6.5,
+    "mouseSensitivity": 1.5,
+    "orbitSpeed": 1.5,
+    "panSpeed": 1.5,
+    "zoomSpeed": 1.5,
+    "followSpeed": 8,
+    "fov": 78,
+    "physicsHz": 120,
+    "solverIterations": 15,
+    "background": "#202a30",
+    "gravity": -9.81,
+    "gameCamera": "first"
+  },
+  "scenes": [
+    {
+      "id": "f6e24138-7f11-4baf-903a-c40535950e13",
+      "name": "Ateliê interativo",
+      "nodes": [
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "name": "Terreno · 8 × 8 blocos",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "49a15e54-c18e-4d6a-b686-8b0c21c88881",
+          "name": "Solo 1,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            1,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            2,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "edd2c497-c49d-46db-a9e2-b0ae29a9078d",
+          "name": "Solo 1,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            1,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            2,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "0ce17c22-edaf-4649-842e-3cbae4a6e766",
+          "name": "Solo 1,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "71a73fb3-86d9-4db0-8390-48193656c284",
+          "name": "Solo 1,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d79b8b86-172b-4e16-95f9-c7298065c083",
+          "name": "Solo 1,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a605b1f5-ff28-4033-b0bf-7d51bf425371",
+          "name": "Solo 1,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "82b5e052-321f-4d4b-87eb-0080b67b753b",
+          "name": "Solo 1,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "78a9f6c1-4e6b-4e9d-926f-4360deede003",
+          "name": "Solo 1,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -7,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "90e1f0f3-2c1e-4b88-b21d-57bbff9cd8d6",
+          "name": "Solo 2,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.75,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1.5,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e45573a3-f364-4cc0-9a59-d04828195572",
+          "name": "Solo 2,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.75,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1.5,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d35db49b-8bd9-431f-b950-feb7ed5210b5",
+          "name": "Solo 2,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b0358082-45f6-4819-a269-900200857ca8",
+          "name": "Solo 2,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "4e82d072-ec51-4dca-b4ab-263f8d81a7c8",
+          "name": "Solo 2,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "38010903-5537-4f0e-98b8-990da4e8a42e",
+          "name": "Solo 2,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "96bb2e44-6d7b-4cd8-8edc-affd41aa8210",
+          "name": "Solo 2,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "7e6d0ac3-5190-4697-89b0-011b21c6150c",
+          "name": "Solo 2,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -5,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "939e12b3-e4bf-449e-bbdc-a697c7b5f5ef",
+          "name": "Solo 3,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e17bfc95-d4ed-48aa-80b0-3daed0f29fd2",
+          "name": "Solo 3,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b5359eb4-31d8-4a03-8455-977a7423d1cf",
+          "name": "Solo 3,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "21482120-9032-4bdf-8e27-5a3bf1806278",
+          "name": "Solo 3,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "18beeece-28e9-4181-a210-3543de2d23aa",
+          "name": "Solo 3,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "4f47fe0e-85db-40ec-a9fc-43fe31de6ad9",
+          "name": "Solo 3,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "0b1e5086-7ffc-4219-89a9-5af8805aa9bd",
+          "name": "Solo 3,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "3a154200-82e9-4438-ac07-5dcb1b91c628",
+          "name": "Solo 3,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -3,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "6c41e2ab-01fc-4dd9-a835-4392f78d6660",
+          "name": "Solo 4,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e57c17f3-c615-4b10-b74d-82650c8865bd",
+          "name": "Solo 4,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c4f68587-43e5-414a-b47d-948051ceb2db",
+          "name": "Solo 4,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "282f8424-11b2-4bad-b014-9abe79157613",
+          "name": "Solo 4,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "45a028f5-6d2e-43a3-8a04-8a58d73cef1b",
+          "name": "Solo 4,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "adddd04a-34fa-490c-a0ef-7c6f3abcd817",
+          "name": "Solo 4,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a95e48fa-4b30-4075-9b2d-efd2ea4eb1d9",
+          "name": "Solo 4,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "dc036647-eab9-49de-9986-63c9a1494bfc",
+          "name": "Solo 4,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            -1,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "8018e92d-3f81-410c-b0bd-018dc3c063ee",
+          "name": "Solo 5,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9518a1fa-8963-4f32-8e76-ae31a582b815",
+          "name": "Solo 5,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a92a8582-d6db-4c9f-a38a-4e38d7f98c57",
+          "name": "Solo 5,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c41e34da-d7fd-4025-8954-235b86951b86",
+          "name": "Solo 5,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9f6d0cca-4467-4090-96aa-0f8791e99d8c",
+          "name": "Solo 5,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e70913e8-7de4-42be-acb3-484a00a97bb8",
+          "name": "Solo 5,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d09de38c-bd46-4929-acb5-3a7fba602265",
+          "name": "Solo 5,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "72cd1a9f-39c0-4a40-bab4-3b2b6da23996",
+          "name": "Solo 5,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            1,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#d8be84",
+          "roughness": 1,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "525eadfa-fedc-4e90-9924-0e6127531d29",
+          "name": "Solo 6,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d0427487-6093-4af3-b1e0-845d8f8c5366",
+          "name": "Solo 6,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "672ab757-66df-44bc-bdcc-3afa7cd6dddb",
+          "name": "Solo 6,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "049776b5-7af2-4eb7-bbb1-f58593b4d946",
+          "name": "Solo 6,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cf26fe45-b3b0-418f-adb5-691c03a1d3ec",
+          "name": "Solo 6,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2da13f5e-fcbf-4bbf-b504-b16d240ec2b2",
+          "name": "Solo 6,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b7cb6f33-c12a-4dfb-8fb1-87edb6c20654",
+          "name": "Solo 6,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b6e59680-dd77-4492-963c-04cef1144e6c",
+          "name": "Solo 6,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            3,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e16d97ec-b469-4035-b1e6-be075d12dd76",
+          "name": "Solo 7,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "24449d01-9262-4c32-89a5-320152b6bcbe",
+          "name": "Solo 7,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "02cfd6e3-f8bc-4141-b216-569ed1796880",
+          "name": "Solo 7,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "d9943986-1cd8-414f-be08-0209a8b7d4c5",
+          "name": "Solo 7,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "8bc00585-ad98-43fe-af5a-5d91659bbb84",
+          "name": "Solo 7,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "71e534ee-28be-4891-a0b3-933e8c73a826",
+          "name": "Solo 7,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c06721e6-2976-49c4-9f61-a1af6f1cf76e",
+          "name": "Solo 7,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "3661fc37-077a-426a-86e2-a6147a8a7328",
+          "name": "Solo 7,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            5,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "bcd2fbc9-71b0-497e-bbd1-b33edba62a02",
+          "name": "Solo 8,1",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            -7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "11ca2359-a727-47de-808f-d9b94f009256",
+          "name": "Solo 8,2",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "7951e61f-1735-4506-8b77-aebffd3045d7",
+          "name": "Solo 8,3",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "119c7929-0834-4a2f-87d0-d3e8c41b91f3",
+          "name": "Solo 8,4",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            -1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cfd1a75c-44a1-4f19-9b79-3f71ed11366f",
+          "name": "Solo 8,5",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "49700f40-dd58-497a-8d1f-b68e2e82638d",
+          "name": "Solo 8,6",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cc5350a6-132b-4ea7-909a-42ad960dbbb4",
+          "name": "Solo 8,7",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": true,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "39d234d8-9b96-40f9-9d1e-66a3ba92d6ca",
+          "name": "Solo 8,8",
+          "kind": "box",
+          "parent": "40c70614-eabc-4c2b-86be-a3e95bb3fddb",
+          "visible": true,
+          "position": [
+            7,
+            0.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            1,
+            2
+          ],
+          "color": "#628c61",
+          "roughness": 0.95,
+          "metalness": 0,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "name": "Casa",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.8,
+            1,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.7,
+            0.7,
+            0.7
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "fa24c87c-6c7b-40cc-a502-e1aff1b5f3b9",
+          "name": "Casa · 1",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            0,
+            0.15,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6,
+            0.3,
+            6
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a74f2704-6256-4768-875e-e6727848396b",
+          "name": "Casa · 2",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            0,
+            1.7,
+            -2.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6,
+            3,
+            0.3
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2784a4b7-e8f2-4294-841a-b74e45e32e21",
+          "name": "Casa · 3",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            -2.8,
+            1.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            3,
+            6
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c06f6ccf-f8d6-4dc7-bacd-1eede688475c",
+          "name": "Casa · 4",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            2.8,
+            1.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            3,
+            6
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a90172f0-7aea-4f4e-96ba-fa4e864386b4",
+          "name": "Casa · 5",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            -2,
+            1.7,
+            2.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            3,
+            0.3
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "15ca9e99-25b4-4a34-a930-ae73a64028ed",
+          "name": "Casa · 6",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            2,
+            1.7,
+            2.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            3,
+            0.3
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "114202eb-21de-4a0c-a9d1-1c8721bb2e2f",
+          "name": "Casa · 7",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            0,
+            3,
+            2.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            0.4,
+            0.3
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "bf31f592-52dc-45f6-978e-7d44ef9825a2",
+          "name": "Casa · 8",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            -1.5,
+            3.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            25
+          ],
+          "scale": [
+            3.5,
+            0.3,
+            6.5
+          ],
+          "color": "#a56953",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "3801016b-c963-48b9-af08-1958a04b207f",
+          "name": "Casa · 9",
+          "kind": "box",
+          "parent": "1eec6e5b-2893-440d-b736-50407bbf83d1",
+          "visible": true,
+          "position": [
+            1.5,
+            3.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            -25
+          ],
+          "scale": [
+            3.5,
+            0.3,
+            6.5
+          ],
+          "color": "#a56953",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "5f579f2b-0074-475e-9221-5e1aad5c9aa5",
+          "name": "Árvore",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5,
+            1,
+            2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "732d4249-3c0a-406a-a67d-1ba236bdf0af",
+          "name": "Árvore · 1",
+          "kind": "cylinder",
+          "parent": "5f579f2b-0074-475e-9221-5e1aad5c9aa5",
+          "visible": true,
+          "position": [
+            0,
+            1.2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.45,
+            2.4,
+            0.45
+          ],
+          "color": "#98704e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2f515144-6441-401f-96e4-d56401356c37",
+          "name": "Árvore · 2",
+          "kind": "sphere",
+          "parent": "5f579f2b-0074-475e-9221-5e1aad5c9aa5",
+          "visible": true,
+          "position": [
+            0,
+            3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            3,
+            3
+          ],
+          "color": "#538763",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "4a105ad0-21a2-4f48-b3a4-47f44b6b82a0",
+          "name": "Pinheiro",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -5,
+            2.2,
+            -5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cdc2f6b5-8c6d-4b57-a5cc-d05fda403af4",
+          "name": "Pinheiro · 1",
+          "kind": "cylinder",
+          "parent": "4a105ad0-21a2-4f48-b3a4-47f44b6b82a0",
+          "visible": true,
+          "position": [
+            0,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.4,
+            2,
+            0.4
+          ],
+          "color": "#98704e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2be95e74-a03d-4b5a-a0fe-c0191499442b",
+          "name": "Pinheiro · 2",
+          "kind": "cone",
+          "parent": "4a105ad0-21a2-4f48-b3a4-47f44b6b82a0",
+          "visible": true,
+          "position": [
+            0,
+            1.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.8,
+            2,
+            2.8
+          ],
+          "color": "#538763",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ba2a9df4-e9d4-4491-9cda-5177ec044604",
+          "name": "Pinheiro · 3",
+          "kind": "cone",
+          "parent": "4a105ad0-21a2-4f48-b3a4-47f44b6b82a0",
+          "visible": true,
+          "position": [
+            0,
+            2.5,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.1999999999999997,
+            2,
+            2.1999999999999997
+          ],
+          "color": "#538763",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "73122e40-fc61-493a-80f6-e06a243c58a1",
+          "name": "Pinheiro · 4",
+          "kind": "cone",
+          "parent": "4a105ad0-21a2-4f48-b3a4-47f44b6b82a0",
+          "visible": true,
+          "position": [
+            0,
+            3.3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.5999999999999999,
+            2,
+            1.5999999999999999
+          ],
+          "color": "#538763",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "828c9fff-239b-4512-aa9a-9ac95c8b8ae1",
+          "name": "Banco",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            4,
+            1,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.8,
+            0.8,
+            0.8
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b4974780-7439-4660-9875-cdaed22de8e7",
+          "name": "Banco · 1",
+          "kind": "box",
+          "parent": "828c9fff-239b-4512-aa9a-9ac95c8b8ae1",
+          "visible": true,
+          "position": [
+            0,
+            0.65,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.2,
+            0.8
+          ],
+          "color": "#98704e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a92d6f38-f8a3-45df-a338-7cba669b7a3e",
+          "name": "Banco · 2",
+          "kind": "box",
+          "parent": "828c9fff-239b-4512-aa9a-9ac95c8b8ae1",
+          "visible": true,
+          "position": [
+            0,
+            1.2,
+            -0.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.9,
+            0.15
+          ],
+          "color": "#98704e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "601f9888-0a06-45dd-8ce6-52c969d625fd",
+          "name": "Banco · 3",
+          "kind": "box",
+          "parent": "828c9fff-239b-4512-aa9a-9ac95c8b8ae1",
+          "visible": true,
+          "position": [
+            -1,
+            0.3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.2,
+            0.6,
+            0.7
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "2374f350-5a41-46d1-8ba2-06c8e1f680d6",
+          "name": "Banco · 4",
+          "kind": "box",
+          "parent": "828c9fff-239b-4512-aa9a-9ac95c8b8ae1",
+          "visible": true,
+          "position": [
+            1,
+            0.3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.2,
+            0.6,
+            0.7
+          ],
+          "color": "#b5c6c4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "name": "Flor",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2,
+            1,
+            3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "1df20baf-345e-4a15-88e9-b4d6937cc56f",
+          "name": "Flor · 1",
+          "kind": "cylinder",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            0,
+            0.5,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.08,
+            1,
+            0.08
+          ],
+          "color": "#538763",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "15ebb4f8-884a-478a-8101-a932f44887df",
+          "name": "Flor · 2",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            0.25,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "99cd4387-5699-4358-9ad1-11c2e6fc2f4b",
+          "name": "Flor · 3",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            0.13507557646703494,
+            1,
+            0.21036774620197413
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "948dcf7e-f48f-47d3-b13d-5f7be47c239d",
+          "name": "Flor · 4",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            -0.1040367091367856,
+            1,
+            0.22732435670642043
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b7dd26a4-e869-4c39-90bd-bd939987bdf3",
+          "name": "Flor · 5",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            -0.24749812415011135,
+            1,
+            0.0352800020149668
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "b220d4d9-0512-42e7-b1e2-9f085628cac7",
+          "name": "Flor · 6",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            -0.16341090521590299,
+            1,
+            -0.18920062382698205
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "22a09ead-1f24-45a1-af43-eabdaf24d329",
+          "name": "Flor · 7",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            0.07091554636580656,
+            1,
+            -0.2397310686657846
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.35,
+            0.12,
+            0.35
+          ],
+          "color": "#e79ba4",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "22e03717-f6fd-4964-a090-f5b07508ddea",
+          "name": "Flor · 8",
+          "kind": "sphere",
+          "parent": "c34b6387-68fc-43ab-a84b-0cf7d27dc306",
+          "visible": true,
+          "position": [
+            0,
+            1.04,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.2,
+            0.15,
+            0.2
+          ],
+          "color": "#f8d284",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "bbda9316-2b3b-4192-82e4-e80d4bae52fb",
+          "name": "Barril",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            6,
+            1,
+            1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "f15a240c-0f1a-428f-a524-e630eeebc699",
+          "name": "Barril · 1",
+          "kind": "cylinder",
+          "parent": "bbda9316-2b3b-4192-82e4-e80d4bae52fb",
+          "visible": true,
+          "position": [
+            0,
+            0.7,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1.4,
+            1
+          ],
+          "color": "#98704e",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 5,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a9cca766-4ebe-496f-b87a-ee948eea5dfa",
+          "name": "Bola elástica",
+          "kind": "group",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#6dd6b0",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ac394af2-89ea-4eb9-bdaa-c2dcb736d7d0",
+          "name": "Bola elástica · 1",
+          "kind": "sphere",
+          "parent": "a9cca766-4ebe-496f-b87a-ee948eea5dfa",
+          "visible": true,
+          "position": [
+            0,
+            3,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#e78886",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 1,
+          "restitution": 0.9,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "93112c42-b985-4c06-8e39-d0011c33fbe3",
+          "name": "Jogador",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            2.2,
+            5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.6,
+            1.7,
+            0.6
+          ],
+          "color": "#eabf82",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 7,
+          "amplitude": 0.4
+        },
+        {
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "lua",
+            "source": "-- Estado customizado em self persiste durante a execução.\nfunction start()\n  self.baseY = self.y\n  self.alternate = false\n  engine.log(\"Ateliê: WASD, Shift, Espaço; E muda a cor da escultura.\")\nend\n\nfunction update(dt, time, input)\n  self.ry = self.ry + 50 * dt\n  self.y = self.baseY + math.sin(time * 2) * 0.25\n  if input.pressed.e then\n    self.alternate = not self.alternate\n    self.color = self.alternate and \"#edac80\" or \"#79d8bf\"\n    engine.log(\"Cor alterada!\")\n  end\nend",
+            "enabled": true
+          },
+          "id": "e685f376-d864-4efe-b550-6f58c63b5eb2",
+          "name": "Escultura Lua · E muda a cor",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            2.1,
+            -3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#79d8bf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ]
+}

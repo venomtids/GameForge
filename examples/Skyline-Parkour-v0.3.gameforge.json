@@ -1,0 +1,2091 @@
+{
+  "format": "gameforge",
+  "version": 3,
+  "name": "Skyline • Parkour FPS",
+  "activeScene": "skyline",
+  "scenes": [
+    {
+      "id": "skyline",
+      "name": "Skyline · 20 plataformas",
+      "nodes": [
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-0",
+          "name": "01 · Base segura",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.45,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            8,
+            0.9,
+            8
+          ],
+          "color": "#527e7f",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "66b38b5a-6da7-40e0-b839-e7eab15dd615",
+          "name": "Borda 1",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0.018,
+            -3.9
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            7.88,
+            0.035,
+            0.13
+          ],
+          "color": "#80edd3",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-1",
+          "name": "02 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.2,
+            -6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.9,
+            3
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c4023ff2-0f15-4a2e-a819-5f6c47f3d112",
+          "name": "Borda 2",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            0.268,
+            -7.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.88,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-2",
+          "name": "03 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.4,
+            0.2,
+            -10.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.8,
+            0.9,
+            2.8
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "c8971b93-0589-483a-b605-497528bc9285",
+          "name": "Borda 3",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            1.4,
+            0.668,
+            -11.700000000000001
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6799999999999997,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-3",
+          "name": "04 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            0.6000000000000001,
+            -14.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.8,
+            0.9,
+            2.8
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "6b6461c9-0ff3-47c6-86be-a5dc00db3e65",
+          "name": "Borda 4",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            1.068,
+            -15.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6799999999999997,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-3",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -1,
+            2.2,
+            -14.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-4",
+          "name": "05 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            1,
+            -18.6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.9,
+            3
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9474cf32-b01f-4609-82c2-946dbf63a282",
+          "name": "Borda 5",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            1.468,
+            -20
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.88,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-5",
+          "name": "06 · Base segura",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1,
+            -22.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.5,
+            0.9,
+            4.5
+          ],
+          "color": "#527e7f",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "0d2ab771-3209-4960-8687-faabcc8821eb",
+          "name": "Borda 6",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.468,
+            -24.95
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.38,
+            0.035,
+            0.13
+          ],
+          "color": "#80edd3",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-5",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            2.5999999999999996,
+            -22.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "checkpoint-5",
+          "name": "Checkpoint 1",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.4849999999999999,
+            -22.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.7,
+            0.06,
+            2.7
+          ],
+          "color": "#77dabc",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "checkpoint",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-6",
+          "name": "07 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.6,
+            1.25,
+            -27
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6,
+            0.9,
+            2.6
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "48762757-3ed9-4410-8239-18bf1594c4e4",
+          "name": "Borda 7",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.6,
+            1.718,
+            -28.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.48,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-7",
+          "name": "08 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            6.5,
+            1.5999999999999999,
+            -31
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6,
+            0.9,
+            2.6
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "3604c0cb-a436-4dfe-9298-bdca3c12b4c0",
+          "name": "Borda 8",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            6.5,
+            2.0679999999999996,
+            -32.199999999999996
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.48,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-7",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            6.5,
+            3.1999999999999997,
+            -31
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-8",
+          "name": "09 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.8,
+            1.95,
+            -35.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6,
+            0.9,
+            2.6
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "81704974-a03a-411e-a49a-3e7928daa34c",
+          "name": "Borda 9",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3.8,
+            2.4179999999999997,
+            -36.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.48,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-9",
+          "name": "10 · Base segura",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            1.95,
+            -39.3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.5,
+            0.9,
+            4.5
+          ],
+          "color": "#527e7f",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "999e5e43-a72b-4bb4-a5f6-d5c7ca8118f5",
+          "name": "Borda 10",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            2.4179999999999997,
+            -41.449999999999996
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.38,
+            0.035,
+            0.13
+          ],
+          "color": "#80edd3",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-9",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            3.55,
+            -39.3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "checkpoint-9",
+          "name": "Checkpoint 2",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            2.435,
+            -38.699999999999996
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.7,
+            0.06,
+            2.7
+          ],
+          "color": "#77dabc",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "checkpoint",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-10",
+          "name": "11 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            2.1999999999999997,
+            -44.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.4,
+            0.9,
+            4.3
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "030b6cad-50fd-4154-907c-60dfbad3ca02",
+          "name": "Borda 11",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0.5,
+            2.6679999999999997,
+            -46.449999999999996
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1.2799999999999998,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-11",
+          "name": "12 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            2.4499999999999997,
+            -49
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.9,
+            3
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "f3a82a80-bcf8-4c5d-a72d-49aa918279a4",
+          "name": "Borda 12",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            2.9179999999999997,
+            -50.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.38,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-12",
+          "name": "13 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -6.5,
+            2.8,
+            -53.1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.9,
+            2.5
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "5a766bab-92a9-4984-892d-8941be9c201b",
+          "name": "Borda 13",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -6.5,
+            3.268,
+            -54.25
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.38,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-12",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -6.5,
+            4.4,
+            -53.1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-13",
+          "name": "14 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3.7,
+            3.15,
+            -57.1
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.6,
+            0.9,
+            2.6
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "9d568249-fb0f-465f-ba62-078efec2ae92",
+          "name": "Borda 14",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3.7,
+            3.618,
+            -58.3
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.48,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-14",
+          "name": "15 · Base segura",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            3.15,
+            -61.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            5,
+            0.9,
+            5
+          ],
+          "color": "#527e7f",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a9b6a3a2-8ba9-424f-ad9f-c2f7c86a438b",
+          "name": "Borda 15",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            3.618,
+            -63.9
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.88,
+            0.035,
+            0.13
+          ],
+          "color": "#80edd3",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-14",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            4.75,
+            -61.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "checkpoint-14",
+          "name": "Checkpoint 3",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            3.6350000000000002,
+            -60.9
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.7,
+            0.06,
+            2.7
+          ],
+          "color": "#77dabc",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "checkpoint",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-15",
+          "name": "16 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            3.75,
+            -66
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.9,
+            2.5
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "23d89d9c-54e5-4e2e-a277-f4996b9fb1fb",
+          "name": "Borda 16",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            4.218,
+            -67.15
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.38,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-16",
+          "name": "17 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            4.35,
+            -70.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.9,
+            2.5
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "cb71dc5c-b3b1-48da-840c-d90ac1d0f522",
+          "name": "Borda 17",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2.7,
+            4.818,
+            -71.35000000000001
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.38,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-17",
+          "name": "18 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            4.95,
+            -74.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.5,
+            0.9,
+            2.5
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "ba1defd6-1a16-4db2-9620-e5193d6dbc34",
+          "name": "Borda 18",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            5.418,
+            -75.55000000000001
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.38,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-17",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            6.550000000000001,
+            -74.4
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-18",
+          "name": "19 · Plataforma",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.7,
+            5.55,
+            -78.6
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.9,
+            3
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "91052ef4-341c-4eaa-a45f-085801f32734",
+          "name": "Borda 19",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2.7,
+            6.018,
+            -80
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2.88,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "platform-19",
+          "name": "20 · Chegada",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            5.55,
+            -83.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            6,
+            0.9,
+            6
+          ],
+          "color": "#c7c6b2",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": true,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a7302d79-9fc3-438a-a7a0-12964fbe9a79",
+          "name": "Borda 20",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            6.018,
+            -86.10000000000001
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            5.88,
+            0.035,
+            0.13
+          ],
+          "color": "#ee9878",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "crystal-19",
+          "name": "Cristal",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            7.15,
+            -83.2
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.48,
+            0.72,
+            0.48
+          ],
+          "color": "#89eacf",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "collectible",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "1cc28638-4889-41ba-977a-9ce35b0fab99",
+          "name": "Portal • Coluna",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2,
+            7.7,
+            -84.7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            3.4,
+            0.3
+          ],
+          "color": "#f2b77a",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "dcafdbaf-07d5-4b7c-9bbb-346d5e174589",
+          "name": "Portal • Coluna",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2,
+            7.7,
+            -84.7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.3,
+            3.4,
+            0.3
+          ],
+          "color": "#f2b77a",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "543f61c3-f580-4485-b971-cb4a83ef53f0",
+          "name": "Portal • Travessa",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            9.3,
+            -84.7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            4.3,
+            0.3,
+            0.3
+          ],
+          "color": "#f2b77a",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e6570437-52e4-4f7e-a44f-3483cfaa0cde",
+          "name": "Final do percurso",
+          "kind": "cylinder",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            6.04,
+            -84.5
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3.5,
+            0.06,
+            2.7
+          ],
+          "color": "#f2b77a",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "finish",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "parkour-player",
+          "name": "Jogador",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.1,
+            1.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.6,
+            1.7,
+            0.6
+          ],
+          "color": "#eabf82",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 5.4,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "background": "#526c7e",
+    "gravity": -9.81,
+    "gameCamera": "first"
+  }
+}
