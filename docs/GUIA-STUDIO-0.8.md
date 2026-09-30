@@ -88,7 +88,7 @@ Ao restaurar uma versão, o Studio cria **“Antes da restauração”** com a e
 
 A biblioteca tem limites: 12 recentes, 5 versões por projeto/25 no total; entradas mais antigas são removidas para conter uso de disco. Remover um recente também remove suas versões locais, mas não apaga arquivos de projeto salvos fora da biblioteca nem a cena aberta.
 
-No navegador os dados pertencem àquele perfil/origem; limpar o site os apaga. Se o localStorage pequeno estiver cheio, procure a última versão em **Projetos** (IndexedDB). No Electron há também `autosave.gameforge.json` em `%APPDATA%\GameForge Studio` e cópia `.bak` no fechamento. **Use arquivos externos para backup durável.**
+No navegador os dados pertencem àquele perfil/origem; limpar o site os apaga. Se o localStorage pequeno estiver cheio, procure a última versão em **Projetos** (IndexedDB). No Electron há também `autosave.gameforge.json` no diretório de dados do app (normalmente `%APPDATA%\gameforge-studio`) e cópia `.bak` no fechamento. **Use arquivos externos para backup durável.**
 
 ## 7. Atalhos principais
 

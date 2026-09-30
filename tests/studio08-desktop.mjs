@@ -126,10 +126,18 @@ try {
   await expect(page.locator(".project-identity strong")).toHaveText(
     "Motion Lab",
   );
+  // Windows CI may clamp the window to a small virtual desktop. Exercise its responsive drawers.
+  const sceneNav = page.getByRole("button", { name: "Cena", exact: true });
+  if (await sceneNav.isVisible()) await sceneNav.click();
   await page
     .locator(".tree-row")
     .filter({ hasText: "Plataforma móvel" })
     .click();
+  const viewportNav = page.getByRole("button", {
+    name: "Viewport",
+    exact: true,
+  });
+  if (await viewportNav.isVisible()) await viewportNav.click();
   await page.getByRole("button", { name: "Animação", exact: true }).click();
   await expect(page.locator(".animation-panel")).toBeVisible();
   await page.screenshot({ path: "test-results/studio08-windows-desktop.png" });
@@ -139,6 +147,33 @@ try {
   await page.keyboard.press("F8");
   await expect(page.locator(".play-border")).not.toBeVisible();
   await expect(page.locator(".animation-panel")).toBeVisible();
+  stage = "native lazy script editor and production worker";
+  await page.getByRole("button", { name: "Scripts", exact: true }).click();
+  await page
+    .getByLabel("Linguagem do script", { exact: true })
+    .selectOption("javascript");
+  await page
+    .getByRole("textbox", { name: "Código do script", exact: true })
+    .fill('function start(){engine.log("native worker ok");}');
+  await page
+    .getByRole("button", { name: "Aplicar script", exact: true })
+    .click();
+  await page.keyboard.press("F5");
+  await page
+    .getByRole("button", { name: "Permitir e executar", exact: true })
+    .click();
+  await expect(page.locator(".play-border")).toBeVisible();
+  await page.waitForTimeout(2000);
+  await page.keyboard.press("F8");
+  await page.getByRole("button", { name: /^Console/ }).click();
+  await expect(page.locator(".console-content")).toContainText(
+    "native worker ok",
+  );
+  await page.getByRole("button", { name: "Animação", exact: true }).click();
+  console.log(
+    "PASS native lazy-loaded CodeMirror and production Worker execution",
+  );
+  stage = "shutdown flush";
   await page.waitForFunction(() =>
     document
       .querySelector(".status-bar")

@@ -32,7 +32,8 @@
     "examples:studio08": "tsx scripts/generate-studio08.ts",
     "build:player": "vite build --config vite.player.config.ts",
     "predev": "npm run build:player",
-    "test:desktop:studio08": "node tests/studio08-desktop.mjs"
+    "test:desktop:studio08": "node tests/studio08-desktop.mjs",
+    "test:export:studio08": "node tests/studio08-export.mjs"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",
