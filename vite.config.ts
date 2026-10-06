@@ -26,5 +26,11 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: [".e2b.app", "localhost"],
   },
-  build: { chunkSizeWarningLimit: 1200 },
+  build: {
+    chunkSizeWarningLimit: 1200,
+    rollupOptions: {
+      /* Studio + o jogo de demonstração GORE FORGE. */
+      input: { studio: "index.html", goreforge: "goreforge.html" },
+    },
+  },
 });

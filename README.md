@@ -14,6 +14,21 @@ Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, co
 
 Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md). Física atual e escopo: [docs/GELATINA-0.8.3.md](docs/GELATINA-0.8.3.md). Histórico: [0.8.2](docs/GELATINA-0.8.2.md) e [mapa/base 0.8.1](docs/GELATINA-0.8.1.md).
 
+## GORE FORGE · jogo de demonstração completo
+
+`goreforge.html` traz um sandbox de física em primeira pessoa no estilo **GoreBox**, feito
+inteiramente com a engine atual (gelatina, ragdolls, fratura, explosões, partículas, decalques)
+e uma UI 2D dirigida por dados. Serve para provar a física e o desenho da engine no limite:
+pátio com 74 corpos dinâmicos, 12 rigs elásticos, gore com desmembramento real e um menu que
+edita tema, HUD e presets de gore ao vivo.
+
+```bash
+npm run dev             # abra http://localhost:5173/goreforge.html
+npm run test:goreforge  # valida física, gelatina, fratura, tiro e tema no navegador
+```
+
+Estrutura de arquivos, decisões e como estender: [docs/GOREFORGE.md](docs/GOREFORGE.md).
+
 ## Correção dos braços e física volumétrica · 0.8.3
 
 O personagem de gelatina agora dobra os cotovelos e ergue os braços **para a frente** ao andar/saltar. A primeira pessoa ganhou balanço contínuo, squash controlado e mãos em camada com profundidade própria, evitando o “flic” de braços/antebraços.
@@ -112,6 +127,8 @@ npm run typecheck
 npm run build               # player single-file + editor de produção
 npm run preview             # produção local
 npm run test:jelly           # Toolbox, personagem/mapa, câmeras e HTML offline
+npm run test:goreforge       # GORE FORGE: física, gelatina, destruição, HUD e tema no navegador
+npm run shots:goreforge      # capturas do GORE FORGE em test-results/
 npm run test:studio08        # fluxos do Studio; servidor dev precisa estar aberto
 npm run test:export:studio08 # downloads + jogo file:// offline, Unicode e toque
 npm run test:update          # regressões/scripts; servidor dev precisa estar aberto
