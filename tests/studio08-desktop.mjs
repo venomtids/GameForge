@@ -46,7 +46,14 @@ try {
   stage = "native save/open/backup";
   const file = path.join(temporary, "native.gameforge.json");
   await app.evaluate(({ dialog }, file) => {
-    dialog.showSaveDialog = async () => ({ canceled: false, filePath: file });
+    globalThis.gameforgeSaveDialogCalls = [];
+    dialog.showSaveDialog = async (_window, options) => {
+      globalThis.gameforgeSaveDialogCalls.push({
+        suggested: options?.defaultPath,
+        destination: file,
+      });
+      return { canceled: false, filePath: file };
+    };
   }, file);
   await page.getByRole("button", { name: /^Salvar/ }).click();
   await expect(page.locator(".toast")).toContainText("Projeto salvo em disco");
@@ -62,6 +69,17 @@ try {
   );
   await page.getByRole("button", { name: "Concluir", exact: true }).click();
   await page.getByRole("button", { name: /^Salvar/ }).click();
+  await expect
+    .poll(
+      async () =>
+        app.evaluate(() => globalThis.gameforgeSaveDialogCalls.length),
+      {
+        timeout: 15000,
+        message:
+          "The renderer must invoke the native save dialog again after renaming",
+      },
+    )
+    .toBe(2);
   await expect
     .poll(async () => JSON.parse(await fs.readFile(file, "utf8")).name, {
       timeout: 15000,
@@ -277,8 +295,11 @@ try {
         focus: document.activeElement?.outerHTML.slice(0, 350),
       }))
       .catch(() => ({}));
+    const dialogs = await app
+      .evaluate(() => globalThis.gameforgeSaveDialogCalls ?? [])
+      .catch(() => []);
     console.error(
-      `::error title=Native renderer state::${JSON.stringify(state)}`,
+      `::error title=Native renderer state::${JSON.stringify({ ...state, dialogs })}`,
     );
   }
   await nativePage

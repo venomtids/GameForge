@@ -365,8 +365,10 @@ export default function Editor() {
     setLibraryThumbnail(viewport.current?.thumbnail());
     setLibraryOpen(true);
   };
+  // Mutations, loads, undo and redo update this ref synchronously. A render of
+  // an older React snapshot must never overwrite a newer edit while an IPC
+  // save starts (notably on slow Windows renderers).
   const projectRef = useRef(project);
-  projectRef.current = project;
   useEffect(
     () => () => {
       try {
@@ -457,11 +459,15 @@ export default function Editor() {
   }
   function undo() {
     if (playing) return;
-    setProject(history.current!.undo());
+    const next = history.current!.undo();
+    projectRef.current = next;
+    setProject(next);
   }
   function redo() {
     if (playing) return;
-    setProject(history.current!.redo());
+    const next = history.current!.redo();
+    projectRef.current = next;
+    setProject(next);
   }
   function add(kind: Kind) {
     if (!editing) return;
