@@ -1,0 +1,164 @@
+/* GORE FORGE — folha de estilo da "casca".
+   Todo o visual do HUD/menus vem de variáveis CSS do tema (`--gf-*`), escritas
+   em tempo real pela UI kit. Aqui só vive o que é do documento: reset, splash de
+   entrada e detalhes do canvas. */
+
+:root {
+  --gf-page-bg: #101014;
+  --gf-font: "Bahnschrift", "Rajdhani", "Oswald", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: var(--gf-page-bg);
+  color: #e8e8ee;
+  font-family: var(--gf-font);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  position: fixed;
+  inset: 0;
+  touch-action: none;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Nada de cursor quando o mouse está capturado pelo jogo. */
+body:has(canvas:active) {
+  cursor: none;
+}
+
+::selection {
+  background: var(--gf-accent, #ff5c2b);
+  color: #0b0b0f;
+}
+
+/* ------------------------------------------------------------- splash ----- */
+
+#goreforge-boot {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255, 92, 43, 0.16), transparent 55%),
+    linear-gradient(180deg, #0c0c11 0%, #131318 65%, #09090c 100%);
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+
+#goreforge-boot.gf-hidden {
+  opacity: 0;
+  transform: scale(1.02);
+  pointer-events: none;
+}
+
+.gf-boot-card {
+  width: min(880px, 94vw);
+  border: 1px solid #3a3a44;
+  border-radius: 14px;
+  padding: 26px 28px 22px;
+  background: linear-gradient(160deg, rgba(28, 28, 34, 0.94), rgba(14, 14, 18, 0.96));
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+}
+
+.gf-boot-card h1 {
+  margin: 0;
+  font-size: clamp(30px, 7vw, 60px);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ff6a34;
+  text-shadow: 0 2px 0 #4a1508, 0 0 26px rgba(255, 92, 43, 0.45);
+}
+
+.gf-boot-card h2 {
+  margin: 4px 0 14px;
+  font-size: 0.95em;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #9a9aa8;
+}
+
+.gf-boot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+
+.gf-boot-grid li {
+  border: 1px solid #33333d;
+  border-left: 3px solid #ff6a34;
+  border-radius: 8px;
+  padding: 8px 11px;
+  font-size: 0.82em;
+  line-height: 1.45;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.gf-boot-grid b {
+  display: block;
+  color: #ffb08a;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.9em;
+}
+
+.gf-boot-note {
+  margin: 0 0 18px;
+  font-size: 0.8em;
+  color: #8b8b98;
+  line-height: 1.6;
+}
+
+#gf-enter {
+  font: inherit;
+  font-size: 1.05em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 12px 26px;
+  border-radius: 10px;
+  border: 1px solid #ff8a5c;
+  background: linear-gradient(180deg, #ff6a34, #d13c15);
+  color: #1a0a04;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 120ms ease, box-shadow 160ms ease;
+}
+
+#gf-enter:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 26px rgba(255, 92, 43, 0.35);
+}
+
+#gf-enter:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+@media (max-width: 620px) {
+  .gf-boot-card {
+    padding: 18px;
+  }
+
+  .gf-boot-grid li {
+    font-size: 0.76em;
+  }
+}

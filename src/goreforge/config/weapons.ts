@@ -13,6 +13,24 @@ export type WeaponKind = "hitscan" | "projectile" | "melee" | "tool";
 export type ToolKind = "physgun" | "dissolve" | "clone" | "anchor" | "spawn" | null;
 export type WeaponCategory = "pistola" | "fuzil" | "escopeta" | "pesada" | "corpo-a-corpo" | "ferramenta";
 
+
+/**
+ * BASE DE PRIMEIRA PESSOA — o modelo nasce no canto inferior direito da tela.
+ *
+ * Cada arma guarda apenas o DESVIO em relação a esta base (`view.hip`/`view.ads`
+ * viram deltas), então ajustar o enquadramento de todas as armas é mexer em um
+ * lugar só. `maxMetalness`/`emissive` existem porque a camada do viewmodel é
+ * iluminada por luz ambiente: metal puro ficaria preto e sem leitura.
+ */
+export const viewmodelBase = {
+  hip: [0.2, -0.15, -0.42] as [number, number, number],
+  ads: [0, -0.075, -0.26] as [number, number, number],
+  maxMetalness: 0.28,
+  emissive: 0.2,
+  /** Escala global do modelo em primeira pessoa (encolhe/estica todos de uma vez). */
+  scale: 0.84,
+};
+
 export interface ViewPart {
   shape: "box" | "cyl" | "sphere" | "cone";
   size: [number, number, number];

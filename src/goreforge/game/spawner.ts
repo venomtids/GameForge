@@ -55,6 +55,12 @@ export class Spawner {
     this.budget = Math.max(120, this.ctx.settings.npcLimit * 14);
   }
 
+  /** Recalcula o orçamento de corpos criados (menu: "limite de NPCs"). */
+  setBudget(limit: number) {
+    this.budget = Math.max(120, limit * 14);
+    this.enforceBudget();
+  }
+
   get list() {
     return this.records;
   }

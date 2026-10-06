@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { VIEWMODEL_LAYER } from "../../engine/viewmodel";
 import type { GameContext } from "./context";
-import { weaponFor, type ViewPart, type WeaponSpec } from "../config/weapons";
+import { viewmodelBase, weaponFor, type ViewPart, type WeaponSpec } from "../config/weapons";
 import { clamp, damp } from "./util";
 
 /**
@@ -54,12 +54,17 @@ export class ViewModel {
     const key = `${part.color}:${part.metal ?? 0.2}:${part.rough ?? 0.5}:${part.emissive ?? ""}`;
     let material = this.materials.get(key);
     if (!material) {
-      material = new THREE.MeshStandardMaterial({
+      const accent = new THREE.Color(part.color).multiplyScalar(viewmodelBase.emissive);
+      material = new THREE.MeshPhysicalMaterial({
         color: part.color,
-        metalness: part.metal ?? 0.2,
+        /* Metal puro refletiria só o ambiente (não há envMap nesta passada de
+           render): limitamos para o modelo continuar legível. */
+        metalness: Math.min(part.metal ?? 0.2, viewmodelBase.maxMetalness),
         roughness: part.rough ?? 0.5,
-        emissive: new THREE.Color(part.emissive ?? "#000000"),
-        emissiveIntensity: part.emissive ? 1.4 : 0,
+        emissive: new THREE.Color(part.emissive ?? "#000000").add(accent),
+        emissiveIntensity: part.emissive ? 1.4 : 1,
+        clearcoat: 0.35,
+        clearcoatRoughness: 0.4,
       });
       this.materials.set(key, material);
     }
@@ -71,7 +76,7 @@ export class ViewModel {
     let group = this.groups.get(spec.id);
     if (group) return group;
     group = new THREE.Group();
-    group.scale.setScalar(spec.view.scale);
+    group.scale.setScalar(spec.view.scale * viewmodelBase.scale);
     for (const part of spec.view.parts) {
       const mesh = new THREE.Mesh(this.geometry(part), this.material(part));
       mesh.position.set(...part.pos);
@@ -108,8 +113,11 @@ export class ViewModel {
     if (!group) return;
     const visible = this.ctx.settings.viewmodel && store.alive;
     group.visible = visible;
-    /* Em mira, os braços da engine saem de cena para dar lugar ao modelo. */
-    this.ctx.rig.arms.visible = this.ctx.rig.arms.visible && !store.ads;
+    /* O jogo traz as próprias mãos: os braços genéricos da engine são escondidos
+       pelo FILHO (não pelo nó raiz) porque a segunda passada de render do
+       viewmodel é justamente a que decide desenhar a camada 1 — desligar
+       `arms.visible` apagaria também o modelo do jogo. */
+    for (const child of this.ctx.rig.arms.children) child.visible = !visible;
     if (!visible) return;
 
     const player = this.ctx.player;
@@ -132,8 +140,9 @@ export class ViewModel {
     this.reloadSpin = store.reloading > 0 ? 1 : damp(this.reloadSpin, 0, 6, dt);
     const sprintTilt = player.state === "sprint" ? 1 : 0;
 
-    const hip = new THREE.Vector3(...spec.view.hip);
-    const ads = new THREE.Vector3(...spec.view.ads);
+    /* Base (canto inferior direito) + desvio da arma, ambos em dados. */
+    const hip = new THREE.Vector3(...spec.view.hip).add(new THREE.Vector3(...viewmodelBase.hip));
+    const ads = new THREE.Vector3(...spec.view.ads).add(new THREE.Vector3(...viewmodelBase.ads));
     const base = hip.clone().lerp(ads, this.adsBlend);
     const reloadDip = this.reloadSpin * 0.28;
     const swing = this.swing;

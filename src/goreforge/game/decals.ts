@@ -173,7 +173,9 @@ export class Decals {
     entry.mesh.quaternion.copy(this.quaternion);
     entry.mesh.rotateZ(this.random() * Math.PI * 2);
     entry.mesh.position.copy(point).addScaledVector(this.normal, 0.014);
-    const scale = size * (0.75 + this.random() * 0.6);
+    /* A geometria do decalque tem raio 1.1 m: limitamos a escala para uma poça
+       de sangue nunca virar um tapete de vários metros com o gore no máximo. */
+    const scale = Math.min(kind === "sangue" ? 1.5 : 2.2, size * (0.75 + this.random() * 0.6));
     entry.mesh.scale.set(scale, scale, scale);
     entry.maxLife = life ?? LIFETIMES[kind];
     entry.life = entry.maxLife;

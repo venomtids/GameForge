@@ -183,7 +183,7 @@ const boolKeys = [
   "damageNumbers",
   "viewmodel",
 ] as const;
-const goreLevels: GoreLevel[] = ["off", "light", "full", "insane"];
+export const goreLevels: GoreLevel[] = ["off", "light", "full", "insane"];
 const qualityModes: QualityMode[] = ["auto", "economy", "high"];
 const hudLayouts: GameSettings["hudLayout"][] = [
   "classico",
@@ -229,6 +229,22 @@ export function goreScale(settings: GameSettings) {
 
 export function goreEnabled(settings: GameSettings) {
   return settings.gore !== "off" && settings.bloodAmount > 0;
+}
+
+/**
+ * Preset de gore: cada nível é uma linha de DADOS. O menu de pausa e o runtime
+ * só aplicam a linha — trocar o balanceamento não mexe em código de jogo.
+ */
+export const gorePresets: Record<GoreLevel, Partial<GameSettings>> = {
+  off: { gore: "off", bloodAmount: 0, maxDecals: 60, dismember: false, gibThreshold: 400, destruction: true },
+  light: { gore: "light", bloodAmount: 0.9, maxDecals: 120, dismember: true, gibThreshold: 120, destruction: true },
+  full: { gore: "full", bloodAmount: 1.6, maxDecals: 220, dismember: true, gibThreshold: 70, destruction: true },
+  insane: { gore: "insane", bloodAmount: 2.8, maxDecals: 380, dismember: true, gibThreshold: 35, destruction: true },
+};
+
+/** Cópia do preset (o menu pode mutar o objeto à vontade). */
+export function gorePresetPatch(level: GoreLevel): Partial<GameSettings> {
+  return { ...gorePresets[level] };
 }
 
 export const SETTINGS_KEY = "goreforge.settings.v1";

@@ -62,11 +62,12 @@ export const hudLayouts: Record<string, Record<string, WidgetPlacement>> = {
   },
   tatico: {
     vitals: { anchor: "bl", dx: "0", dy: "0" },
-    ammo: { anchor: "bl", dx: "230px", dy: "0" },
+    ammo: { anchor: "bl", dx: "244px", dy: "0" },
     slots: { anchor: "bl", dx: "0", dy: "78px", scale: 0.85 },
     zone: { anchor: "tc", dx: "0", dy: "0", scale: 0.9 },
     diagnostics: { anchor: "tr", dx: "0", dy: "0" },
-    score: { anchor: "tr", dx: "0", dy: "120px", scale: 0.9 },
+    /* tc + dy: fica abaixo do cabeçalho de zona, nunca sob o diagnóstico. */
+    score: { anchor: "tc", dx: "0", dy: "74px", scale: 0.9 },
   },
 };
 
@@ -145,10 +146,10 @@ export class Hud {
 
     this.feedList = document.createElement("div");
     this.feedList.style.cssText =
-      "position:absolute;right:var(--gf-pad);top:132px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:340px";
+      "position:absolute;right:var(--gf-pad);top:188px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:330px";
     this.toastList = document.createElement("div");
     this.toastList.style.cssText =
-      "position:absolute;left:50%;bottom:96px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px";
+      "position:absolute;left:50%;bottom:132px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:5px";
     this.numberLayer = document.createElement("div");
     this.numberLayer.style.cssText = "position:absolute;inset:0";
 
@@ -177,7 +178,7 @@ export class Hud {
 
     this.hint = document.createElement("div");
     this.hint.style.cssText =
-      "position:absolute;left:50%;top:58%;transform:translateX(-50%);padding:8px 16px;border:1px solid var(--gf-border);border-radius:var(--gf-radius);background:var(--gf-panel);color:var(--gf-text);font-size:0.9em;letter-spacing:0.06em";
+      "position:absolute;left:50%;top:64%;transform:translateX(-50%);padding:8px 16px;border:1px solid var(--gf-border);border-radius:var(--gf-radius);background:var(--gf-panel);color:var(--gf-text);font-size:0.9em;letter-spacing:0.06em;white-space:nowrap;backdrop-filter:blur(var(--gf-blur));opacity:0;transition:opacity 220ms ease";
     this.hint.textContent = "CLIQUE PARA JOGAR · TAB abre o menu de spawn";
     this.overlay.append(this.hint);
 
@@ -281,7 +282,7 @@ export class Hud {
       place("diagnostics", {
         id: "hud-diagnostics",
         type: "panel",
-        style: { width: "190px", gap: "1px", pad: "7px 10px", fontSize: "0.76em" },
+        style: { width: "212px", gap: "1px", pad: "7px 10px", fontSize: "0.74em" },
         children: [
           { id: "hud-diag-fps", type: "label", text: "60 fps", bind: "diagFps" },
           { id: "hud-diag-physics", type: "label", text: "0 corpos", bind: "diagPhysics" },
@@ -395,7 +396,7 @@ export class Hud {
       zoneHint: { text: store.zoneHint },
       diagFps: { text: `${fps.toFixed(0)} fps · ${store.particles} partículas` },
       diagPhysics: { text: `${store.bodies} corpos · ${this.decalCount} marcas` },
-      diagRigs: { text: `${store.rigs} rigs elásticos/ragdoll (limite 12)` },
+      diagRigs: { text: `${store.rigs} rigs (máx 12)` },
       diagFx: { text: `${store.spawned} criados · ${this.ctx.combat.projectileCount} projéteis` },
       diagSpawned: {
         text: `destruídos ${store.destroyed} · gore ${store.gibs} · pilha ${this.ctx.store.spawnedNow}`,

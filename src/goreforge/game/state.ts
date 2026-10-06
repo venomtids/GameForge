@@ -1,4 +1,10 @@
-import { goreforgeDefaults, loadSettings, saveSettings, type GameSettings } from "../config/settings";
+import {
+  goreforgeDefaults,
+  loadSettings,
+  saveSettings,
+  validateSettings,
+  type GameSettings,
+} from "../config/settings";
 import { themeFor, validateTheme, type UITheme } from "../config/theme";
 import { quickSlots, weaponFor, weapons } from "../config/weapons";
 import { spawnables } from "../config/spawnables";
@@ -105,6 +111,27 @@ export class GameStore {
   constructor() {
     this.resetLoadout();
     this.records = this.loadRecords();
+    this.spawnFavorites = this.loadFavorites();
+  }
+
+  /** Favoritos do menu de spawn (Shift+clique) — sobrevivem ao recarregar. */
+  saveFavorites() {
+    try {
+      localStorage.setItem("goreforge.favorites.v1", JSON.stringify(this.spawnFavorites));
+    } catch {
+      /* sem armazenamento: favoritos ficam só na sessão */
+    }
+  }
+
+  private loadFavorites(): string[] {
+    try {
+      const text = localStorage.getItem("goreforge.favorites.v1");
+      const parsed = text ? (JSON.parse(text) as unknown) : null;
+      if (!Array.isArray(parsed)) return this.spawnFavorites;
+      return parsed.filter((id): id is string => typeof id === "string").slice(0, 24);
+    } catch {
+      return this.spawnFavorites;
+    }
   }
 
   resetLoadout() {
@@ -275,7 +302,9 @@ export class GameStore {
 
   /* ---------------------------------------------------------- ajustes ----- */
   applySettings(patch: Partial<GameSettings>) {
-    this.settings = { ...this.settings, ...patch };
+    /* Sempre validado: nenhuma ação de UI consegue deixar o jogo num estado
+       fisicamente impossível (velocidade NaN, 1e9 de NPCs, gore inválido). */
+    this.settings = validateSettings({ ...this.settings, ...patch });
     saveSettings(this.settings);
     if (patch.theme) this.theme = themeFor(patch.theme);
   }

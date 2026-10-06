@@ -58,6 +58,8 @@ export interface UIStyle {
   lineHeight: string;
   textAlign: string;
   textTransform: string;
+  /** "nowrap" evita quebrar linhas em rótulos curtos (padrão de `label`). */
+  whiteSpace: string;
   align: string;
   justify: string;
   opacity: string;
@@ -115,6 +117,10 @@ interface Mounted {
 
 const px = (value: number) => `${value}px`;
 
+/** Contêineres deixam `pointer-events` herdado do host. */
+const CONTAINER_TYPES: UIWidgetType[] = ["panel", "row", "stack", "grid", "keyvalue", "tabs"];
+const INTERACTIVE_TYPES: UIWidgetType[] = ["button", "item", "slider", "toggle"];
+
 function styleFor(
   node: UINode,
   theme: UITheme,
@@ -144,6 +150,7 @@ function styleFor(
   if (style.lineHeight) parts.push(`line-height:${style.lineHeight}`);
   if (style.textAlign) parts.push(`text-align:${style.textAlign}`);
   if (style.textTransform) parts.push(`text-transform:${style.textTransform}`);
+  if (style.whiteSpace) parts.push(`white-space:${style.whiteSpace}`);
   if (style.overflowY) parts.push(`overflow-y:${style.overflowY}`);
   if (style.position) parts.push(`position:${style.position}`);
   if (style.display) parts.push(`display:${style.display}`);
@@ -179,9 +186,16 @@ export class UI {
     public root: HTMLElement,
     public theme: UITheme,
   ) {
-    this.root.className = "gf-ui";
-    this.root.style.cssText =
-      "position:absolute;inset:0;pointer-events:none;font-family:var(--gf-font);color:var(--gf-text);overflow:hidden";
+    /* NUNCA sobrescrever o estilo do host: menus controlam `display` e o fundo
+       do próprio contêiner (fechado = display:none). Só preenchemos o que falta. */
+    this.root.classList.add("gf-ui");
+    const style = this.root.style;
+    if (!style.position) style.position = "absolute";
+    if (!style.inset) style.inset = "0";
+    if (!style.pointerEvents) style.pointerEvents = "none";
+    if (!style.overflow) style.overflow = "hidden";
+    if (!style.fontFamily) style.fontFamily = "var(--gf-font)";
+    if (!style.color) style.color = "var(--gf-text)";
     this.setTheme(theme);
   }
 
@@ -190,12 +204,18 @@ export class UI {
   }
 
   /** Troca o tema escrevendo só variáveis CSS: nenhum widget é recriado. */
-  setTheme(theme: UITheme) {
+  setTheme(theme: UITheme, global = true) {
     this.theme = theme;
     const vars = themeVariables(theme);
     for (const key of this.variables) this.root.style.removeProperty(key);
     this.variables = Object.keys(vars);
     for (const [key, value] of Object.entries(vars)) this.root.style.setProperty(key, value);
+    /* Elementos fora do root da UI (overlay do HUD, hints, telas de morte)
+       também usam as variáveis --gf-*: publicamos no documento quando o tema é
+       único para todo o jogo. */
+    if (global && typeof document !== "undefined")
+      for (const [key, value] of Object.entries(vars))
+        document.documentElement.style.setProperty(key, value);
   }
 
   mount(tree: UINode[]) {
@@ -220,7 +240,11 @@ export class UI {
     if (node.type === "button") (el as HTMLButtonElement).type = "button";
     el.style.cssText = styleFor(node, this.theme);
     if (node.className) el.className = node.className;
-    if (node.type !== "button" && node.type !== "item") el.style.pointerEvents = "auto";
+    /* Contêineres herdam do host (menu = auto, HUD = none); rótulos e barras
+       nunca capturam o mouse; só widgets interativos são clicáveis. Assim uma
+       tela fechada não rouba o clique de quem está mirando no jogo. */
+    if (!CONTAINER_TYPES.includes(node.type))
+      el.style.pointerEvents = INTERACTIVE_TYPES.includes(node.type) ? "auto" : "none";
     const mounted: Mounted = { node, el, children: [], last: "" };
 
     switch (node.type) {
@@ -247,6 +271,8 @@ export class UI {
           el.style.justifyContent = "space-between";
           el.style.gap = "var(--gf-gap)";
         }
+        if (node.style?.whiteSpace) el.style.whiteSpace = node.style.whiteSpace;
+        else if (node.type === "label" || node.type === "badge") el.style.whiteSpace = "nowrap";
         el.textContent = node.text ?? "";
         break;
       }
@@ -439,6 +465,9 @@ export class UI {
         );
     }
     this.mounted.set(node.id, mounted);
+    /* `bind` é um ALIAS do nó: `flush({ hp: ... })` escreve no widget que
+       declarou `bind: "hp"` sem o chamador precisar conhecer ids de DOM. */
+    if (node.bind) this.mounted.set(node.bind, mounted);
     return mounted;
   }
 

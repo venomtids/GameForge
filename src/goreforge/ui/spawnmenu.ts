@@ -140,6 +140,16 @@ export class SpawnMenu {
     this.ui.setTheme(theme);
   }
 
+  /** Troca de categoria (ação `spawn-tabs` vinda do UI kit). */
+  setCategory(category: string) {
+    const all: string[] = [...spawnCategories, "Armas", "Ferramentas", "Favoritos"];
+    if (!all.includes(category) || this.category === category) return;
+    this.category = category;
+    this.query = "";
+    this.searchInput.value = "";
+    this.rebuild();
+  }
+
   /** Força a reconstrução no próximo refresh. */
   rebuild() {
     this.lastRebuild = "";

@@ -6,6 +6,8 @@ import { goreforgeDefaults } from "../config/settings";
 
 type Tab = "geral" | "jogo" | "interface" | "stats" | "ajuda" | "dados";
 
+const TABS: Tab[] = ["geral", "jogo", "interface", "stats", "ajuda", "dados"];
+
 const TIPS = [
   "Shift + Ctrl enquanto corre vira escorregão: ganha velocidade e passa por baixo de grades.",
   "Barris vermelhos detonam em cadeia. Mire no primeiro e deixe a física trabalhar.",
@@ -68,6 +70,14 @@ export class PauseMenu {
 
   setTheme(theme = this.ctx.store.theme) {
     this.ui.setTheme(theme);
+  }
+
+  /** Troca de aba por id (ação `pause-tab` vinda do UI kit). */
+  setTab(tab: string) {
+    if (!TABS.includes(tab as Tab)) return;
+    if (this.tab === tab) return;
+    this.tab = tab as Tab;
+    this.rebuild(true);
   }
 
   /** Reconstrói a aba atual (chamado ao abrir e ao trocar de aba). */

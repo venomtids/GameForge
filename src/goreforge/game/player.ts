@@ -73,7 +73,8 @@ export class PlayerController {
   }
 
   /* -------------------------------------------------------------- passo --- */
-  private step(context: {
+  /** Passo de movimento do jogador — chamado pela engine via World.playerStep. */
+  step(context: {
     dt: number;
     keys: Set<string>;
     yaw: number;

@@ -365,6 +365,19 @@ export class Effects {
     }
   }
 
+  /** Troca a capacidade dos bancos de partículas sem recriar a cena. */
+  setQuality(quality: number) {
+    const scale = Math.max(0.25, quality);
+    const additive = new ParticleBank(Math.round(1800 * scale), true);
+    const soft = new ParticleBank(Math.round(2200 * scale), false);
+    this.group.remove(this.additive.points, this.soft.points);
+    this.additive.points.geometry.dispose();
+    this.soft.points.geometry.dispose();
+    this.additive = additive;
+    this.soft = soft;
+    this.group.add(additive.points, soft.points);
+  }
+
   get particleCount() {
     return this.additive.live + this.soft.live;
   }

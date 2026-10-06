@@ -11,6 +11,8 @@ interface DeathOptions {
 
 /** Índices do rig articulado criado pela engine (PhysicalRig tipo ragdoll). */
 const RAGDOLL_PARTS = ["tronco", "cabeça", "braço esquerdo", "braço direito", "perna esquerda", "perna direita"];
+/** Concordância do aviso de desmembramento (o membro é feminino/masculino). */
+const PART_GENDER = ["o", "a", "o", "o", "a", "a"];
 
 /**
  * Gore: sangue, poças, estilhaços de carne e DESMEMBRAMENTO real.
@@ -105,9 +107,10 @@ export class Gibs {
     body.wakeUp();
 
     const name = RAGDOLL_PARTS[index] ?? "membro";
+    const gender = PART_GENDER[index] ?? "o";
     this.ctx.store.gibs += 1;
     this.ctx.store.pushFeed({
-      text: `${name} arrancado`,
+      text: `${name} arrancad${gender === "a" ? "a" : "o"}`,
       detail: nodeId.replace(/^gf-/, ""),
       kind: "kill",
     });
@@ -140,7 +143,7 @@ export class Gibs {
       : options.point.clone();
     if (ratio > 0) {
       this.ctx.fx.blood(options.point, options.direction, 30 * ratio, true);
-      this.spill(base, 1.6);
+      this.spill(base, 1.15);
       this.ctx.world.audio.play("morte.grito", 0.6, 0.9 + this.random() * 0.3);
     }
     const gibThreshold = this.ctx.settings.gibThreshold;
@@ -176,7 +179,7 @@ export class Gibs {
     }
     this.ctx.fx.blood(base, new THREE.Vector3(0, 1, 0), 44 * Math.max(0.4, ratio), true);
     this.ctx.fx.burst("carne", base, { amount: 24, direction: new THREE.Vector3(0, 1, 0), scale: 1.6 });
-    this.spill(base, 2.6);
+    this.spill(base, 1.4);
     this.ctx.world.audio.play("sangue.splash", 0.8, 0.85);
     this.ctx.world.command({ type: "remove", id: nodeId });
     this.ctx.store.gibs += 1;
