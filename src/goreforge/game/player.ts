@@ -419,9 +419,22 @@ export class PlayerController {
     const store = this.ctx.store;
     const settings = store.settings;
     /* A engine lê world.health para esconder braços, ativar ragdoll e tocar
-       eventos: mantemos o mapa sincronizado com o estado do jogo. */
-    if (this.ctx.world.playerId)
-      this.ctx.world.health.set(this.ctx.world.playerId, store.alive ? store.health : 0);
+       eventos: mantemos o mapa sincronizado com o estado do jogo — MAS antes
+       convertemos em dano qualquer queda que tenha vindo DA ENGINE (NPCs com
+       `behavior: attack` chamam world.damage direto, e explosões/contatos
+       também). Sem isso, escrever o valor do jogo por cima apagaria os ataques. */
+    const engineId = this.ctx.world.playerId;
+    if (engineId) {
+      const engineHealth = this.ctx.world.health.get(engineId) ?? store.health;
+      const last = this.ctx.world.lastDamage;
+      const source = last && last.id === engineId ? last.source : "engine";
+      if (store.alive && engineHealth < store.health - 0.5) {
+        /* Modo deus: a engine não conhece o ajuste, então devolvemos a vida. */
+        if (store.godMode) this.ctx.world.health.set(engineId, store.health);
+        else this.damage(store.health - engineHealth, source);
+      }
+      this.ctx.world.health.set(engineId, store.alive ? store.health : 0);
+    }
     if (!store.alive) {
       store.respawnIn = Math.max(0, store.respawnIn - dt);
       if (store.respawnIn === 0 && this.ctx.input.pressed("r")) this.respawn();

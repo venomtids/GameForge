@@ -75,6 +75,12 @@ export interface PlayerStepContext {
 export class World {
   /** Controlador externo opcional; ver PlayerStepContext. */
   playerStep: ((context: PlayerStepContext) => boolean | void) | null = null;
+  /**
+   * Último dano aplicado pela engine (bots, explosões, quedas). Jogos com
+   * contador de vida próprio usam isso para não perder o dano quando
+   * reescrevem `World.health` a cada quadro.
+   */
+  lastDamage: { id: string; amount: number; source: string; at: number } | null = null;
   private animatedNodes: Node3D[] = [];
   private kinematicIds = new Set<string>();
   private physicalAnimationRoots = new Set<string>();
@@ -822,6 +828,9 @@ export class World {
     if (!Number.isFinite(amount) || amount < 0) return;
     const n = this.configs.find((n) => n.id === id);
     if (!n) return;
+    /* Jogos com vida própria (FPS) leem este registro para converter o dano da
+       engine em dano do jogo, com autor e instante — ver World.lastDamage. */
+    this.lastDamage = { id, amount, source, at: this.elapsed };
     const old = this.health.get(id) ?? n.actor.health,
       next = Math.max(0, old - Math.min(100, amount));
     this.health.set(id, next);

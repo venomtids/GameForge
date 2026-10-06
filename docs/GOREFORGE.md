@@ -64,7 +64,7 @@ Fora de `src/goreforge/`, a mudança de engine que o jogo precisou:
 
 | Arquivo | Mudança |
 | --- | --- |
-| [`src/engine/World.ts`](../src/engine/World.ts) | `PlayerStepContext` + `World.playerStep`: um jogo pode assumir o passo do jogador (o caminho antigo continua idêntico quando não há hook) |
+| [`src/engine/World.ts`](../src/engine/World.ts) | `PlayerStepContext` + `World.playerStep`: um jogo pode assumir o passo do jogador (o caminho antigo continua idêntico quando não há hook). `World.lastDamage` registra o último dano aplicado pela engine (bots, explosões) para jogos com vida própria não perderem o ataque ao reescrever `World.health` — ver `game/player.ts#update` |
 | [`src/engine/Audio.ts`](../src/engine/Audio.ts) | ~55 receitas de combate/foley/UI (tiro, impacto por material, gelatina, gibs, explosões, passos, menu) |
 | [`src/engine/features07.ts`](../src/engine/features07.ts) | `lightDefaults`/`torchDefaults` e `soundNames` exportados |
 

@@ -124,6 +124,26 @@ try {
   assert.equal(shot.weapon, "ferrolho");
   console.log(`PASS arma disparou (${shot.shots} tiros)`);
 
+  /* ------------------- dano da engine → vida do jogo (bots/explosões) --- */
+  await page.evaluate(() => {
+    const runtime = window.goreforge;
+    runtime.store.health = 100;
+    runtime.store.armor = 0;
+    runtime.store.damageTaken = 0;
+    /* É exatamente o que um NPC com behavior "attack" faz na engine. */
+    runtime.world.damage(runtime.world.playerId, 24, "gf-teste");
+  });
+  await page.waitForFunction(() => window.goreforge.store.damageTaken >= 20, null, { timeout: 30000 });
+  const bridge = await page.evaluate(() => ({
+    hp: window.goreforge.store.health,
+    engine: window.goreforge.world.health.get(window.goreforge.world.playerId),
+    taken: window.goreforge.store.damageTaken,
+    indicator: window.goreforge.store.hitDirection.life > 0,
+  }));
+  assert.ok(bridge.hp <= 80 && bridge.hp > 0, `ataque de NPC deveria tirar vida: ${bridge.hp}`);
+  assert.equal(bridge.engine, bridge.hp, "a vida do jogo e a da engine devem ficar iguais");
+  console.log(`PASS dano da engine convertido (100 → ${bridge.hp} de vida, ${bridge.taken} recebido)`);
+
   /* ------------------------------------------------- menu de spawn ------- */
   const backdrop = page.locator('[data-gf-part="spawn-backdrop"]');
   const cardCount = () => page.locator('[data-gf-part="spawn-backdrop"] button[data-item]').count();
