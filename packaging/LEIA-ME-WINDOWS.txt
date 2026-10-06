@@ -1,4 +1,4 @@
-GAMEFORGE STUDIO 0.8.2 — WINDOWS x64
+GAMEFORGE STUDIO 0.8.3 — WINDOWS x64
 
 Requisitos: Windows 10/11 (64 bits, Intel/AMD), aceleração gráfica/WebGL2,
 4 GB de RAM recomendados e aproximadamente 600 MB livres em disco.
@@ -6,7 +6,7 @@ Não é necessário instalar Node.js, Python ou ferramentas de desenvolvimento.
 
 1. Guarde cópias dos seus projetos .gameforge.json antes de atualizar.
 2. Feche o GameForge Studio.
-3. Execute GameForge-Studio-0.8.2-Windows-x64-Setup.exe.
+3. Execute GameForge-Studio-0.8.3-Windows-x64-Setup.exe.
 4. Escolha a pasta e conclua o assistente (instalação no usuário atual).
 5. Abra o atalho GameForge Studio na área de trabalho ou no menu Iniciar.
 
@@ -17,8 +17,12 @@ Não desative o antivírus nem ignore alertas de malware.
 Comece com Jelly Jump, Ilha Aurora, Baseplate, Skyline Obby ou Motion Lab em Projetos.
 Jelly Jump: WASD move, Espaço pula, Shift corre e R retorna ao checkpoint.
 Na Toolbox, busque gelatina para adicionar o jogador articulado e plataformas.
-No Inspetor, escolha Muito mole / Macia / Firme. Ajuste intensidade, reação ao
-movimento e pivô para mais oscilação. O colisor do jogador continua estável.
+No Inspetor, escolha Muito mole / Macia / Gota viscosa / Firme. Ajuste
+intensidade, reação ao movimento, pivô e fluidez. O colisor jogável é estável;
+a gota é um volume confinado, não água livre. Corpos livres podem consultar
+triângulos deformados para contato pontual com o jogador. A primeira pessoa
+agora tem mãos sem flicker, com profundidade própria. A colisão global não é
+FEM exato nem IPC/CCD.
 No celular, use as setas, pulo, corrida e o botão de retorno ao checkpoint.
 Ctrl+K busca comandos. Ctrl+S salva um arquivo portátil. F5 executa, F8 para.
 Ctrl/Shift+clique seleciona vários objetos; Ctrl+G agrupa.
@@ -34,7 +38,7 @@ nem oferece multiplayer, hospedagem ou serviços de monetização.
 Scripts de terceiros devem ser revisados antes de permitir sua execução.
 
 Para verificar o instalador no PowerShell:
-Get-FileHash .\GameForge-Studio-0.8.2-Windows-x64-Setup.exe -Algorithm SHA256
+Get-FileHash .\GameForge-Studio-0.8.3-Windows-x64-Setup.exe -Algorithm SHA256
 Compare o resultado com SHA256SUMS.txt.
 
-Código-fonte, guias e limites técnicos: README.md, docs/GUIA-STUDIO-0.8.md e docs/GELATINA-0.8.2.md.
+Código-fonte, guias e limites técnicos: README.md, docs/GUIA-STUDIO-0.8.md e docs/GELATINA-0.8.3.md.

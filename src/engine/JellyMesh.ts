@@ -49,6 +49,8 @@ export class JellyMesh {
       pivot?: THREE.Vector3;
       /** Don't deform a boot sole below its original geometry. */
       pinSole?: boolean;
+      gain?: number;
+      maxFraction?: number;
     } = {},
   ) {
     this.original = mesh.geometry;
@@ -190,7 +192,11 @@ export class JellyMesh {
     const mass = Math.max(0.2, this.node.mass / 12);
     const spring = (settings.stiffness * 0.85) / mass;
     const damping = 0.65 + settings.damping * 2;
-    const influence = ((settings.movementInfluence ?? 1.25) * intensity) / mass;
+    const influence =
+      ((settings.movementInfluence ?? 1.25) *
+        intensity *
+        (this.options.gain ?? 1)) /
+      mass;
     const radiusStrength =
       settings.maintainRadius === false
         ? 0
@@ -203,7 +209,7 @@ export class JellyMesh {
     const limit =
       minSize *
       Math.min(
-        0.3,
+        this.options.maxFraction ?? 0.3,
         0.14 * intensity * Math.min(1.4, (settings.maxStretch ?? 1.65) - 0.5),
       );
     // A moving cage pivot follows its target centroid, without changing bind weights.

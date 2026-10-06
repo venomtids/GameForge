@@ -17,6 +17,8 @@ export class JellyCharacter {
     rotationOffset: THREE.Vector3;
     weight: number;
     angleLimit: number;
+    elbow: boolean;
+    arm: boolean;
   }[] = [];
   private previous = new THREE.Vector3();
   private delta = new THREE.Vector3();
@@ -65,6 +67,8 @@ export class JellyCharacter {
           rotationOffset: new THREE.Vector3(),
           weight,
           angleLimit,
+          elbow: joint === h.leftElbow || joint === h.rightElbow,
+          arm: joint === h.leftArm || joint === h.rightArm,
         });
     }
     object.traverse((part) => {
@@ -83,8 +87,22 @@ export class JellyCharacter {
       const boot =
         part.geometry.boundingBox!.getSize(new THREE.Vector3()).y < 0.12 &&
         part.position.y < -0.2;
+      const arm =
+        this.limbs &&
+        [
+          this.limbs.leftArm,
+          this.limbs.rightArm,
+          this.limbs.leftElbow,
+          this.limbs.rightElbow,
+        ].includes(part.parent as THREE.Group);
+      const head = part.parent === this.limbs?.head;
       this.surfaces.push(
-        new JellyMesh(part, node, { pivot: anchor, pinSole: boot }),
+        new JellyMesh(part, node, {
+          pivot: anchor,
+          pinSole: boot,
+          gain: head ? 0.15 : arm ? 0.3 : 0.65,
+          maxFraction: head ? 0.012 : arm ? 0.07 : 0.13,
+        }),
       );
     });
     object.userData.jellyCharacter = true;
@@ -191,6 +209,15 @@ export class JellyCharacter {
         THREE.MathUtils.clamp(p.offset.y * 0.35, -p.angleLimit, p.angleLimit),
         THREE.MathUtils.clamp(-p.offset.x * 3, -p.angleLimit, p.angleLimit),
       );
+      if (p.elbow || p.arm) {
+        const base = p.object.rotation.x;
+        p.rotationOffset.x =
+          THREE.MathUtils.clamp(
+            base + p.rotationOffset.x,
+            p.elbow ? 0.08 : -0.7,
+            p.elbow ? 1.35 : 1.35,
+          ) - base;
+      }
       p.object.rotation.x += p.rotationOffset.x;
       p.object.rotation.y += p.rotationOffset.y;
       p.object.rotation.z += p.rotationOffset.z;

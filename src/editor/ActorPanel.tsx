@@ -194,6 +194,7 @@ export default function ActorPanel({
                 ["distanceFalloff", "Distribuição pelo pivô", 0.1, 4, 0.1],
                 ["radiusConstraint", "Preservação do raio", 0, 1, 0.05],
                 ["performance", "Economia da malha", 0, 1, 0.1],
+                ["fluidity", "Fluidez da gota (confinada)", 0, 1, 0.05],
               ] as const
             ).map(([key, label, min, max, step]) => (
               <label key={key}>
@@ -221,28 +222,32 @@ export default function ActorPanel({
             ))}
           {n.deform.type === "jelly" && (
             <>
-              {(["maintainRadius", "useLOD"] as const).map((key) => (
-                <label className="check" key={key}>
-                  <input
-                    type="checkbox"
-                    aria-label={
-                      key === "useLOD"
-                        ? "LOD automático da gelatina"
-                        : "Manter raio da gelatina"
-                    }
-                    disabled={disabled}
-                    checked={n.deform[key] ?? true}
-                    onChange={(e) =>
-                      onChange({
-                        deform: { ...n.deform, [key]: e.target.checked },
-                      })
-                    }
-                  />
-                  {key === "useLOD"
-                    ? "LOD automático · só detalhe visual"
-                    : "Manter raio em torno do pivô"}
-                </label>
-              ))}
+              {(["maintainRadius", "useLOD", "surfaceCollision"] as const).map(
+                (key) => (
+                  <label className="check" key={key}>
+                    <input
+                      type="checkbox"
+                      aria-label={
+                        key === "useLOD"
+                          ? "LOD automático da gelatina"
+                          : key === "surfaceCollision"
+                            ? "Contato por triângulos deformados"
+                            : "Manter raio da gelatina"
+                      }
+                      disabled={disabled}
+                      checked={n.deform[key] ?? deformDefaults[key] ?? true}
+                      onChange={(e) =>
+                        onChange({
+                          deform: { ...n.deform, [key]: e.target.checked },
+                        })
+                      }
+                    />
+                    {key === "useLOD"
+                      ? "LOD automático · só detalhe visual"
+                      : "Manter raio em torno do pivô"}
+                  </label>
+                ),
+              )}
               {(["lodNear", "lodFar"] as const).map((key) => (
                 <label key={key}>
                   {key === "lodNear" ? "LOD próximo" : "LOD distante"}
@@ -326,6 +331,13 @@ export default function ActorPanel({
                   Plataforma ancorada · apoio sólido
                 </label>
               )}
+              <small>
+                Volume dividido em 6 tetraedros XPBD (FEM simplificado); Fluidez
+                produz uma gota viscosa confinada, não água/fluido livre. O
+                contato por triângulos complementa colisores existentes para
+                gelatinas livres e o jogador; plataformas ainda usam apoio
+                sólido plano.
+              </small>
               <small>
                 {n.behavior === "player" || n.actor.humanoid
                   ? "Colisor estável + articulações e vértices com molas. Acelerar, parar, virar, saltar e aterrissar fazem o corpo oscilar. Pés protegidos."

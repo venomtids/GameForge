@@ -1,4 +1,4 @@
-# GameForge Studio 0.8.2 · Gelatina mais mole e reativa
+# GameForge Studio 0.8.3 · Braços corrigidos, volume tetraédrico e contato com malha
 
 Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, construído sobre o código-fonte 0.7 fornecido: editor 3D, física, scripts, terreno, personagens e exportação offline. Interface em português, sem conta obrigatória.
 
@@ -14,6 +14,14 @@ Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, co
 
 Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md). Física atual e referência adaptada: [docs/GELATINA-0.8.2.md](docs/GELATINA-0.8.2.md). Mapa e base: [docs/GELATINA-0.8.1.md](docs/GELATINA-0.8.1.md).
 
+## Correção dos braços e física volumétrica · 0.8.3
+
+O personagem de gelatina agora dobra os cotovelos e ergue os braços **para a frente** ao andar/saltar. A primeira pessoa ganhou balanço contínuo, squash controlado e mãos em camada com profundidade própria, evitando o “flic” de braços/antebraços.
+
+Após inspecionar os quatro repositórios indicados, acrescentamos **6 tetraedros com volume assinado/XPBD** à gaiola, preset **Gota viscosa** (pressão em um corpo fechado) e uma consulta de **ponto mais próximo por triângulo da malha deformada** para o jogador contra corpos de gelatina *livres*. Essa consulta complementa os colisores Cannon existentes, não os substitui: é discreta e aproximada no formato do jogador, não é FEM de material contínuo, água livre nem colisão global/CCD/IPC exato. Plataformas do parkour mantêm a superfície de apoio sólida, que não afunda.
+
+**130 testes unitários**, build e testes de navegador `test:jelly`, `test:studio06`, `test:studio08` e `test:export:studio08` passaram. O teste offline móvel (390px) verifica pixels reais da cena depois do resize, não só o HUD; testes de braço por 1.000 passos rejeitam giros para trás/flicker. [Comparação dos quatro projetos, parâmetros, escopo real e limites](docs/GELATINA-0.8.3.md). O instalador público 0.8.2 foi publicado antes destas alterações; **não inclui a 0.8.3**. A versão atual só receberá link de instalador após validação do aplicativo instalado no Windows CI.
+
 ## Gelatina mais mole e reativa · 0.8.2
 
 Adaptados os algoritmos do [Jelly-Mesh-System de Roundy](https://github.com/roundyyy/Jelly-Mesh-System), com atribuição MIT: **molas por vértice**, reação à aceleração/rotação, pivô ajustável, falloff, recuperação radial e LOD visual. A geometria original é preservada, inclusive em esferas.
@@ -26,9 +34,11 @@ Adaptados os algoritmos do [Jelly-Mesh-System de Roundy](https://github.com/roun
 
 **121 testes**, build e navegador de gelatina/Studio 0.6/0.8; percurso completo por controles reais a 30/60/144 cadências, saltos repetidos, mobile/offline e layout 320–1920. A gelatina continua uma aproximação híbrida, não FEM nem MeshCollider deformável exato. [Implementação, parâmetros, comparação e limites](docs/GELATINA-0.8.2.md).
 
+![Visão em primeira pessoa com as mãos à frente](docs/screenshots/jelly-first-person.png)
+
 ## Correção de salto/colisão · 06/10/2026
 
-Corrigido o personagem afundando visualmente nos blocos: a translação da animação elástica não acumula mais a cada salto. Contatos antigos não marcam o jogador como apoiado após lançamento, e as gelatinas agora escrevem profundidade para oclusão consistente. **110/110 testes**, build e testes de navegador de gelatina/Studio 0.6/0.8 passaram; prévia e HTML offline reconstruídos. [Reprodução e detalhes](docs/CORRECAO-SALTO-GELATINA.md). O instalador Windows desta correção ainda não foi validado/publicado.
+Corrigido o personagem afundando visualmente nos blocos: a translação da animação elástica não acumula mais a cada salto. Contatos antigos não marcam o jogador como apoiado após lançamento, e as gelatinas agora escrevem profundidade para oclusão consistente. **110/110 testes**, build e testes de navegador de gelatina/Studio 0.6/0.8 passaram; prévia e HTML offline reconstruídos. [Reprodução e detalhes](docs/CORRECAO-SALTO-GELATINA.md). Essa correção foi incluída e validada no instalador Windows 0.8.2.
 
 ## Gelatina · atualização 0.8.1
 
@@ -59,7 +69,9 @@ A base anterior foi preservada: gizmos, hierarquia, snapping, câmeras ortográf
 
 ## Windows — usuário final
 
-**Atualização 0.8.2:** testes locais e empacotamento preparados; a conexão GitHub foi restabelecida. A nova instalação/validação nativa e publicação estão em andamento. **Ainda não declarar um instalador 0.8.2 validado antes do sucesso do Windows CI.** A 0.8.1 não chegou a ter uma publicação validada; a versão antiga 0.8.0 abaixo não contém as melhorias de gelatina.
+**Instalador atualizado 0.8.2 — entregue:** [baixar Windows x64](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.2/GameForge-Studio-0.8.2-Windows-x64-Setup.exe) · [release/checksum/instruções](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.2). **Gerado, instalado e validado no executável instalado** no [Windows CI](https://github.com/venomtids/GameForge/actions/runs/37466047048), incluindo abrir/salvar/backup, gelatina e exportação. 103.753.986 bytes, SHA-256 `598f6cb27b00190fb8a7f64687ed686bffc404ddf359f6a31d606272632c819d`. Esta versão contém a nova física e todas as correções de salto/salvamento. A 0.8.1 não teve publicação validada; a 0.8.0 abaixo é histórica.
+
+[Resumo da entrega 0.8.2](ENTREGA-GELATINA-0.8.2.md). Prévia sem assinatura digital; confira a origem e o checksum, sem desativar o antivírus.
 
 ### Instalador anterior 0.8.0 (já entregue)
 

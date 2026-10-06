@@ -222,6 +222,9 @@ test("new jelly settings roundtrip, validate all bounds, omit optional legacy fi
     { lodNear: 30, lodFar: 20 },
     { performance: -1 },
     { radiusConstraint: null },
+    { fluidity: 2 },
+    { fluidity: -0.1 },
+    { surfaceCollision: "yes" },
   ])
     assert.throws(() => validateDeform({ ...a.deform, ...bad }));
 });

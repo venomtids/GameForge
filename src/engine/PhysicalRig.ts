@@ -316,7 +316,7 @@ export class PhysicalRig {
       this.skinTarget[i * 3 + 2] = this.p.z;
     }
   }
-  sync(dt = 0, view?: THREE.Vector3) {
+  sync(dt = 0, view?: THREE.Vector3, contactPoint?: THREE.Vector3) {
     if (this.type === "ragdoll")
       this.meshes.forEach((m, i) => {
         const b = this.bodies[i];
@@ -352,7 +352,19 @@ export class PhysicalRig {
       const interval =
         (1 + Math.round(lod * 3 + (this.node.deform.performance ?? 0) * 2)) /
         60;
-      const draw = dt === 0 || this.visualElapsed + 1e-10 >= interval;
+      const nearContact =
+        !this.anchored &&
+        contactPoint &&
+        this.hit
+          .set(
+            this.anchor.position.x,
+            this.anchor.position.y,
+            this.anchor.position.z,
+          )
+          .distanceTo(contactPoint) <
+          Math.max(this.size.x, this.size.y, this.size.z) * 1.5 + 2;
+      const draw =
+        dt === 0 || !!nearContact || this.visualElapsed + 1e-10 >= interval;
       if (draw) this.skinCage();
       if (this.surface && this.skinTarget) {
         if (draw) {
@@ -433,6 +445,43 @@ export class PhysicalRig {
         ),
       );
       b.wakeUp();
+    }
+  }
+  /** Localized reaction from a controller hitting a visible jelly triangle. */
+  contactImpulse(
+    point: THREE.Vector3,
+    normal: THREE.Vector3,
+    magnitude: number,
+  ) {
+    if (this.type !== "jelly" || this.anchored || magnitude <= 0) return;
+    const nearest = this.bodies
+      .filter((b) => b.invMass > 0)
+      .map((b) => ({
+        b,
+        distance: Math.max(
+          0.02,
+          point.distanceTo(
+            new THREE.Vector3(b.position.x, b.position.y, b.position.z),
+          ),
+        ),
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 4);
+    const total = nearest.reduce(
+      (sum, item) => sum + 1 / (item.distance * item.distance),
+      0,
+    );
+    const bounded = Math.min(magnitude, Math.max(0.1, this.node.mass) * 3);
+    for (const item of nearest) {
+      const fraction = 1 / (item.distance * item.distance) / total;
+      item.b.applyImpulse(
+        new CANNON.Vec3(
+          normal.x * bounded * fraction,
+          normal.y * bounded * fraction,
+          normal.z * bounded * fraction,
+        ),
+      );
+      item.b.wakeUp();
     }
   }
   dispose(restore = false) {

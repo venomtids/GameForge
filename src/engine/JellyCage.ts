@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
+import { TetraVolume } from "./TetraVolume";
 import type { Node3D } from "./model";
 
 const signs = Array.from(
@@ -11,7 +12,8 @@ const clamp = THREE.MathUtils.clamp;
 /** Eight-point elastic cage. Springs + rotational shape recovery + bounded
  * volume/stretch projection. An anchored cage transfers contact loads from a
  * solid kinematic support collider; its bottom four corners remain fixed.
- * This is a bounded soft-body approximation, not a tetrahedral FEM solver. */
+ * Per-tetra XPBD volume is a coarse finite-element-style constraint, not
+ * a Green-strain constitutive FEM / free-flowing liquid solver. */
 export class JellyCage {
   private center = new THREE.Vector3();
   private axes = [
@@ -35,6 +37,8 @@ export class JellyCage {
   private dt = 1 / 120;
   /** Last signed volume / rest volume, useful to diagnose collapse/inversion. */
   volumeRatio = 1;
+  /** Signed volume of the most-compressed tetra / its rest volume. */
+  tetra: TetraVolume;
 
   constructor(
     public node: Node3D,
@@ -54,6 +58,11 @@ export class JellyCage {
     );
     this.frame.copy(rotation);
     this.restVolume = size.x * size.y * size.z;
+    this.tetra = new TetraVolume(
+      bodies,
+      rest,
+      Math.min(size.x, size.y, size.z),
+    );
     this.minSize = Math.min(size.x, size.y, size.z);
     this.up.set(0, 1, 0).applyQuaternion(rotation);
     this.supportRest = support?.position.clone() ?? null;
@@ -111,10 +120,14 @@ export class JellyCage {
         b.force.z -= world.gravity.z * b.mass;
       }
     }
+    const fluidity = this.node.deform.fluidity ?? 0;
     for (const s of this.springs) {
       const mass = Math.min(s.bodyA.mass || Infinity, s.bodyB.mass || Infinity);
       if (!Number.isFinite(mass)) continue;
-      s.stiffness = Math.min(this.node.deform.stiffness, mass / (14 * dt * dt));
+      s.stiffness = Math.min(
+        this.node.deform.stiffness * (1 - fluidity * 0.88),
+        mass / (14 * dt * dt),
+      );
       s.damping = Math.min(this.node.deform.damping, mass / (14 * dt));
       s.applyForce();
     }
@@ -136,7 +149,7 @@ export class JellyCage {
       const b = this.bodies[i];
       if (!b.mass) continue;
       const k = Math.min(
-        this.node.deform.stiffness * recovery * 0.9,
+        this.node.deform.stiffness * recovery * 0.9 * (1 - fluidity * 0.94),
         b.mass / (14 * dt * dt),
       );
       this.v
@@ -249,7 +262,16 @@ export class JellyCage {
       0.65 + recovery * 0.3,
       1.4 - recovery * 0.3,
     );
-    if (ratio === this.volumeRatio) return;
+    if (ratio === this.volumeRatio) {
+      this.tetra.project(
+        this.dt,
+        recovery *
+          (this.support ? 0.045 : 0.3 + (this.node.deform.fluidity ?? 0) * 0.7),
+        this.node.deform.fluidity,
+      );
+      this.measure();
+      return;
+    }
     // Gradient of det(mean opposite-face axes). One bounded XPBD projection.
     const [x, y, z] = this.axes;
     const gx = this.v.crossVectors(y, z),
@@ -280,6 +302,12 @@ export class JellyCage {
       b.velocity.z += (this.v.z / this.dt) * 0.08;
       b.aabbNeedsUpdate = true;
     }
+    this.tetra.project(
+      this.dt,
+      recovery *
+        (this.support ? 0.045 : 0.3 + (this.node.deform.fluidity ?? 0) * 0.7),
+      this.node.deform.fluidity,
+    );
     this.measure();
   }
 }

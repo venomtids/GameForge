@@ -58,6 +58,10 @@ export interface DeformSettings {
   volume?: number;
   /** Maximum spring length relative to its rest length. */
   maxStretch?: number;
+  /** 0 = elastic solid, 1 = sealed pressure-driven viscous drop (not free water). */
+  fluidity?: number;
+  /** Optional vertex-triangle contact for a free jelly and the player. */
+  surfaceCollision?: boolean;
   /** Vertex response settings, optional in legacy schema7 projects. */
   intensity?: number;
   movementInfluence?: number;
@@ -77,6 +81,8 @@ export const deformDefaults: DeformSettings = {
   damping: 3,
   volume: 0.85,
   maxStretch: 1.65,
+  fluidity: 0,
+  surfaceCollision: true,
   intensity: 1.2,
   movementInfluence: 1.25,
   distanceFalloff: 1.2,
@@ -151,6 +157,7 @@ export function validateDeform(v: any): DeformSettings {
     "Física articulada/deformável inválida.",
   );
   for (const [key, min, max] of [
+    ["fluidity", 0, 1],
     ["intensity", 0, 3],
     ["movementInfluence", 0, 4],
     ["distanceFalloff", 0.1, 4],
@@ -163,7 +170,7 @@ export function validateDeform(v: any): DeformSettings {
       v[key] === undefined || finite(v[key], min, max),
       `Gelatina: ${key} inválido.`,
     );
-  for (const key of ["maintainRadius", "useLOD"] as const)
+  for (const key of ["maintainRadius", "useLOD", "surfaceCollision"] as const)
     check(
       v[key] === undefined || typeof v[key] === "boolean",
       `Gelatina: ${key} inválido.`,
@@ -181,6 +188,8 @@ export function validateDeform(v: any): DeformSettings {
   );
   const optional = Object.fromEntries(
     [
+      "fluidity",
+      "surfaceCollision",
       "intensity",
       "movementInfluence",
       "distanceFalloff",

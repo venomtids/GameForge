@@ -2,6 +2,7 @@ import type { DeformSettings } from "./features06";
 export const jellyPresets = {
   soft: {
     label: "Muito mole",
+    fluidity: 0,
     stiffness: 42,
     damping: 1.4,
     volume: 0.82,
@@ -12,6 +13,7 @@ export const jellyPresets = {
   },
   balanced: {
     label: "Macia",
+    fluidity: 0,
     stiffness: 65,
     damping: 2.4,
     volume: 0.88,
@@ -20,8 +22,20 @@ export const jellyPresets = {
     movementInfluence: 1.25,
     radiusConstraint: 0.3,
   },
+  drop: {
+    label: "Gota viscosa",
+    stiffness: 28,
+    damping: 3,
+    volume: 0.97,
+    maxStretch: 2,
+    fluidity: 0.85,
+    intensity: 1.7,
+    movementInfluence: 1.5,
+    radiusConstraint: 0.12,
+  },
   firm: {
     label: "Firme",
+    fluidity: 0,
     stiffness: 145,
     damping: 6,
     volume: 0.97,

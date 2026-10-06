@@ -1,4 +1,5 @@
 import { fpsArms, animateArms, styleArms, setHandProp } from "./Humanoid";
+import { renderWithViewmodel, VIEWMODEL_LAYER } from "./viewmodel";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { controls, type Project, type CameraMode } from "./model";
@@ -15,6 +16,8 @@ export class CameraRig {
   );
   private torchSignature = "";
   private handKind = "";
+  private lastYaw = 0;
+  private lastPitch = 0;
   private shakeAmount = 0;
   private shakeLeft = 0;
   perspective = new THREE.PerspectiveCamera(55, 1, 0.06, 1000);
@@ -117,7 +120,11 @@ export class CameraRig {
   };
   constructor(private canvas: HTMLCanvasElement) {
     this.perspective.position.set(14, 12, 17);
+    this.arms.traverse((o) => o.layers.set(VIEWMODEL_LAYER));
     this.perspective.add(this.arms);
+    const viewLight = new THREE.AmbientLight("#ffffff", 2.5);
+    viewLight.layers.set(VIEWMODEL_LAYER);
+    this.perspective.add(viewLight);
     this.arms.visible = false;
     this.torch.name = "studio-torch";
     this.torch.position.set(0.24, -0.2, 0);
@@ -283,14 +290,25 @@ export class CameraRig {
         this.arms,
         config,
         world.jellyCharacters.get(config.id)?.deformation ?? 1,
+        dt,
       );
-      animateArms(this.arms, dt, velocity, b ? world.grounded(b) : false);
+      animateArms(
+        this.arms,
+        dt,
+        velocity,
+        b ? world.grounded(b) : false,
+        b?.velocity.y ?? 0,
+        this.yaw - this.lastYaw,
+        this.pitch - this.lastPitch,
+      );
       const dados = this.arms.userData as any;
       if (dados?.lanterna) dados.lanterna.visible = !!torch.enabled;
       this.arms.traverse((o) => {
         if (o instanceof THREE.Mesh) o.castShadow = false;
       });
     }
+    this.lastYaw = this.yaw;
+    this.lastPitch = this.pitch;
     /* objeto na mao livre pedido pelo script (engine.hand) */
     const pedido = world.hand;
     if (
@@ -359,6 +377,14 @@ export class CameraRig {
       this.camera.rotation.z += Math.sin(t * 61) * forca * 0.035;
       if (this.shakeLeft === 0) this.shakeAmount = 0;
     }
+  }
+  render(renderer: THREE.WebGLRenderer, scene: THREE.Scene) {
+    renderWithViewmodel(
+      renderer,
+      scene,
+      this.camera,
+      this.arms.visible && this.playing && this.mode === "first",
+    );
   }
   async capture() {
     if (document.pointerLockElement === this.canvas) return;

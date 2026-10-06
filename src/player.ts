@@ -232,7 +232,6 @@ try {
             .getWorldPosition(new THREE.Vector3())
         : rig.controls.target,
     );
-    renderer.render(scene, rig.camera);
     sum += dt;
     frames++;
     if (sum > 0.75) {
@@ -242,6 +241,9 @@ try {
       sum = 0;
       frames = 0;
     }
+    // Resize the backbuffer BEFORE drawing. A late setPixelRatio clears the
+    // just-presented mobile frame and can show only the blue CSS background.
+    rig.render(renderer, scene);
   }
   requestAnimationFrame(frame);
   window.addEventListener(

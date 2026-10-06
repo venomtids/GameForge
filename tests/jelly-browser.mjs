@@ -81,6 +81,17 @@ try {
     return n?.deform.stiffness === 145 && n.deform.intensity === 0.55;
   });
   await page
+    .getByRole("button", { name: "Gelatina gota viscosa", exact: true })
+    .click();
+  await page
+    .getByLabel("Contato por triângulos deformados", { exact: true })
+    .uncheck();
+  await page.waitForFunction(() => {
+    const p = JSON.parse(localStorage.getItem("gameforge.project.v6")),
+      n = p.scenes[0].nodes.find((n) => n.id === p.settings.playerId);
+    return n?.deform.fluidity === 0.85 && n.deform.surfaceCollision === false;
+  });
+  await page
     .getByRole("button", { name: "Gelatina muito mole", exact: true })
     .click();
   await page.getByLabel("Intensidade da gelatina", { exact: true }).fill("1.9");
@@ -91,6 +102,7 @@ try {
       n = p.scenes[0].nodes.find((n) => n.id === p.settings.playerId);
     return (
       n?.deform.stiffness === 42 &&
+      n.deform.fluidity === 0 &&
       n.deform.intensity === 1.9 &&
       n.deform.movementInfluence === 1.6 &&
       n.deform.pivot?.[1] === -0.2
@@ -164,8 +176,41 @@ try {
     rig.update(w, 1 / 60);
     const firstHidden = !w.objects.get(w.playerId).visible,
       firstArms = rig.arms.visible;
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: false,
+      preserveDrawingBuffer: true,
+    });
+    renderer.setSize(480, 300, false);
+    rig.resize(480 / 300);
+    rig.render(renderer, w.scene);
+    const gl = renderer.getContext(),
+      withHands = new Uint8Array(480 * 300 * 4);
+    gl.readPixels(0, 0, 480, 300, gl.RGBA, gl.UNSIGNED_BYTE, withHands);
+    rig.arms.visible = false;
+    rig.render(renderer, w.scene);
+    const withoutHands = new Uint8Array(withHands.length);
+    gl.readPixels(0, 0, 480, 300, gl.RGBA, gl.UNSIGNED_BYTE, withoutHands);
+    let changedPixels = 0;
+    for (let i = 0; i < withHands.length; i += 4)
+      if (
+        Math.abs(withHands[i] - withoutHands[i]) +
+          Math.abs(withHands[i + 1] - withoutHands[i + 1]) +
+          Math.abs(withHands[i + 2] - withoutHands[i + 2]) >
+        30
+      )
+        changedPixels++;
+    const viewmodelComposite =
+      changedPixels > 250 && rig.camera.layers.mask === 1 && renderer.autoClear;
+    rig.arms.visible = true;
+    renderer.forceContextLoss();
+    renderer.dispose();
     const hand = rig.arms.userData.direita.mao.material;
-    const gelHand = hand.transparent && hand.color.getHexString() === "9cf5d2";
+    const gelHand =
+      !hand.transparent &&
+      hand.depthTest &&
+      hand.depthWrite &&
+      hand.color.getHexString() === "9cf5d2";
     w.damage(w.playerId, 100);
     rig.update(w, 1 / 60);
     const deadArmsHidden = !rig.arms.visible;
@@ -209,6 +254,7 @@ try {
       firstHidden,
       firstArms,
       gelHand,
+      viewmodelComposite,
       deadArmsHidden,
       respawnVisible,
       jumpVisualAligned,
@@ -260,6 +306,8 @@ try {
     "Gelatina · edição rápida 🚀",
   );
   console.log("PASS immediate name edit/blur/save uses the latest UTF-8 draft");
+  // Release both editor and its GPU context before stressing SwiftShader offline.
+  await page.close();
 
   const offline = await browser.newContext({
     viewport: { width: 390, height: 844 },
@@ -283,7 +331,23 @@ try {
   await game.setViewportSize({ width: 391, height: 844 });
   await game.setViewportSize({ width: 390, height: 844 });
   await game.waitForTimeout(700);
-  await game.screenshot({ path: "test-results/jelly-offline-mobile.png" });
+  const mobileShot = await game.screenshot({
+    path: "test-results/jelly-offline-mobile.png",
+  });
+  const scenePixel = await game.evaluate(async (encoded) => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${encoded}`;
+    await image.decode();
+    const sample = document.createElement("canvas");
+    sample.width = sample.height = 1;
+    const context = sample.getContext("2d");
+    context.drawImage(image, 195, 500, 1, 1, 0, 0, 1, 1);
+    return Array.from(context.getImageData(0, 0, 1, 1).data);
+  }, mobileShot.toString("base64"));
+  assert.ok(
+    scenePixel[0] > 100 && scenePixel[1] > scenePixel[0] + 8,
+    `Mobile scene disappeared after GPU resize: ${scenePixel}`,
+  );
   await game
     .getByRole("button", { name: "Retornar ao checkpoint", exact: true })
     .tap();
@@ -307,7 +371,8 @@ try {
   );
   console.log("ALL JELLY BROWSER/EXPORT TESTS PASSED");
 } catch (error) {
-  await page.screenshot({ path: "test-results/jelly-failure.png" });
+  if (!page.isClosed())
+    await page.screenshot({ path: "test-results/jelly-failure.png" });
   throw error;
 } finally {
   await browser.close();

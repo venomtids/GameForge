@@ -2,6 +2,10 @@ import { sampleAnimation } from "./animation";
 import { humanoid, animateHumanoid } from "./Humanoid";
 import { PhysicalRig } from "./PhysicalRig";
 import { JellyCharacter } from "./JellyCharacter";
+import {
+  DeformedMeshContact,
+  resolveDeformedSphere,
+} from "./DeformedMeshContact";
 import { jellyBox, jellyMaterial } from "./jelly-material";
 import { BotController } from "./BotController";
 import {
@@ -53,6 +57,9 @@ export class World {
   physicalRigs = new Map<string, PhysicalRig>();
   jellyCharacters = new Map<string, JellyCharacter>();
   private jellyView?: THREE.Vector3;
+  private meshContact = new DeformedMeshContact();
+  private meshGround?: { body: CANNON.Body; until: number };
+  private footProbe = new THREE.Vector3();
   setJellyView(position: THREE.Vector3) {
     (this.jellyView ??= new THREE.Vector3()).copy(position);
   }
@@ -756,7 +763,10 @@ export class World {
   }
   grounded(body: CANNON.Body) {
     return (
-      this.physics?.contacts.some((c) => {
+      (this.meshGround?.body === body &&
+        this.meshGround.until >= this.elapsed &&
+        body.velocity.y <= 0.5) ||
+      (this.physics?.contacts.some((c) => {
         if (!c.enabled) return false;
         const sign = c.bi === body ? -1 : c.bj === body ? 1 : 0;
         if (!sign || c.ni.y * sign <= 0.5) return false;
@@ -778,7 +788,8 @@ export class World {
           (c.bj.position.y + c.rj.y - c.bi.position.y - c.ri.y) * c.ni.y +
           (c.bj.position.z + c.rj.z - c.bi.position.z - c.ri.z) * c.ni.z;
         return separating <= 2 && gap <= 0.005;
-      }) ?? false
+      }) ??
+        false)
     );
   }
   damage(id: string, amount: number, source = "script") {
@@ -895,6 +906,7 @@ export class World {
     if (this.playerId) this.jellyCharacters.get(this.playerId)?.reset();
     this.jumpQueuedUntil = -100;
     this.lastGelBounce = -100;
+    this.meshGround = undefined;
     this.respawnRequested = false;
     this.deaths++;
     this.lastGround = -100;
@@ -1088,8 +1100,20 @@ export class World {
     this.physics.step(dt);
     for (const rig of this.physicalRigs.values()) {
       rig.afterStep();
-      rig.sync(dt, this.jellyView);
+      rig.sync(
+        dt,
+        this.jellyView,
+        player?.position
+          ? this.footProbe.set(
+              player.position.x,
+              player.position.y,
+              player.position.z,
+            )
+          : undefined,
+      );
     }
+    if (player && this.playerId && !this.physicalRigs.has(this.playerId))
+      this.resolveMeshContacts(player);
     if (
       player &&
       !this.inputFrozen &&
@@ -1252,6 +1276,67 @@ export class World {
               `Faltam ${this.total - this.collected} cristais para concluir.`,
             );
           }
+        }
+      }
+    }
+  }
+  /** A limited sphere-vs-triangle narrowphase complements Cannon corner
+   * particles for *free* jellies. Anchored parkour pads keep solid flat support. */
+  private resolveMeshContacts(player: CANNON.Body) {
+    const shape = player.shapes[0];
+    if (!(shape instanceof CANNON.Box || shape instanceof CANNON.Sphere))
+      return;
+    const half =
+      shape instanceof CANNON.Box ? shape.halfExtents.y : shape.radius;
+    const radius =
+      shape instanceof CANNON.Box
+        ? Math.max(
+            0.04,
+            Math.min(shape.halfExtents.x, shape.halfExtents.z) * 0.85,
+          )
+        : shape.radius;
+    for (const rig of this.physicalRigs.values()) {
+      if (
+        rig.type !== "jelly" ||
+        rig.anchored ||
+        rig.node.deform.surfaceCollision === false
+      )
+        continue;
+      let deepest: ReturnType<DeformedMeshContact["query"]> = null;
+      for (const offset of [-half + radius, 0, half - radius]) {
+        this.footProbe.set(
+          player.position.x,
+          player.position.y + offset,
+          player.position.z,
+        );
+        const contact = this.meshContact.query(
+          rig.meshes[0],
+          this.footProbe,
+          radius,
+        );
+        if (contact && contact.depth > (deepest?.depth ?? 0)) deepest = contact;
+      }
+      if (!deepest) continue;
+      const normal = deepest.normal;
+      const toward =
+        player.velocity.x * normal.x +
+        player.velocity.y * normal.y +
+        player.velocity.z * normal.z;
+      if (resolveDeformedSphere(player, deepest) > 0) {
+        if (normal.y > 0.5 && player.velocity.y <= 0.5)
+          this.meshGround = { body: player, until: this.elapsed + 1 / 40 };
+        if (toward < -0.15) {
+          rig.contactImpulse(
+            deepest.point,
+            normal.clone().negate(),
+            -toward * player.mass * 0.18,
+          );
+          rig.surface?.impulse(
+            deepest.point,
+            normal.clone().negate(),
+            Math.min(6, -toward),
+            radius * 2,
+          );
         }
       }
     }
@@ -1590,6 +1675,7 @@ export class World {
     this.turns.clear();
     for (const rig of this.physicalRigs.values()) rig.dispose();
     this.physicalRigs.clear();
+    this.meshGround = undefined;
     for (const jelly of this.jellyCharacters.values()) jelly.dispose();
     this.jellyCharacters.clear();
     this.health.clear();

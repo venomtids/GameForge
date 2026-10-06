@@ -1,3 +1,7 @@
+# Validação da gelatina 0.8.3 · 06/10/2026
+
+**130/130 testes unitários**, typecheck/build e testes de navegador `test:jelly`, `test:studio06`, `test:studio08`, `test:export:studio08` passaram. Braços e câmera, 6 tetraedros XPBD, gota viscosa confinada e consulta triângulo da malha para gelatinas livres cobertos. Visão de primeira pessoa comparada por pixels, mobile `file://` a 390px verifica **pixels de cena** após resize, layout 320–1920. Parkour completo sem teleporte/morte nas cadências de entrada 30/60/144. Studio e jogo nos servidores 5173/5174 respondem HTTP200. O instalador 0.8.2 documentado abaixo é da versão anterior, sem estas alterações. **O instalador 0.8.3 ainda precisa passar Windows CI nativo antes de ser declarado entregue.**
+
 # Validação da gelatina 0.8.2 · 06/10/2026
 
 - 121 testes unitários, typecheck/build e `test:jelly`, `test:studio06`, `test:studio08`.
@@ -6,7 +10,7 @@
 - Saltos/boosts repetidos sem deriva; topo alinhado ao apoio; 11 superfícies, 5 cristais, 2 checkpoints e percurso completo a 30/60/144 cadências, sem teleporte/mortes.
 - Offline `file://`, mobile 390px e workspace 320–1920px. Cadências de teste não são garantia de FPS em todo dispositivo.
 - Studio5173 e jogo5174 reconstruídos/HTTP200 com host de prévia.
-- Conexão GitHub recuperada. Validação do instalador 0.8.2 no Windows CI está em andamento; atualizar esta seção com o resultado antes de declarar entrega nativa.
+- **Windows CI 37466047048: success (3m08s)**. NSIS gerado/instalado, recursos verificados, executável instalado/IPC/backup/exportação testados e release 0.8.2 publicada. [Execução](https://github.com/venomtids/GameForge/actions/runs/37466047048) · [download](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.2/GameForge-Studio-0.8.2-Windows-x64-Setup.exe). Código `2a13d4ed1534ebc489e7f918f53db33926831118`; 103.753.986 bytes; SHA-256 `598f6cb27b00190fb8a7f64687ed686bffc404ddf359f6a31d606272632c819d`. A conexão GitHub expirou depois da publicação: documentos atualizados estão salvos localmente até reconexão, mas o instalador público já foi entregue.
 
 [Detalhes e limites da adaptação](docs/GELATINA-0.8.2.md).
 

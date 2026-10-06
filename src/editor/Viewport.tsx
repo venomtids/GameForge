@@ -116,7 +116,7 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
     screenshot: () => {
       const a = api.current;
       if (!a) return;
-      a.renderer.render(a.scene, a.rig.camera);
+      a.rig.render(a.renderer, a.scene);
       return a.renderer.domElement.toDataURL("image/png");
     },
     respawn: () => api.current?.world.respawn(),
@@ -127,7 +127,7 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
     thumbnail: () => {
       const a = api.current;
       if (!a) return;
-      a.renderer.render(a.scene, a.rig.camera);
+      a.rig.render(a.renderer, a.scene);
       const image = document.createElement("canvas");
       image.width = 360;
       image.height = 210;
@@ -528,7 +528,6 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
           }
       }
       for (const h of helpers) h.update();
-      renderer.render(scene, rig.camera);
       sum += dt;
       frames++;
       if (sum >= 0.5) {
@@ -554,6 +553,9 @@ export default forwardRef<ViewportAPI, Props>(function Viewport(props, ref) {
         sum = 0;
         frames = 0;
       }
+      // Always draw AFTER any adaptive pixel-ratio resize: otherwise WebGL
+      // clears the previous frame and narrow screens flash a blank canvas.
+      rig.render(renderer, scene);
     };
     frame = requestAnimationFrame(tick);
     return () => {

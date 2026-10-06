@@ -178,12 +178,12 @@ export function animateHumanoid(
     h.rightLeg.rotation.x = suave(h.rightLeg.rotation.x, 0.34, blend);
     h.leftKnee.rotation.x = suave(h.leftKnee.rotation.x, -0.95, blend);
     h.rightKnee.rotation.x = suave(h.rightKnee.rotation.x, -0.55, blend);
-    h.leftArm.rotation.x = suave(h.leftArm.rotation.x, -1.15, blend);
-    h.rightArm.rotation.x = suave(h.rightArm.rotation.x, -1.05, blend);
+    h.leftArm.rotation.x = suave(h.leftArm.rotation.x, 1.05, blend);
+    h.rightArm.rotation.x = suave(h.rightArm.rotation.x, 1.0, blend);
     h.leftArm.rotation.z = suave(h.leftArm.rotation.z, 0.32, blend);
     h.rightArm.rotation.z = suave(h.rightArm.rotation.z, -0.32, blend);
-    h.leftElbow.rotation.x = suave(h.leftElbow.rotation.x, -0.55, blend);
-    h.rightElbow.rotation.x = suave(h.rightElbow.rotation.x, -0.5, blend);
+    h.leftElbow.rotation.x = suave(h.leftElbow.rotation.x, 0.55, blend);
+    h.rightElbow.rotation.x = suave(h.rightElbow.rotation.x, 0.5, blend);
     h.head.rotation.x = suave(h.head.rotation.x, -0.12, blend);
   } else if (andando) {
     const swingE = seno * amp,
@@ -195,10 +195,18 @@ export function animateHumanoid(
       -Math.max(0, swingE) * 1.05 - (correndo ? 0.2 : 0.06);
     h.rightKnee.rotation.x =
       -Math.max(0, swingD) * 1.05 - (correndo ? 0.2 : 0.06);
-    h.leftArm.rotation.x = suave(h.leftArm.rotation.x, -swingE * 0.78, blend);
-    h.rightArm.rotation.x = suave(h.rightArm.rotation.x, -swingD * 0.78, blend);
-    h.leftElbow.rotation.x = -0.34 - Math.max(0, -swingE) * 0.5;
-    h.rightElbow.rotation.x = -0.34 - Math.max(0, -swingD) * 0.5;
+    h.leftArm.rotation.x = suave(
+      h.leftArm.rotation.x,
+      0.12 - swingE * 0.65,
+      blend,
+    );
+    h.rightArm.rotation.x = suave(
+      h.rightArm.rotation.x,
+      0.12 - swingD * 0.65,
+      blend,
+    );
+    h.leftElbow.rotation.x = 0.34 + Math.max(0, swingE) * 0.35;
+    h.rightElbow.rotation.x = 0.34 + Math.max(0, swingD) * 0.35;
     h.leftArm.rotation.z = suave(h.leftArm.rotation.z, 0.1, blend);
     h.rightArm.rotation.z = suave(h.rightArm.rotation.z, -0.1, blend);
     h.head.rotation.x = suave(h.head.rotation.x, correndo ? 0.08 : 0.02, blend);
@@ -225,8 +233,8 @@ export function animateHumanoid(
     );
     h.leftArm.rotation.z = suave(h.leftArm.rotation.z, 0.08, blend);
     h.rightArm.rotation.z = suave(h.rightArm.rotation.z, -0.08, blend);
-    h.leftElbow.rotation.x = suave(h.leftElbow.rotation.x, -0.22, blend);
-    h.rightElbow.rotation.x = suave(h.rightElbow.rotation.x, -0.22, blend);
+    h.leftElbow.rotation.x = suave(h.leftElbow.rotation.x, 0.22, blend);
+    h.rightElbow.rotation.x = suave(h.rightElbow.rotation.x, 0.22, blend);
     h.head.rotation.x = suave(h.head.rotation.x, respira * 0.03, blend);
     h.lean.rotation.x = suave(h.lean.rotation.x, 0, blend);
     h.lean.position.y = respira * 0.012 + h.land * 0.05;
@@ -247,37 +255,44 @@ export interface FpsArms extends THREE.Group {
     esquerda: { braco: THREE.Group; mao: THREE.Mesh; antebraco: THREE.Mesh };
     direita: { braco: THREE.Group; mao: THREE.Mesh; antebraco: THREE.Mesh };
     palette?: string;
+    squash?: number;
+    motion?: number;
   };
 }
 /** Braços em primeira pessoa com lanterna na mão direita. */
 export function fpsArms() {
   const group = new THREE.Group() as FpsArms;
   const material = (color: string) =>
-    new THREE.MeshStandardMaterial({
+    new THREE.MeshPhysicalMaterial({
       color,
       roughness: 0.7,
-      depthTest: false,
-      depthWrite: false,
+      depthTest: true,
+      depthWrite: true,
     });
   const pele = material("#ddb48d"),
     tecido = material("#4d6a72"),
     metal = material("#3d4249");
   const build = (side: number) => {
     const braco = new THREE.Group();
-    braco.position.set(side * 0.22, -0.3, -0.1);
-    braco.rotation.z = side * 0.1;
-    const antebraco = box([0.11, 0.12, 0.34], [0, 0, -0.17], tecido);
-    antebraco.renderOrder = 1000;
-    const mao = box([0.1, 0.1, 0.14], [0, -0.01, -0.36], pele);
-    mao.renderOrder = 1001;
-    braco.add(antebraco, mao);
+    // Short upper sleeves + distinct palms/thumbs, framed below the horizon.
+    // A jointed silhouette is easier to read than two long tubes from the lens.
+    braco.position.set(side * 0.25, -0.3, -0.28);
+    braco.scale.setScalar(0.82);
+    braco.rotation.set(0, side * 0.08, side * 0.06);
+    const sleeve = new THREE.Mesh(jellyBox([0.14, 0.14, 0.15], 1), tecido);
+    sleeve.position.set(side * 0.01, -0.025, -0.045);
+    const antebraco = box([0.11, 0.11, 0.25], [0, 0, -0.18], tecido);
+    const mao = box([0.14, 0.09, 0.16], [-side * 0.02, 0.035, -0.36], pele);
+    const thumb = new THREE.Mesh(jellyBox([0.06, 0.07, 0.1], 1), pele);
+    thumb.position.set(-side * 0.09, 0, -0.35);
+    braco.add(sleeve, antebraco, mao, thumb);
     return { braco, mao, antebraco };
   };
   const esquerda = build(-1),
     direita = build(1);
   // lanterna na mão direita
   const lanterna = new THREE.Group();
-  lanterna.position.set(0, 0.02, -0.48);
+  lanterna.position.set(0, 0.015, -0.19);
   const corpo = box([0.09, 0.09, 0.3], [0, 0, 0], metal);
   corpo.renderOrder = 1001;
   const lente = box([0.11, 0.11, 0.05], [0, 0, -0.17], material("#ffe9b8"));
@@ -295,7 +310,12 @@ export function fpsArms() {
   return group;
 }
 /** Match the view model to a gelatin actor without recoloring held props. */
-export function styleArms(arms: FpsArms, n: Node3D, deformation = 1) {
+export function styleArms(
+  arms: FpsArms,
+  n: Node3D,
+  deformation = 1,
+  dt = 1 / 60,
+) {
   const jelly = n.deform.type === "jelly",
     signature = `${jelly}:${n.color}:${n.actor.skin}`;
   const data = arms.userData;
@@ -309,16 +329,28 @@ export function styleArms(arms: FpsArms, n: Node3D, deformation = 1) {
         const m = mesh.material as THREE.MeshStandardMaterial;
         m.color.set(color);
         m.roughness = jelly ? 0.18 : 0.7;
-        m.transparent = jelly;
-        m.opacity = jelly ? 0.86 : 1;
+        m.transparent = false;
+        m.opacity = 1;
+        m.depthTest = m.depthWrite = true;
+        (m as THREE.MeshPhysicalMaterial).clearcoat = jelly ? 0.85 : 0;
+        mesh.geometry.dispose();
+        const size: [number, number, number] =
+          mesh === side.mao ? [0.14, 0.09, 0.16] : [0.11, 0.11, 0.25];
+        mesh.geometry = jelly
+          ? jellyBox(size, 1)
+          : new THREE.BoxGeometry(...size);
         m.needsUpdate = true;
       }
   }
+  const target = THREE.MathUtils.clamp(deformation, 0.84, 1.12);
+  data.squash =
+    (data.squash ?? 1) +
+    (target - (data.squash ?? 1)) * (1 - Math.exp(-12 * Math.min(dt, 0.05)));
   for (const side of [data.esquerda, data.direita])
     side.braco.scale.set(
-      jelly ? 1 / Math.sqrt(deformation) : 1,
-      jelly ? deformation : 1,
-      1,
+      jelly ? 0.82 / Math.sqrt(data.squash) : 0.82,
+      jelly ? 0.82 * data.squash : 0.82,
+      0.82,
     );
 }
 /** Modelos prontos de "coisa na mao": a engine entrega a forma, o jogo escolhe qual. */
@@ -328,11 +360,11 @@ export function handProp(kind: string) {
       color,
       metalness,
       roughness: 0.45,
-      depthTest: false,
-      depthWrite: false,
+      depthTest: true,
+      depthWrite: true,
     });
   const grupo = new THREE.Group();
-  grupo.position.set(0, -0.02, -0.42);
+  grupo.position.set(0, -0.01, -0.17);
   grupo.rotation.set(-0.25, 0, 0);
   const peca = (
     geo: THREE.BufferGeometry,
@@ -452,6 +484,7 @@ export function setHandProp(arms: THREE.Group, kind: string) {
   if (!kind || kind === "nenhum") return;
   const grupo = handProp(kind);
   if (!grupo) return;
+  grupo.traverse((o) => o.layers.set(1));
   dados.esquerda.mao.add(grupo);
   dados.prop = grupo;
 }
@@ -461,17 +494,35 @@ export function animateArms(
   dt: number,
   velocidade: number,
   grounded: boolean,
+  vy = 0,
+  lookX = 0,
+  lookY = 0,
 ) {
   const dados = arms.userData as any;
   if (!dados) return;
   const andando = velocidade > 0.2 && grounded,
     passo = Math.min(1, velocidade / 6);
   dados.phase += dt * (andando ? 3 + velocidade * 1.2 : 1.1);
-  dados.phase = dados.phase % (Math.PI * 2);
+  // Both sin(phase) and cos(phase/2) must be periodic at the wrap.
+  dados.phase = dados.phase % (Math.PI * 4);
   const seno = Math.sin(dados.phase),
-    amp = andando ? 0.02 + passo * 0.028 : 0.004;
-  arms.position.y = seno * amp;
-  arms.position.x = Math.cos(dados.phase * 0.5) * (andando ? 0.008 : 0.002);
+    target = andando ? 0.018 + passo * 0.022 : 0.004;
+  dados.motion =
+    (dados.motion ?? 0) +
+    (target - (dados.motion ?? 0)) * (1 - Math.exp(-12 * Math.min(dt, 0.05)));
+  const amp = dados.motion;
+  dados.lookX =
+    (dados.lookX ?? 0) +
+    (THREE.MathUtils.clamp(lookX, -0.08, 0.08) - (dados.lookX ?? 0)) *
+      (1 - Math.exp(-15 * dt));
+  dados.lookY =
+    (dados.lookY ?? 0) +
+    (THREE.MathUtils.clamp(lookY, -0.08, 0.08) - (dados.lookY ?? 0)) *
+      (1 - Math.exp(-15 * dt));
+  arms.position.y = seno * amp + dados.lookY * 0.2;
+  arms.position.z = grounded ? 0 : THREE.MathUtils.clamp(vy, -10, 10) * 0.002;
+  arms.position.x =
+    Math.cos(dados.phase * 0.5) * amp * 0.18 - dados.lookX * 0.3;
   arms.rotation.z = -seno * (andando ? 0.02 : 0.004);
   if (dados.esquerda) dados.esquerda.braco.rotation.x = -seno * amp * 6;
   if (dados.direita) dados.direita.braco.rotation.x = seno * amp * 6;
