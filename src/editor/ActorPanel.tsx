@@ -1,3 +1,5 @@
+import { deformDefaults } from "../engine/features06";
+import { jellyPreset, jellyPresets } from "../engine/jelly-presets";
 import type { Node3D } from "../engine/model";
 export default function ActorPanel({
   node: n,
@@ -154,13 +156,44 @@ export default function ActorPanel({
               <option value="jelly">Gelatina · corpo elástico</option>
             </select>
           </label>
+          {n.deform.type === "jelly" && (
+            <div
+              style={{
+                display: "flex",
+                gap: 6,
+                flexWrap: "wrap",
+                marginBottom: 8,
+              }}
+            >
+              {(Object.keys(jellyPresets) as (keyof typeof jellyPresets)[]).map(
+                (key) => (
+                  <button
+                    key={key}
+                    style={{ flex: "1 1 74px" }}
+                    disabled={disabled}
+                    aria-label={`Gelatina ${jellyPresets[key].label.toLowerCase()}`}
+                    onClick={() =>
+                      onChange({ deform: { ...n.deform, ...jellyPreset(key) } })
+                    }
+                  >
+                    {jellyPresets[key].label}
+                  </button>
+                ),
+              )}
+            </div>
+          )}
           {n.deform.type === "jelly" &&
             (
               [
-                ["stiffness", "Rigidez das molas", 20, 180, 5],
-                ["damping", "Amortecimento", 0.5, 8, 0.5],
+                ["stiffness", "Rigidez das molas", 5, 180, 5],
+                ["damping", "Amortecimento", 0.1, 8, 0.1],
                 ["volume", "Recuperação de volume", 0, 1, 0.05],
                 ["maxStretch", "Limite de esticamento", 1.1, 2.5, 0.05],
+                ["intensity", "Intensidade da gelatina", 0, 3, 0.1],
+                ["movementInfluence", "Reação ao movimento", 0, 4, 0.1],
+                ["distanceFalloff", "Distribuição pelo pivô", 0.1, 4, 0.1],
+                ["radiusConstraint", "Preservação do raio", 0, 1, 0.05],
+                ["performance", "Economia da malha", 0, 1, 0.1],
               ] as const
             ).map(([key, label, min, max, step]) => (
               <label key={key}>
@@ -172,7 +205,7 @@ export default function ActorPanel({
                   min={min}
                   max={max}
                   step={step}
-                  value={n.deform[key] ?? (key === "volume" ? 0.85 : 1.65)}
+                  value={n.deform[key] ?? deformDefaults[key]}
                   onChange={(e) => {
                     const v = e.target.valueAsNumber;
                     if (Number.isFinite(v))
@@ -188,6 +221,95 @@ export default function ActorPanel({
             ))}
           {n.deform.type === "jelly" && (
             <>
+              {(["maintainRadius", "useLOD"] as const).map((key) => (
+                <label className="check" key={key}>
+                  <input
+                    type="checkbox"
+                    aria-label={
+                      key === "useLOD"
+                        ? "LOD automático da gelatina"
+                        : "Manter raio da gelatina"
+                    }
+                    disabled={disabled}
+                    checked={n.deform[key] ?? true}
+                    onChange={(e) =>
+                      onChange({
+                        deform: { ...n.deform, [key]: e.target.checked },
+                      })
+                    }
+                  />
+                  {key === "useLOD"
+                    ? "LOD automático · só detalhe visual"
+                    : "Manter raio em torno do pivô"}
+                </label>
+              ))}
+              {(["lodNear", "lodFar"] as const).map((key) => (
+                <label key={key}>
+                  {key === "lodNear" ? "LOD próximo" : "LOD distante"}
+                  <input
+                    type="number"
+                    aria-label={
+                      key === "lodNear" ? "LOD próximo" : "LOD distante"
+                    }
+                    min={key === "lodNear" ? 1 : 10}
+                    max={key === "lodNear" ? 50 : 200}
+                    disabled={disabled}
+                    value={n.deform[key] ?? deformDefaults[key]}
+                    onChange={(e) => {
+                      if (!Number.isFinite(e.target.valueAsNumber)) return;
+                      const v =
+                        key === "lodNear"
+                          ? Math.min(n.deform.lodFar ?? 80, 51) - 1
+                          : Math.max(n.deform.lodNear ?? 14, 9) + 1;
+                      onChange({
+                        deform: {
+                          ...n.deform,
+                          [key]:
+                            key === "lodNear"
+                              ? Math.max(1, Math.min(v, e.target.valueAsNumber))
+                              : Math.min(
+                                  200,
+                                  Math.max(v, e.target.valueAsNumber),
+                                ),
+                        },
+                      });
+                    }}
+                  />
+                </label>
+              ))}
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+                  gap: 6,
+                }}
+              >
+                {(["X", "Y", "Z"] as const).map((axis, i) => (
+                  <label key={axis}>
+                    Pivô {axis}
+                    <input
+                      type="number"
+                      aria-label={`Pivô da gelatina ${axis}`}
+                      min={-2}
+                      max={2}
+                      step={0.1}
+                      disabled={disabled}
+                      value={n.deform.pivot?.[i] ?? 0}
+                      onChange={(e) => {
+                        if (!Number.isFinite(e.target.valueAsNumber)) return;
+                        const pivot: [number, number, number] = [
+                          ...(n.deform.pivot ?? [0, 0, 0]),
+                        ];
+                        pivot[i] = Math.max(
+                          -2,
+                          Math.min(2, e.target.valueAsNumber),
+                        );
+                        onChange({ deform: { ...n.deform, pivot } });
+                      }}
+                    />
+                  </label>
+                ))}
+              </div>
               {n.behavior !== "player" && !n.actor.humanoid && (
                 <label className="check">
                   <input
@@ -206,10 +328,10 @@ export default function ActorPanel({
               )}
               <small>
                 {n.behavior === "player" || n.actor.humanoid
-                  ? "Colisor estável + membros com molas. Ande, corra e pule normalmente."
+                  ? "Colisor estável + articulações e vértices com molas. Acelerar, parar, virar, saltar e aterrissar fazem o corpo oscilar. Pés protegidos."
                   : n.physics === "static"
-                    ? "A superfície cede ao peso. Restituição ≥ 0,4 ativa impulso ao aterrissar. O apoio é um colisor plano aproximado."
-                    : "8 partículas, 28 molas e recuperação de forma/volume. Impulsos e esticamento limitados para estabilidade."}
+                    ? "Mais mole: cede ao peso, balança e recebe impactos localizados. Restituição ≥ 0,4 ativa impulso. O topo mantém um apoio plano aproximado, sem atravessar os pés."
+                    : "Forma original preservada: 8 pontos físicos + molas por vértice, inércia de movimento/rotação, raio e volume. LOD reduz só o detalhe, nunca a colisão."}
               </small>
             </>
           )}

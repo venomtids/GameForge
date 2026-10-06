@@ -185,21 +185,33 @@ export class JellyCage {
     for (const c of world.contacts) {
       if (!c.enabled || (c.bi !== this.support && c.bj !== this.support))
         continue;
-      const normal =
-        c.ni.x * this.up.x + c.ni.y * this.up.y + c.ni.z * this.up.z;
-      if ((c.bi === this.support ? normal : -normal) < 0.45) continue;
+      const sign = c.bi === this.support ? 1 : -1;
+      const nx = c.ni.x * sign,
+        ny = c.ni.y * sign,
+        nz = c.ni.z * sign;
+      if (nx * this.up.x + ny * this.up.y + nz * this.up.z < -0.2) continue;
       const f = clamp(c.multiplier, 0, Math.max(1, this.node.mass) * 150);
       if (!Number.isFinite(f)) continue;
       const r = c.bi === this.support ? c.ri : c.rj;
+      const other = c.bi === this.support ? c.bj : c.bi;
       this.v.set(r.x, r.y, r.z).applyQuaternion(this.inverse);
       const x = clamp(this.v.x / this.size.x + 0.5, 0, 1),
         z = clamp(this.v.z / this.size.z + 0.5, 0, 1);
+      const shear =
+        Math.min(f * 0.12, other.mass * 3) *
+        (this.node.deform.movementInfluence ?? 1.25);
       for (const i of [2, 3, 6, 7]) {
         const weight = (i & 1 ? x : 1 - x) * (i & 4 ? z : 1 - z);
         const b = this.bodies[i];
-        b.force.x -= this.up.x * f * weight;
-        b.force.y -= this.up.y * f * weight;
-        b.force.z -= this.up.z * f * weight;
+        b.force.x +=
+          (-nx * f +
+            clamp(other.velocity.x - this.support.velocity.x, -6, 6) * shear) *
+          weight;
+        b.force.y -= ny * f * weight;
+        b.force.z +=
+          (-nz * f +
+            clamp(other.velocity.z - this.support.velocity.z, -6, 6) * shear) *
+          weight;
       }
     }
   }

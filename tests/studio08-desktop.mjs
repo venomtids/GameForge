@@ -55,10 +55,17 @@ try {
   await page
     .getByLabel("Nome do projeto", { exact: true })
     .fill("Projeto nativo · ação 🚀");
+  await page.getByLabel("Nome do projeto", { exact: true }).press("Enter");
+  await expect(page.locator(".project-identity strong")).toHaveText(
+    "Projeto nativo · ação 🚀",
+    { timeout: 15000 },
+  );
   await page.getByRole("button", { name: "Concluir", exact: true }).click();
   await page.getByRole("button", { name: /^Salvar/ }).click();
   await expect
-    .poll(async () => JSON.parse(await fs.readFile(file, "utf8")).name)
+    .poll(async () => JSON.parse(await fs.readFile(file, "utf8")).name, {
+      timeout: 15000,
+    })
     .toBe("Projeto nativo · ação 🚀");
   assert.equal(await fs.readFile(file + ".bak", "utf8"), first);
   await app.evaluate(({ dialog }, file) => {
@@ -261,6 +268,19 @@ try {
   );
   console.log("ALL STUDIO 0.8 DESKTOP TESTS PASSED");
 } catch (error) {
+  if (nativePage) {
+    const state = await nativePage
+      .evaluate(() => ({
+        title: document.querySelector(".project-identity strong")?.textContent,
+        toast: document.querySelector(".toast")?.textContent,
+        status: document.querySelector(".status-bar")?.textContent,
+        focus: document.activeElement?.outerHTML.slice(0, 350),
+      }))
+      .catch(() => ({}));
+    console.error(
+      `::error title=Native renderer state::${JSON.stringify(state)}`,
+    );
+  }
   await nativePage
     ?.screenshot({ path: "test-results/studio08-windows-failure.png" })
     .catch(() => {});

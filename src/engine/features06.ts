@@ -58,6 +58,18 @@ export interface DeformSettings {
   volume?: number;
   /** Maximum spring length relative to its rest length. */
   maxStretch?: number;
+  /** Vertex response settings, optional in legacy schema7 projects. */
+  intensity?: number;
+  movementInfluence?: number;
+  distanceFalloff?: number;
+  maintainRadius?: boolean;
+  radiusConstraint?: number;
+  /** Offset from the mesh/joint pivot, in half-extents. */
+  pivot?: [number, number, number];
+  useLOD?: boolean;
+  lodNear?: number;
+  lodFar?: number;
+  performance?: number;
 }
 export const deformDefaults: DeformSettings = {
   type: "none",
@@ -65,6 +77,16 @@ export const deformDefaults: DeformSettings = {
   damping: 3,
   volume: 0.85,
   maxStretch: 1.65,
+  intensity: 1.2,
+  movementInfluence: 1.25,
+  distanceFalloff: 1.2,
+  maintainRadius: true,
+  radiusConstraint: 0.3,
+  pivot: [0, 0, 0],
+  useLOD: true,
+  lodNear: 14,
+  lodFar: 80,
+  performance: 0,
 };
 const finite = (v: unknown, a: number, b: number) =>
   typeof v === "number" && Number.isFinite(v) && v >= a && v <= b;
@@ -122,13 +144,61 @@ export function validateDeform(v: any): DeformSettings {
   check(
     v &&
       ["none", "ragdoll", "jelly"].includes(v.type) &&
-      finite(v.stiffness, 20, 180) &&
-      finite(v.damping, 0.5, 8) &&
+      finite(v.stiffness, 5, 180) &&
+      finite(v.damping, 0.1, 8) &&
       (v.volume === undefined || finite(v.volume, 0, 1)) &&
       (v.maxStretch === undefined || finite(v.maxStretch, 1.1, 2.5)),
     "Física articulada/deformável inválida.",
   );
+  for (const [key, min, max] of [
+    ["intensity", 0, 3],
+    ["movementInfluence", 0, 4],
+    ["distanceFalloff", 0.1, 4],
+    ["radiusConstraint", 0, 1],
+    ["lodNear", 1, 50],
+    ["lodFar", 10, 200],
+    ["performance", 0, 1],
+  ] as const)
+    check(
+      v[key] === undefined || finite(v[key], min, max),
+      `Gelatina: ${key} inválido.`,
+    );
+  for (const key of ["maintainRadius", "useLOD"] as const)
+    check(
+      v[key] === undefined || typeof v[key] === "boolean",
+      `Gelatina: ${key} inválido.`,
+    );
+  check(
+    v.pivot === undefined ||
+      (Array.isArray(v.pivot) &&
+        v.pivot.length === 3 &&
+        v.pivot.every((x: unknown) => finite(x, -2, 2))),
+    "Pivô da gelatina inválido.",
+  );
+  check(
+    (v.lodFar ?? 80) > (v.lodNear ?? 14),
+    "LOD distante deve ser maior que LOD próximo.",
+  );
+  const optional = Object.fromEntries(
+    [
+      "intensity",
+      "movementInfluence",
+      "distanceFalloff",
+      "maintainRadius",
+      "radiusConstraint",
+      "useLOD",
+      "lodNear",
+      "lodFar",
+      "performance",
+    ]
+      .filter((k) => v[k] !== undefined)
+      .map((k) => [k, v[k]]),
+  );
   return {
+    ...optional,
+    ...(v.pivot === undefined
+      ? {}
+      : { pivot: [...v.pivot] as [number, number, number] }),
     type: v.type,
     stiffness: v.stiffness,
     damping: v.damping,

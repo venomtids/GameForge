@@ -242,6 +242,7 @@ export class CameraRig {
       this.controls.target.add(direction);
       return;
     }
+    world.setJellyView(this.camera.position);
     if (this.perspective.parent !== world.scene)
       world.scene.add(this.perspective);
     const torch = world.torch,

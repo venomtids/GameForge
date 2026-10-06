@@ -1,4 +1,4 @@
-# GameForge Studio 0.8
+# GameForge Studio 0.8.2 · Gelatina mais mole e reativa
 
 Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, construído sobre o código-fonte 0.7 fornecido: editor 3D, física, scripts, terreno, personagens e exportação offline. Interface em português, sem conta obrigatória.
 
@@ -6,15 +6,45 @@ Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, co
 
 ## Comece em cinco minutos
 
-1. Abra **Projetos** e escolha **Ilha Aurora**, **Baseplate**, **Skyline Obby**, **Motion Lab**, **Laboratório de scripts** ou **Projeto vazio**.
+1. Abra **Projetos** e escolha **Jelly Jump**, **Ilha Aurora**, **Baseplate**, **Skyline Obby**, **Motion Lab**, **Laboratório de scripts** ou **Projeto vazio**.
 2. Selecione objetos na cena/Explorador. Use **W / E / R** para mover, girar e escalar; **F** enquadra a seleção.
 3. Adicione modelos na **Toolbox** ou busque um comando com **Ctrl+K**.
 4. **F5** executa, **F8** volta à edição. WASD/setas, Espaço e Shift controlam o jogador; telas estreitas têm botões de toque.
 5. **Ctrl+S** salva um projeto editável. **Exportar jogo** gera um HTML independente que pode ser aberto offline.
 
-Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md).
+Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md). Física atual e referência adaptada: [docs/GELATINA-0.8.2.md](docs/GELATINA-0.8.2.md). Mapa e base: [docs/GELATINA-0.8.1.md](docs/GELATINA-0.8.1.md).
 
-## Novidades desta atualização
+## Gelatina mais mole e reativa · 0.8.2
+
+Adaptados os algoritmos do [Jelly-Mesh-System de Roundy](https://github.com/roundyyy/Jelly-Mesh-System), com atribuição MIT: **molas por vértice**, reação à aceleração/rotação, pivô ajustável, falloff, recuperação radial e LOD visual. A geometria original é preservada, inclusive em esferas.
+
+- **Muito mole / Macia / Firme** no inspector, com intensidade, reação ao movimento, pivô e economia de detalhe.
+- Personagem com mais squash/stretch e oscilação nas articulações; plataformas reagem a carga, cisalhamento e impactos locais.
+- Pés protegidos, topo visual coerente com o suporte e nenhuma acumulação do offset anterior de salto.
+- Buffers de vértices únicos, orçamento de detalhe/normais e culling de malha oculta; **a física e as colisões não são desativadas pelo LOD**.
+- Novos valores no jogador/plataformas da Toolbox e no Jelly Jump. Exportação HTML independente com a mesma física e avisos MIT.
+
+**121 testes**, build e navegador de gelatina/Studio 0.6/0.8; percurso completo por controles reais a 30/60/144 cadências, saltos repetidos, mobile/offline e layout 320–1920. A gelatina continua uma aproximação híbrida, não FEM nem MeshCollider deformável exato. [Implementação, parâmetros, comparação e limites](docs/GELATINA-0.8.2.md).
+
+## Correção de salto/colisão · 06/10/2026
+
+Corrigido o personagem afundando visualmente nos blocos: a translação da animação elástica não acumula mais a cada salto. Contatos antigos não marcam o jogador como apoiado após lançamento, e as gelatinas agora escrevem profundidade para oclusão consistente. **110/110 testes**, build e testes de navegador de gelatina/Studio 0.6/0.8 passaram; prévia e HTML offline reconstruídos. [Reprodução e detalhes](docs/CORRECAO-SALTO-GELATINA.md). O instalador Windows desta correção ainda não foi validado/publicado.
+
+## Gelatina · atualização 0.8.1
+
+- **Jelly Jump:** mapa pronto/editável, 11 superfícies gelatinosas, 2 checkpoints, 5 cristais, gelatina de impulso e portal. **Novo → Jelly Jump → F5**.
+- **Toolbox → gelatina:** jogador articulado/jogável, plataforma elástica ancorada e corpo macio livre. Inserir um jogador o torna principal sem excluir os anteriores.
+- **Física melhorada:** massa respeitada, molas, recuperação de forma/volume, limites de esticamento/impulso e colisão entre gelatinas. Apoios sólidos cedem ao peso e se recuperam.
+- **Jogador híbrido:** colisor estável, joelhos/cotovelos animados e deformação por molas. Câmeras, corrida, salto, morte/renascimento e mãos em primeira pessoa continuam funcionando.
+- **Entrada responsiva:** pulo/retorno capturados no evento, sem perder toques/teclas rápidos entre quadros; botão ↺ no celular. Campos de edição/salvamento preservam alterações imediatas.
+
+**106/106 testes passaram**, incluindo a travessia completa com entradas a 30/60/144 FPS (sem teleporte), estabilidade, carga nos apoios e recuperação. Toolbox, câmeras, toque e exportação offline também passaram no navegador. Esses FPS são cadências de simulação/entrada, não garantia de desempenho em todo aparelho.
+
+A gelatina é uma aproximação, não FEM/líquido volumétrico: o jogador não possui colisores individuais por membro e as plataformas usam apoio plano aproximado. Limite de 12 rigs físicos/elásticos ativos. [Detalhes técnicos](docs/GELATINA-0.8.1.md).
+
+Projeto portátil: [Jelly-Jump-Gelatina.gameforge.json](examples/studio08/Jelly-Jump-Gelatina.gameforge.json).
+
+## Recursos do Studio 0.8 preservados
 
 - **Workspace responsivo:** Explorador/Inspetor redimensionáveis e recolhíveis; gavetas em telas estreitas; dock ajustável; preferências persistidas; atalhos de teclado e foco dos diálogos.
 - **Qualidade adaptativa:** Auto, Econômica e Alta; ajuste gradual de resolução conforme o FPS observado. Céu físico opcional no editor; no jogo, respeita as configurações do mundo.
@@ -28,6 +58,10 @@ Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md).
 A base anterior foi preservada: gizmos, hierarquia, snapping, câmeras ortográficas/perspectiva/FPS/terceira pessoa; física Cannon-es, humanoides, bots, ragdoll e gelatina; primitivas, modelos, terrenos contínuos/voxel e pintura; Pixel Studio, interfaces 2D, luzes, sombras, lanterna, céu e áudio sintetizado; jogos e laboratórios originais.
 
 ## Windows — usuário final
+
+**Atualização 0.8.2:** testes locais e empacotamento preparados; a conexão GitHub foi restabelecida. A nova instalação/validação nativa e publicação estão em andamento. **Ainda não declarar um instalador 0.8.2 validado antes do sucesso do Windows CI.** A 0.8.1 não chegou a ter uma publicação validada; a versão antiga 0.8.0 abaixo não contém as melhorias de gelatina.
+
+### Instalador anterior 0.8.0 (já entregue)
 
 O alvo é **Windows 10/11 x64 (Intel/AMD)**. O pacote é um instalador Electron/NSIS:
 
@@ -61,6 +95,7 @@ npm test                    # testes de engine, migração, edição e armazenam
 npm run typecheck
 npm run build               # player single-file + editor de produção
 npm run preview             # produção local
+npm run test:jelly           # Toolbox, personagem/mapa, câmeras e HTML offline
 npm run test:studio08        # fluxos do Studio; servidor dev precisa estar aberto
 npm run test:export:studio08 # downloads + jogo file:// offline, Unicode e toque
 npm run test:update          # regressões/scripts; servidor dev precisa estar aberto
@@ -115,3 +150,11 @@ Exemplos 0.8 em `examples/studio08/`. Documentação original, conservada como h
 Interface estreita, com painéis em gavetas (390 px):
 
 <img src="docs/screenshots/studio08-mobile.png" width="390" alt="Studio 0.8 em tela estreita" />
+
+### Jelly Jump
+
+![Parkour de gelatina em execução](docs/screenshots/jelly-play.png)
+
+![Toolbox de gelatina](docs/screenshots/jelly-toolbox.png)
+
+<img src="docs/screenshots/jelly-mobile.png" width="390" alt="Jelly Jump offline com controles de toque" />

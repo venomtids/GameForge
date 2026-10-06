@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
 import type { Node3D } from "./model";
+import { JellyMesh } from "./JellyMesh";
 import { JellyCage } from "./JellyCage";
 import { jellyBox, jellyMaterial } from "./jelly-material";
 /** Bounded articulated / elastic cage rig. 6 jointed bodies or 8 mass points. */
@@ -17,9 +18,20 @@ export class PhysicalRig {
   jelly?: JellyCage;
   anchored = false;
   private weights: number[] = [];
+  private topMask?: Float32Array;
   private originalType: CANNON.Body["type"] = CANNON.Body.STATIC;
   private originalPosition?: CANNON.Vec3;
   private p = new THREE.Vector3();
+  surface?: JellyMesh;
+  private skinTarget?: Float32Array;
+  private contactTimes = new Map<number, number>();
+  private time = 0;
+  private step = 1 / 120;
+  private up = new THREE.Vector3();
+  private hit = new THREE.Vector3();
+  private normal = new THREE.Vector3();
+  private visualElapsed = 0;
+  private size = new THREE.Vector3();
   constructor(
     public node: Node3D,
     public object: THREE.Object3D,
@@ -43,6 +55,29 @@ export class PhysicalRig {
       scale = object
         .getWorldScale(new THREE.Vector3())
         .clampScalar(0.25, this.anchored ? 200 : 8);
+    const jellyGeometry =
+      type === "jelly" && object instanceof THREE.Mesh
+        ? object.geometry.clone()
+        : null;
+    if (jellyGeometry) {
+      jellyGeometry.computeBoundingBox();
+      const center = jellyGeometry.boundingBox!.getCenter(new THREE.Vector3());
+      const extent = jellyGeometry
+        .boundingBox!.getSize(new THREE.Vector3())
+        .clampScalar(0.01, 100);
+      position.add(center.clone().multiply(scale).applyQuaternion(rotation));
+      const a = jellyGeometry.getAttribute("position");
+      for (let i = 0; i < a.count; i++)
+        a.setXYZ(
+          i,
+          (a.getX(i) - center.x) / extent.x,
+          (a.getY(i) - center.y) / extent.y,
+          (a.getZ(i) - center.z) / extent.z,
+        );
+      scale.multiply(extent);
+    }
+    this.size.copy(scale);
+    this.up.set(0, 1, 0).applyQuaternion(rotation);
     object.visible = false;
     scene.add(this.visual);
     const material = new CANNON.Material({
@@ -62,7 +97,7 @@ export class PhysicalRig {
           rotation.w,
         ),
         material,
-        linearDamping: 0.12,
+        linearDamping: type === "jelly" ? 0.04 : 0.12,
         angularDamping: 0.3,
         allowSleep: false,
       });
@@ -175,8 +210,10 @@ export class PhysicalRig {
         scale,
         this.anchored ? original : undefined,
       );
-      const g = jellyBox(),
+      const g = jellyGeometry ?? jellyBox(),
         a = g.getAttribute("position");
+      this.topMask = new Float32Array(a.count);
+      for (let i = 0; i < a.count; i++) this.topMask[i] = a.getY(i);
       // Trilinear cage skinning: rounded/subdivided faces, not eight snapped vertices.
       for (let i = 0; i < a.count; i++) {
         const x = a.getX(i) + 0.5,
@@ -192,6 +229,16 @@ export class PhysicalRig {
       const mesh = new THREE.Mesh(g, jellyMaterial(node.color));
       this.meshes.push(mesh);
       this.visual.add(mesh);
+      this.skinTarget = new Float32Array(a.count * 3);
+      this.skinCage();
+      for (let i = 0; i < a.count; i++)
+        a.setXYZ(
+          i,
+          this.skinTarget[i * 3],
+          this.skinTarget[i * 3 + 1],
+          this.skinTarget[i * 3 + 2],
+        );
+      this.surface = new JellyMesh(mesh, node, { worldSpace: true });
     }
     this.visual.traverse((o) => {
       o.userData.nodeId = node.id;
@@ -204,6 +251,8 @@ export class PhysicalRig {
     return this.anchored ? this.original! : this.bodies[0];
   }
   beforeStep(dt = 1 / 120) {
+    this.time += dt;
+    this.step = dt;
     if (this.jelly) {
       this.jelly.beforeStep(dt, this.physics);
       return;
@@ -221,8 +270,53 @@ export class PhysicalRig {
   }
   afterStep() {
     this.jelly?.afterStep();
+    if (!this.surface || !this.anchored || !this.original) return;
+    for (const c of this.physics.contacts) {
+      if (!c.enabled || (c.bi !== this.original && c.bj !== this.original))
+        continue;
+      const other = c.bi === this.original ? c.bj : c.bi;
+      if (this.time - (this.contactTimes.get(other.id) ?? -10) < 0.22) continue;
+      const impulse = Math.abs(c.multiplier) * this.step;
+      if (
+        !Number.isFinite(impulse) ||
+        impulse < Math.max(0.5, other.mass * 0.12)
+      )
+        continue;
+      const r = c.bi === this.original ? c.ri : c.rj;
+      this.hit.set(
+        this.original.position.x + r.x,
+        this.original.position.y + r.y,
+        this.original.position.z + r.z,
+      );
+      this.normal
+        .set(c.ni.x, c.ni.y, c.ni.z)
+        .multiplyScalar(c.bi === this.original ? -1 : 1);
+      this.surface.impulse(
+        this.hit,
+        this.normal,
+        (impulse / Math.max(1, this.node.mass)) * 1.5,
+        Math.max(this.size.x, this.size.z) * 0.55,
+      );
+      this.contactTimes.set(other.id, this.time);
+    }
   }
-  sync() {
+  private skinCage() {
+    if (!this.skinTarget) return;
+    for (let i = 0; i < this.skinTarget.length / 3; i++) {
+      this.p.set(0, 0, 0);
+      for (let j = 0; j < 8; j++) {
+        const b = this.bodies[j].position,
+          w = this.weights[i * 8 + j];
+        this.p.x += b.x * w;
+        this.p.y += b.y * w;
+        this.p.z += b.z * w;
+      }
+      this.skinTarget[i * 3] = this.p.x;
+      this.skinTarget[i * 3 + 1] = this.p.y;
+      this.skinTarget[i * 3 + 2] = this.p.z;
+    }
+  }
+  sync(dt = 0, view?: THREE.Vector3) {
     if (this.type === "ragdoll")
       this.meshes.forEach((m, i) => {
         const b = this.bodies[i];
@@ -235,21 +329,74 @@ export class PhysicalRig {
         );
       });
     else {
-      const a = this.meshes[0].geometry.getAttribute("position");
-      for (let i = 0; i < a.count; i++) {
-        this.p.set(0, 0, 0);
-        for (let j = 0; j < 8; j++) {
-          const b = this.bodies[j].position,
-            w = this.weights[i * 8 + j];
-          this.p.x += b.x * w;
-          this.p.y += b.y * w;
-          this.p.z += b.z * w;
+      this.visualElapsed += dt;
+      const distance = view
+        ? this.hit
+            .set(
+              this.anchor.position.x,
+              this.anchor.position.y,
+              this.anchor.position.z,
+            )
+            .distanceTo(view)
+        : 0;
+      const lod =
+        this.node.deform.useLOD === false
+          ? 0
+          : THREE.MathUtils.clamp(
+              (distance - (this.node.deform.lodNear ?? 14)) /
+                ((this.node.deform.lodFar ?? 80) -
+                  (this.node.deform.lodNear ?? 14)),
+              0,
+              1,
+            );
+      const interval =
+        (1 + Math.round(lod * 3 + (this.node.deform.performance ?? 0) * 2)) /
+        60;
+      const draw = dt === 0 || this.visualElapsed + 1e-10 >= interval;
+      if (draw) this.skinCage();
+      if (this.surface && this.skinTarget) {
+        if (draw) {
+          if (dt > 0)
+            this.surface.step(
+              this.visualElapsed,
+              view,
+              this.skinTarget,
+              false,
+              false,
+              true,
+            );
+          else this.surface.reset(this.skinTarget);
+          this.visualElapsed = 0;
         }
-        a.setXYZ(i, this.p.x, this.p.y, this.p.z);
+        if (this.anchored && this.original) {
+          // Gameplay uses a flat support, never let surface detail overlap the
+          // rider's feet. Keep the top plane coherent, let sides/bulk wobble.
+          const a = this.meshes[0].geometry.getAttribute("position");
+          const plane =
+            this.original.position.x * this.up.x +
+            this.original.position.y * this.up.y +
+            this.original.position.z * this.up.z +
+            this.size.y * 0.5;
+          for (let i = 0; i < a.count; i++) {
+            this.p.set(a.getX(i), a.getY(i), a.getZ(i));
+            const top =
+              this.node.kind === "box" && (this.topMask?.[i] ?? 0) > 0.49;
+            const target =
+              plane -
+              this.size.y * Math.max(0, 0.5 - (this.topMask?.[i] ?? 0.5));
+            const excess = this.p.dot(this.up) - (top ? target : plane);
+            if (excess > 0 || top) {
+              this.p.addScaledVector(this.up, -excess);
+              a.setXYZ(i, this.p.x, this.p.y, this.p.z);
+            }
+          }
+          a.needsUpdate = true;
+          if (draw) {
+            this.meshes[0].geometry.computeBoundingBox();
+            this.meshes[0].geometry.computeBoundingSphere();
+          }
+        }
       }
-      a.needsUpdate = true;
-      this.meshes[0].geometry.computeVertexNormals();
-      this.meshes[0].geometry.computeBoundingSphere();
     }
     const p =
       this.type === "ragdoll" || this.anchored
@@ -289,6 +436,10 @@ export class PhysicalRig {
     }
   }
   dispose(restore = false) {
+    this.surface?.dispose();
+    this.surface = undefined;
+    this.skinTarget = undefined;
+    this.contactTimes.clear();
     for (const c of this.constraints) this.physics.removeConstraint(c);
     for (const b of this.bodies) this.physics.removeBody(b);
     for (const m of this.meshes) {

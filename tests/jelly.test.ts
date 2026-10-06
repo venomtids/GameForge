@@ -183,7 +183,9 @@ test("anchored gelatin supports weight, visibly compresses, keeps bottom corners
   assert.equal(w.objects.get(pad.id)!.visible, true);
   w.activateRig(pad.id, "jelly");
   tick(w, 1, new Set(["d"]));
-  tick(w, 3);
+  // The softer preset deliberately rings longer; allow several oscillations,
+  // but still require convergence to the same unloaded, solid support.
+  tick(w, 8);
   distance(rig.anchor.position.y, rest, 0.02);
   assert.ok(w.grounded(body));
   const physics = w.physics!;
@@ -403,3 +405,120 @@ for (const fps of [30, 60, 144])
     assert.equal(JSON.stringify(p), original);
     w.dispose();
   });
+
+test("jelly jump and rebound contacts do not keep an upward-moving character grounded", () => {
+  for (const boost of [false, true]) {
+    const pad = prefab("jellyPlatform")[0],
+      player = prefab("jellyPlayer")[0];
+    pad.restitution = boost ? 0.85 : 0.05;
+    player.position = [0, boost ? 4 : 2, 0];
+    const { w } = setup([pad, player]),
+      body = w.bodies.get(player.id)!;
+    if (!boost) {
+      tick(w, 1.5);
+      assert.ok(w.grounded(body));
+      w.queueAction(" ");
+      w.update(1 / 120, new Set());
+    } else {
+      for (let i = 0; i < 240 && body.velocity.y < 6; i++)
+        w.update(1 / 120, new Set());
+    }
+    assert.ok(body.velocity.y > 6, `no launch: ${body.velocity.y}`);
+    assert.equal(
+      w.grounded(body),
+      false,
+      "last-frame landing contacts must not flicker the pose back to grounded after launch",
+    );
+    w.dispose();
+  }
+});
+
+test("repeated jelly jumps and boosts keep the visual body aligned with its solid collider", () => {
+  for (const fps of [30, 144])
+    for (const boost of [false, true]) {
+      const pad = prefab("jellyPlatform")[0],
+        player = prefab("jellyPlayer")[0];
+      pad.restitution = boost ? 0.85 : 0.05;
+      player.position = [0, 4, 0];
+      const { w } = setup([pad, player]),
+        body = w.bodies.get(player.id)!,
+        object = w.objects.get(player.id)!,
+        support = w.physicalRigs.get(pad.id)!;
+      const bounds = new THREE.Box3();
+      let lastJump = -10,
+        jumps = 0;
+      for (let i = 0; i < fps * 12; i++) {
+        if (!boost && w.grounded(body) && w.elapsed - lastJump > 1.4) {
+          w.queueAction(" ");
+          lastJump = w.elapsed;
+          jumps++;
+        }
+        w.update(1 / fps, new Set());
+        object.updateWorldMatrix(true, true);
+        bounds.setFromObject(object, true);
+        const colliderFoot = body.position.y - player.scale[1] / 2;
+        assert.ok(
+          Math.abs(object.userData.limbs.lean.position.y) < 0.2,
+          `accumulated soft offset at ${fps} FPS / boost=${boost}: ${object.userData.limbs.lean.position.y}`,
+        );
+        assert.ok(
+          bounds.min.y >= colliderFoot - 0.1,
+          `visible character sank inside the platform: visual=${bounds.min.y}, collider=${colliderFoot}`,
+        );
+        assert.ok(
+          colliderFoot >= support.anchor.position.y + pad.scale[1] / 2 - 0.085,
+          "solid player passed through the support",
+        );
+      }
+      if (!boost) assert.ok(jumps >= 6);
+      assert.equal(w.deaths, 0);
+      w.respawn();
+      assert.ok(
+        Math.abs(object.userData.limbs.lean.position.y) < 0.05,
+        "respawn retained soft translation",
+      );
+      w.dispose();
+    }
+});
+
+test("gel surfaces and connected limbs write depth instead of flickering through each other", () => {
+  const pad = prefab("jellyPlatform")[0],
+    player = prefab("jellyPlayer")[0];
+  const { w } = setup([pad, player]);
+  const materials = [
+    ...w.objects.get(player.id)!.userData.limbs.materials,
+    w.physicalRigs.get(pad.id)!.meshes[0].material,
+  ] as THREE.Material[];
+  const soft = materials.filter((m) => m.userData.jelly);
+  assert.ok(soft.length >= 4);
+  assert.ok(
+    soft.every((m) => m.depthTest && m.depthWrite),
+    "gel render relies on unstable transparent-object center sorting",
+  );
+  w.dispose();
+});
+
+test("grounded compares relative support motion and preserves small solver corrections", () => {
+  const pad = prefab("jellyPlatform")[0],
+    player = prefab("jellyPlayer")[0];
+  pad.restitution = 0;
+  const { w } = setup([pad, player]),
+    body = w.bodies.get(player.id)!,
+    support = w.physicalRigs.get(pad.id)!.anchor;
+  tick(w, 1.5);
+  assert.ok(w.grounded(body));
+  body.velocity.y = support.velocity.y = 5;
+  assert.ok(
+    w.grounded(body),
+    "rising platform rider was classified as airborne",
+  );
+  body.velocity.y = 11;
+  assert.equal(w.grounded(body), false);
+  body.velocity.y = 0.8;
+  support.velocity.y = 0;
+  assert.ok(
+    w.grounded(body),
+    "small penetration correction caused pose flicker",
+  );
+  w.dispose();
+});

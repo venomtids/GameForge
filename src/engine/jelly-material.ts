@@ -10,13 +10,18 @@ export function jellyMaterial(color: string, opacity = 0.86) {
     clearcoatRoughness: 0.12,
     transparent: true,
     opacity,
-    depthWrite: false,
+    // Large transparent pads and articulated limbs must occlude per fragment,
+    // not depend only on transparent-object center sorting during jumps.
+    depthWrite: true,
     emissive: color,
     emissiveIntensity: 0.035,
   });
   material.userData.jelly = true;
   return material;
 }
-export function jellyBox(size: [number, number, number] = [1, 1, 1]) {
-  return new RoundedBoxGeometry(...size, 1, Math.min(...size) * 0.12);
+export function jellyBox(
+  size: [number, number, number] = [1, 1, 1],
+  detail = 2,
+) {
+  return new RoundedBoxGeometry(...size, detail, Math.min(...size) * 0.12);
 }

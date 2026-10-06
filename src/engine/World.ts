@@ -19,7 +19,7 @@ import {
 } from "./features07";
 import { VoxelVolume } from "./VoxelVolume";
 import { makeNode, kindNames, behaviorNames } from "./model";
-import { actorDefaults, validateActor } from "./features06";
+import { actorDefaults, validateActor, validateDeform } from "./features06";
 import type { UIElement } from "./studio-model";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
@@ -52,6 +52,10 @@ export class World {
   turns = new Map<string, number>();
   physicalRigs = new Map<string, PhysicalRig>();
   jellyCharacters = new Map<string, JellyCharacter>();
+  private jellyView?: THREE.Vector3;
+  setJellyView(position: THREE.Vector3) {
+    (this.jellyView ??= new THREE.Vector3()).copy(position);
+  }
   health = new Map<string, number>();
   botOrigins = new Map<string, THREE.Vector3>();
   bots = new BotController();
@@ -569,6 +573,15 @@ export class World {
     const o = this.objects.get(id),
       n = this.configs.find((c) => c.id === id);
     if (!o || !n || !patch || typeof patch !== "object") return;
+    if (patch.deform && typeof patch.deform === "object") {
+      // Runtime material/pivot tuning is shared by cages and vertex springs.
+      // Changing the rig type still goes through activateRig/restoreRig.
+      n.deform = validateDeform({
+        ...n.deform,
+        ...patch.deform,
+        type: n.deform.type,
+      });
+    }
     if (!options.tweens && this.physicalRigs.has(id)) return;
     const num = (v: unknown, min: number, max: number) =>
       typeof v === "number" && Number.isFinite(v)
@@ -743,11 +756,29 @@ export class World {
   }
   grounded(body: CANNON.Body) {
     return (
-      this.physics?.contacts.some(
-        (c) =>
-          c.enabled &&
-          ((c.bi === body && c.ni.y < -0.5) || (c.bj === body && c.ni.y > 0.5)),
-      ) ?? false
+      this.physics?.contacts.some((c) => {
+        if (!c.enabled) return false;
+        const sign = c.bi === body ? -1 : c.bj === body ? 1 : 0;
+        if (!sign || c.ni.y * sign <= 0.5) return false;
+        const support = sign < 0 ? c.bj : c.bi;
+        // Contacts describe the start of the last physics step. A jump/rebound
+        // can already be separating from that support: don't reuse it as ground.
+        // Compare relative motion so a rising platform still supports its rider.
+        const separating =
+          sign *
+          ((body.velocity.x - support.velocity.x) * c.ni.x +
+            (body.velocity.y - support.velocity.y) * c.ni.y +
+            (body.velocity.z - support.velocity.z) * c.ni.z);
+        if (separating <= 0.5) return true;
+        // The solver can push a slightly penetrated resting body upward. Keep
+        // that real support contact, but never a fast jump/boost or a separated
+        // contact point (the latter causes one-frame grounded/air pose flicker).
+        const gap =
+          (c.bj.position.x + c.rj.x - c.bi.position.x - c.ri.x) * c.ni.x +
+          (c.bj.position.y + c.rj.y - c.bi.position.y - c.ri.y) * c.ni.y +
+          (c.bj.position.z + c.rj.z - c.bi.position.z - c.ri.z) * c.ni.z;
+        return separating <= 2 && gap <= 0.005;
+      }) ?? false
     );
   }
   damage(id: string, amount: number, source = "script") {
@@ -1057,7 +1088,7 @@ export class World {
     this.physics.step(dt);
     for (const rig of this.physicalRigs.values()) {
       rig.afterStep();
-      rig.sync();
+      rig.sync(dt, this.jellyView);
     }
     if (
       player &&
@@ -1125,7 +1156,13 @@ export class World {
           b ? this.grounded(b) : true,
           b?.velocity.y ?? 0,
         );
-      if (jelly && b) jelly.update(dt, this.grounded(b));
+      if (jelly && b)
+        jelly.update(
+          dt,
+          this.grounded(b),
+          this.jellyView,
+          n.id === this.playerId,
+        );
       if (
         n.behavior === "collectible" &&
         this.active.has(n.id) &&

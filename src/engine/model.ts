@@ -242,7 +242,15 @@ export function makeNode(kind: Kind, patch: Partial<Node3D> = {}): Node3D {
   };
   // patches parciais nunca deixam campos soltos no ator, na deformação ou na luz
   node.actor = { ...actorDefaults, ...(patch.actor ?? {}) };
-  node.deform = { ...deformDefaults, ...(patch.deform ?? {}) };
+  node.deform = {
+    ...deformDefaults,
+    ...(patch.deform ?? {}),
+    pivot: [...(patch.deform?.pivot ?? deformDefaults.pivot!)] as [
+      number,
+      number,
+      number,
+    ],
+  };
   node.light = { ...lightDefaults, ...(patch.light ?? {}) };
   return node;
 }

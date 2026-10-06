@@ -191,18 +191,26 @@ function Field({
 }) {
   const cancel = useRef(false);
   const [draft, setDraft] = useState(String(value));
-  useEffect(() => setDraft(String(value)), [value]);
-  const commit = () => {
+  const synchronized = useRef(String(value));
+  useEffect(() => {
+    const incoming = String(value);
+    // A delayed mount effect must not erase text typed immediately on opening.
+    if (incoming !== synchronized.current) {
+      synchronized.current = incoming;
+      setDraft(incoming);
+    }
+  }, [value]);
+  const commit = (text: string) => {
     if (cancel.current) {
       cancel.current = false;
       return;
     }
     if (type === "number") {
-      const n = Number(draft);
-      if (draft.trim() && Number.isFinite(n))
+      const n = Number(text);
+      if (text.trim() && Number.isFinite(n))
         onChange(Math.max(min ?? -10000, Math.min(max ?? 10000, n)));
       else setDraft(String(value));
-    } else onChange(draft.slice(0, 100));
+    } else onChange(text.slice(0, 100));
   };
   return (
     <input
@@ -213,7 +221,7 @@ function Field({
       max={max}
       step={step}
       onChange={(e) => setDraft(e.target.value)}
-      onBlur={commit}
+      onBlur={(e) => commit(e.currentTarget.value)}
       onKeyDown={(e) => {
         if (e.key === "Enter") e.currentTarget.blur();
         if (e.key === "Escape") {
@@ -602,7 +610,7 @@ export default function Editor() {
   }
   async function save() {
     try {
-      if (await saveProject(project))
+      if (await saveProject(projectRef.current))
         notify(
           window.gameforgeDesktop
             ? "Projeto salvo em disco."

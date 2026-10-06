@@ -25,10 +25,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -105,7 +119,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -132,7 +160,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "de460390-5e60-4269-8658-8e9cc627464a",
+          "id": "0325df99-6357-4d7d-a1c9-e34ece2f7122",
           "name": "Base cristalina 1",
           "kind": "box",
           "parent": null,
@@ -182,7 +210,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -209,7 +251,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "cd2bbdfb-a57a-4099-97a9-6d891121e45a",
+          "id": "0b6df3ca-ac09-44d6-85fe-a58b201b857e",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -259,7 +301,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -286,7 +342,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "7eed4f3c-9d0e-4468-94c7-79a9700be3e7",
+          "id": "fb78e8d4-d136-4962-9fd7-a91018a73468",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -333,10 +389,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -413,7 +483,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -440,7 +524,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "17eacf80-70e4-4767-a0b1-2fba651fffc0",
+          "id": "4ce84ebb-aa62-4c07-aa34-0dae940f37a7",
           "name": "Base cristalina 2",
           "kind": "box",
           "parent": null,
@@ -487,10 +571,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -567,7 +665,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -594,7 +706,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "33ef2ed9-92a7-4457-acc7-33a7b7923255",
+          "id": "b67a16cb-3a73-4375-936b-f2509f6173bb",
           "name": "Base cristalina 3",
           "kind": "box",
           "parent": null,
@@ -644,7 +756,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -718,10 +844,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -798,7 +938,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -825,7 +979,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "640cf983-8b5f-42fb-b77b-f698cf725842",
+          "id": "73665ff8-f8b9-4f5a-b8b3-5b2007986639",
           "name": "Base cristalina 4",
           "kind": "box",
           "parent": null,
@@ -872,10 +1026,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -952,7 +1120,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -979,7 +1161,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "83a32a80-3dc9-4f3c-86b0-9db839aad02c",
+          "id": "e452186d-b413-42ef-bf94-857f967d93c5",
           "name": "Base cristalina 5",
           "kind": "box",
           "parent": null,
@@ -1029,7 +1211,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1106,7 +1302,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1183,7 +1393,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1210,7 +1434,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "edd4c65d-5231-4598-90b6-ba2b61bdb5a7",
+          "id": "f40d2b23-8673-4d58-9441-868d0251b748",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -1260,7 +1484,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1287,7 +1525,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "9e3d1800-db65-4ddc-a8a4-11ed04b52e36",
+          "id": "208f04a5-8e6a-4adb-9152-83c7c908a7be",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -1334,10 +1572,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1414,7 +1666,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1441,7 +1707,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "f2b5705b-3f44-40b0-9a60-cf19831591da",
+          "id": "3e4220cc-90dc-4bc1-9c10-c19214a67b76",
           "name": "Base cristalina 6",
           "kind": "box",
           "parent": null,
@@ -1491,7 +1757,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1518,7 +1798,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "cf49db12-3303-481c-9dc5-92c6ef0603de",
+          "id": "b3b01813-cd36-44a6-8083-3c20bc971088",
           "name": "Bolha de impulso",
           "kind": "sphere",
           "parent": null,
@@ -1568,7 +1848,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1595,7 +1889,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "6f73b572-3488-4752-a147-3b839cf7e74b",
+          "id": "563e4ed0-cb18-470e-a545-4948853a81a0",
           "name": "Bolha de impulso",
           "kind": "sphere",
           "parent": null,
@@ -1642,10 +1936,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1722,7 +2030,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1749,7 +2071,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "c628e676-3fd8-4afb-a27e-d41f2d8b3192",
+          "id": "5d7347fb-e6aa-42af-9a78-ec9cfca27937",
           "name": "Base cristalina 7",
           "kind": "box",
           "parent": null,
@@ -1799,7 +2121,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1873,10 +2209,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1953,7 +2303,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -1980,7 +2344,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "c6c57f91-5a20-4cac-b3e2-6829946dae5e",
+          "id": "3ac46493-46ea-4b28-8864-e29125d413e9",
           "name": "Base cristalina 8",
           "kind": "box",
           "parent": null,
@@ -2027,10 +2391,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2107,7 +2485,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2134,7 +2526,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "66a63426-227e-4246-8e2e-6d6c3f2d058a",
+          "id": "71714113-e9da-4dbc-8ed3-7d6abd5d5526",
           "name": "Base cristalina 9",
           "kind": "box",
           "parent": null,
@@ -2184,7 +2576,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2261,7 +2667,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2288,7 +2708,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "2f20b4fd-1810-4296-80b4-6ea6cbd491d4",
+          "id": "9bde9e16-ed55-4664-86fe-3f7973a16996",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -2338,7 +2758,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2365,7 +2799,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "09035b52-6df8-4b0c-8f8c-2239b32ffd2a",
+          "id": "5331c3bf-1cb5-49e8-8754-aecaebc86908",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -2412,10 +2846,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2492,7 +2940,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2519,7 +2981,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "a5934c2b-d69d-4d95-917e-06608faad944",
+          "id": "82f95978-05a4-4e45-92ca-2299e7a3571f",
           "name": "Base cristalina 10",
           "kind": "box",
           "parent": null,
@@ -2569,7 +3031,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2643,10 +3119,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 160,
-            "damping": 6,
-            "volume": 0.95,
-            "maxStretch": 1.4
+            "stiffness": 58,
+            "damping": 2.2,
+            "volume": 0.88,
+            "maxStretch": 1.7,
+            "intensity": 1.35,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2723,7 +3213,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2750,7 +3254,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "e6d38227-a7af-46a3-b9a2-115bfd78cbb8",
+          "id": "79a2df33-47f8-4f02-8a12-d78d3354c065",
           "name": "Base cristalina 11",
           "kind": "box",
           "parent": null,
@@ -2800,7 +3304,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2877,7 +3395,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2904,7 +3436,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "69992b45-e5a3-42e7-bdf0-db4bf7ccc82f",
+          "id": "9b9a75c4-8e6f-4e5f-828e-397a383c98bd",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -2954,7 +3486,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -2981,7 +3527,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "581723d7-8a89-4b45-8ec1-723783dbfa57",
+          "id": "1e3aa68b-7a0e-476a-8a34-820bbc6c13e6",
           "name": "Bolha de açúcar",
           "kind": "sphere",
           "parent": null,
@@ -3031,7 +3577,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -3058,7 +3618,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "9bcafb80-0f38-4657-9848-ba9fb6469c2f",
+          "id": "4587cb22-e91b-425d-87b4-4453291ed5b2",
           "name": "Portal · pilar de açúcar",
           "kind": "capsule",
           "parent": null,
@@ -3108,7 +3668,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -3135,7 +3709,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "1077a071-11cc-4e9a-8346-53f20559607d",
+          "id": "86dac1d4-1a07-440d-815c-fb453c91fdcc",
           "name": "Portal · pilar de açúcar",
           "kind": "capsule",
           "parent": null,
@@ -3185,7 +3759,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -3212,7 +3800,7 @@
             "source": "",
             "enabled": false
           },
-          "id": "fa0eca9c-458b-4543-8713-8e684ea2fb45",
+          "id": "bd7675b5-1b5c-482a-ae3d-9030d43b4943",
           "name": "Portal · arco de chegada",
           "kind": "torus",
           "parent": null,
@@ -3262,7 +3850,21 @@
             "stiffness": 100,
             "damping": 3,
             "volume": 0.85,
-            "maxStretch": 1.65
+            "maxStretch": 1.65,
+            "intensity": 1.2,
+            "movementInfluence": 1.25,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.3,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",
@@ -3336,10 +3938,24 @@
           },
           "deform": {
             "type": "jelly",
-            "stiffness": 110,
-            "damping": 3.5,
-            "volume": 0.95,
-            "maxStretch": 1.65
+            "stiffness": 42,
+            "damping": 1.4,
+            "volume": 0.9,
+            "maxStretch": 1.85,
+            "intensity": 1.8,
+            "movementInfluence": 1.45,
+            "distanceFalloff": 1.2,
+            "maintainRadius": true,
+            "radiusConstraint": 0.2,
+            "pivot": [
+              0,
+              0,
+              0
+            ],
+            "useLOD": true,
+            "lodNear": 14,
+            "lodFar": 80,
+            "performance": 0
           },
           "light": {
             "type": "none",

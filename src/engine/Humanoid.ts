@@ -32,7 +32,7 @@ function box(
 ) {
   const m = new THREE.Mesh(
     mat.userData.jelly
-      ? jellyBox(size as [number, number, number])
+      ? jellyBox(size as [number, number, number], 1)
       : new THREE.BoxGeometry(size[0], size[1], size[2]),
     mat,
   );

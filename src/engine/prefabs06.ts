@@ -1,4 +1,5 @@
 import { makeNode, type Node3D } from "./model";
+import { jellyPreset } from "./jelly-presets";
 import { actorDefaults, deformDefaults } from "./features06";
 export const prefab06Names = {
   humanoidPlayer: "Jogador articulado · opção 2",
@@ -48,9 +49,8 @@ export function prefab06(kind: Prefab06): Node3D[] {
         deform: {
           ...deformDefaults,
           type: "jelly",
-          stiffness: 110,
-          damping: 3.5,
-          volume: 0.95,
+          ...jellyPreset("soft"),
+          volume: 0.9,
         },
       }),
     ];
@@ -68,10 +68,9 @@ export function prefab06(kind: Prefab06): Node3D[] {
         deform: {
           ...deformDefaults,
           type: "jelly",
-          stiffness: 160,
-          damping: 6,
-          volume: 0.95,
-          maxStretch: 1.4,
+          ...jellyPreset("balanced"),
+          stiffness: 58,
+          damping: 2.2,
         },
       }),
     ];
@@ -98,7 +97,7 @@ export function prefab06(kind: Prefab06): Node3D[] {
         mass: 4,
         restitution: 0.1,
         color: "#85d7af",
-        deform: { ...deformDefaults, type: "jelly" },
+        deform: { ...deformDefaults, ...jellyPreset("soft"), type: "jelly" },
       }),
     ];
   if (kind.startsWith("bot")) {

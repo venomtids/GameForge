@@ -1,3 +1,45 @@
+# Validação da gelatina 0.8.2 · 06/10/2026
+
+- 121 testes unitários, typecheck/build e `test:jelly`, `test:studio06`, `test:studio08`.
+- Referência Roundy/Jelly-Mesh-System inspecionada no commit 730062288016c211c773610cf4a11bfe947ef0fa; algoritmos de vértices/pivô/raio/LOD adaptados e licenças incluídas no aplicativo e HTML.
+- Mais squash/stretch, molas nas malhas, impulsos locais/cisalhamento, presets e pivô persistidos.
+- Saltos/boosts repetidos sem deriva; topo alinhado ao apoio; 11 superfícies, 5 cristais, 2 checkpoints e percurso completo a 30/60/144 cadências, sem teleporte/mortes.
+- Offline `file://`, mobile 390px e workspace 320–1920px. Cadências de teste não são garantia de FPS em todo dispositivo.
+- Studio5173 e jogo5174 reconstruídos/HTTP200 com host de prévia.
+- Conexão GitHub recuperada. Validação do instalador 0.8.2 no Windows CI está em andamento; atualizar esta seção com o resultado antes de declarar entrega nativa.
+
+[Detalhes e limites da adaptação](docs/GELATINA-0.8.2.md).
+
+---
+
+## Histórico de validações anteriores
+
+# Validação — Studio 0.8.1 · Gelatina
+
+Estado em 30/09/2026. A seção histórica 0.8 abaixo se refere à entrega anterior, não ao instalador desta atualização.
+
+| Verificação 0.8.1 | Resultado |
+|---|---|
+| `npm test` | **106/106 passaram**: 94 herdados + 12 de gelatina |
+| `npm run typecheck` / `npm run build` | Passaram; editor e player autocontido |
+| `npm run test:jelly` | Passou em Chromium headless, incluindo edição/blur/salvamento imediato |
+| `npm run test:studio08` | Passou; agora sete templates e layouts 320–1920 px |
+| `npm run test:studio06` | Passou; scripts JS/Lua, câmera, rigs, bots, sombras e terreno |
+| Mapas/saltos | Percurso completo sem teleporte com entradas a 30/60/144 FPS, 2 checkpoints, 5 cristais, impulso, chegada e zero quedas |
+| Exportação | Downloads reais JSON/HTML, standalone `file://` offline, zero requests HTTP, câmera, controles de toque, retorno ↺, pausa/reinício |
+| Windows 0.8.1 | NSIS gerado e realmente instalado; **validação nativa final/publicação pendentes** |
+
+## Windows 0.8.1: resultado real, não publicação presumida
+
+- [Run 36758997765](https://github.com/venomtids/GameForge/actions/runs/36758997765), commit `166dc926895989cec27bbf270228badcaa0658f7`: testes, build, NSIS e instalação/recursos passaram. O teste novo de gelatina falhou porque o mock do diálogo ainda apontava para `offline.html` depois da exportação, enquanto verificava o JSON anterior. Corrigido no commit `25bee6f`.
+- [Run 36759709158](https://github.com/venomtids/GameForge/actions/runs/36759709158), commit `25bee6fc67709d411efc6243cb54fdb0331f89cc`: testes, build e instalação passaram. O teste nativo encontrou um salvamento rápido mantendo o nome anterior. A versão local agora não sobrescreve um draft recém-digitado em efeito de montagem tardio, usa o valor atual do input no blur e salva o `projectRef` mais recente. O harness confirma o nome aplicado antes de salvar e restaura corretamente o destino JSON.
+- Essa correção passou nos testes de engine e no navegador, inclusive a regressão **fill → blur/fechar → download** com nome Unicode. **Ainda não foi revalidada no aplicativo Windows instalado.** A autenticação `git`/`gh` expirou antes do push dessa correção; a publicação está bloqueada até reconectar o GitHub na Arena.
+- **Não existe uma release 0.8.1 validada/publicada neste estado.** O instalador 0.8.0 é anterior e não contém as novidades de gelatina. Não se entrega um binário antigo como se fosse atualizado.
+
+Screenshots desta atualização: `docs/screenshots/jelly-{play,toolbox,mobile}.png`. Relatórios temporários ficam em `test-results/` (ignorados). Limites de física, FPS e validação: [GELATINA-0.8.1.md](docs/GELATINA-0.8.1.md).
+
+---
+
 # Validação — Studio 0.8
 
 Estado registrado em 30/09/2026. Os relatórios originais estão em `docs/archive/` e não certificam esta atualização.

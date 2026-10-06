@@ -72,6 +72,30 @@ try {
   await expect(
     page.getByRole("button", { name: "Jogador principal", exact: true }),
   ).toBeDisabled();
+  await page
+    .getByRole("button", { name: "Gelatina firme", exact: true })
+    .click();
+  await page.waitForFunction(() => {
+    const p = JSON.parse(localStorage.getItem("gameforge.project.v6")),
+      n = p.scenes[0].nodes.find((n) => n.id === p.settings.playerId);
+    return n?.deform.stiffness === 145 && n.deform.intensity === 0.55;
+  });
+  await page
+    .getByRole("button", { name: "Gelatina muito mole", exact: true })
+    .click();
+  await page.getByLabel("Intensidade da gelatina", { exact: true }).fill("1.9");
+  await page.getByLabel("Reação ao movimento", { exact: true }).fill("1.6");
+  await page.getByLabel("Pivô da gelatina Y", { exact: true }).fill("-0.2");
+  await page.waitForFunction(() => {
+    const p = JSON.parse(localStorage.getItem("gameforge.project.v6")),
+      n = p.scenes[0].nodes.find((n) => n.id === p.settings.playerId);
+    return (
+      n?.deform.stiffness === 42 &&
+      n.deform.intensity === 1.9 &&
+      n.deform.movementInfluence === 1.6 &&
+      n.deform.pivot?.[1] === -0.2
+    );
+  });
   await page.getByLabel("Recuperação de volume", { exact: true }).fill("0.9");
   await page.getByLabel("Limite de esticamento", { exact: true }).fill("1.5");
   await page.waitForFunction(() => {
@@ -90,7 +114,7 @@ try {
   );
   await page.screenshot({ path: "test-results/jelly-toolbox.png" });
   console.log(
-    "PASS searchable jelly Toolbox, primary player without deleting the original, inspector parameters",
+    "PASS jelly Toolbox, primary player, soft/firm presets, intensity, movement response, pivot and inspector persistence",
   );
 
   await newJelly();
@@ -150,6 +174,33 @@ try {
     rig.update(w, 1 / 60);
     const respawnVisible =
       w.objects.get(w.playerId).visible && w.jellyCharacters.has(w.playerId);
+    // Replay multiple jumps in the actual browser engine and compare the
+    // visible geometry to the controller, not only HUD/keyboard responses.
+    const body = w.bodies.get(w.playerId),
+      avatar = w.objects.get(w.playerId),
+      bounds = new THREE.Box3();
+    let jumpVisualAligned = true,
+      jumpGroundingStable = true,
+      lastJump = -10,
+      jumps = 0;
+    for (let i = 0; i < 120 * 8; i++) {
+      if (w.grounded(body) && w.elapsed - lastJump > 1.4) {
+        w.queueAction(" ");
+        lastJump = w.elapsed;
+        jumps++;
+      }
+      w.update(1 / 120, new Set());
+      avatar.updateWorldMatrix(true, true);
+      bounds.setFromObject(avatar, true);
+      jumpVisualAligned &&=
+        Math.abs(avatar.userData.limbs.lean.position.y) < 0.2 &&
+        bounds.min.y >= body.position.y - 0.9 - 0.1;
+      if (body.velocity.y > 3) jumpGroundingStable &&= !w.grounded(body);
+    }
+    jumpVisualAligned &&= jumps >= 5;
+    const depthStable = avatar.userData.limbs.materials
+      .filter((m) => m.userData.jelly)
+      .every((m) => m.depthWrite && m.depthTest);
     rig.dispose();
     w.dispose();
     canvas.remove();
@@ -160,11 +211,14 @@ try {
       gelHand,
       deadArmsHidden,
       respawnVisible,
+      jumpVisualAligned,
+      jumpGroundingStable,
+      depthStable,
     };
   });
   assert.ok(Object.values(camera).every(Boolean), JSON.stringify(camera));
   console.log(
-    "PASS first/third-person gelatin visibility, matching FPS hands and ragdoll/respawn camera",
+    "PASS first/third-person gelatin visibility, FPS hands, respawn, repeated jump alignment and depth stability",
   );
 
   const [jsonDownload] = await Promise.all([
@@ -181,6 +235,32 @@ try {
   const html = await readFile(htmlPath, "utf8");
   assert.ok(!html.includes("__GAMEFORGE_PROJECT_DATA__"));
   assert.ok(!/<script[^>]+src=/.test(html));
+  assert.ok(
+    html.includes("Copyright (c) 2026 Roundy") && html.includes("MIT License"),
+  );
+  // Regression: a rapid fill → blur/close → save must use the current draft,
+  // never the initial mount value or the previous React render's project.
+  await page.getByLabel("Configurações do projeto", { exact: true }).click();
+  await page
+    .getByLabel("Nome do projeto", { exact: true })
+    .fill("Gelatina · edição rápida 🚀");
+  await page.getByRole("button", { name: "Concluir", exact: true }).click();
+  await expect(page.locator(".project-identity strong")).toHaveText(
+    "Gelatina · edição rápida 🚀",
+  );
+  const [fastSave] = await Promise.all([
+    page.waitForEvent("download"),
+    page.getByRole("button", { name: /^Salvar/ }).click(),
+  ]);
+  await fastSave.saveAs("test-results/jelly-fast-save.gameforge.json");
+  assert.equal(
+    JSON.parse(
+      await readFile("test-results/jelly-fast-save.gameforge.json", "utf8"),
+    ).name,
+    "Gelatina · edição rápida 🚀",
+  );
+  console.log("PASS immediate name edit/blur/save uses the latest UTF-8 draft");
+
   const offline = await browser.newContext({
     viewport: { width: 390, height: 844 },
     isMobile: true,
