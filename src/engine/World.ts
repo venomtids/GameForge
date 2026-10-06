@@ -23,7 +23,12 @@ import {
 } from "./features07";
 import { VoxelVolume } from "./VoxelVolume";
 import { makeNode, kindNames, behaviorNames } from "./model";
-import { actorDefaults, validateActor, validateDeform } from "./features06";
+import {
+  actorDefaults,
+  deformDefaults,
+  validateActor,
+  validateDeform,
+} from "./features06";
 import type { UIElement } from "./studio-model";
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
@@ -48,7 +53,28 @@ export function disposeTree(root: THREE.Object3D) {
   });
   root.removeFromParent();
 }
+/**
+ * Ponto de extensão opcional para jogos com controlador próprio (FPS, parkour,
+ * veículos). O World continua dono da física, dos contatos, do respawn e da
+ * sincronização de malhas: o hook só decide a velocidade do passo fixo.
+ * Devolver `true` assume o movimento do jogador; `false`/`undefined` mantém o
+ * WASD/corrida/pulo padrão, bit a bit igual ao comportamento histórico.
+ */
+export interface PlayerStepContext {
+  dt: number;
+  keys: Set<string>;
+  yaw: number;
+  body: CANNON.Body;
+  node: Node3D;
+  grounded: boolean;
+  /** Um pulo foi pedido e ainda está dentro da janela de buffer (~0,12 s). */
+  jumpQueued: boolean;
+  /** Consome o pulo pedido (zera o buffer e reinicia o bloqueio anti-duplo). */
+  consumeJump: () => void;
+}
 export class World {
+  /** Controlador externo opcional; ver PlayerStepContext. */
+  playerStep: ((context: PlayerStepContext) => boolean | void) | null = null;
   private animatedNodes: Node3D[] = [];
   private kinematicIds = new Set<string>();
   private physicalAnimationRoots = new Set<string>();
@@ -1042,33 +1068,52 @@ export class World {
       (this.health.get(this.playerId!) ?? 100) > 0
     ) {
       const config = this.configs.find((n) => n.id === this.playerId)!;
-      const dx =
-        Number(keys.has("d") || keys.has("arrowright")) -
-        Number(keys.has("a") || keys.has("arrowleft"));
-      const dz =
-        Number(keys.has("s") || keys.has("arrowdown")) -
-        Number(keys.has("w") || keys.has("arrowup"));
-      const length = Math.hypot(dx, dz) || 1;
-      const speed =
-        config.speed *
-        this.options.moveMultiplier *
-        (keys.has("shift") ? this.options.sprintMultiplier : 1);
-      player.velocity.x =
-        ((dx * Math.cos(yaw) + dz * Math.sin(yaw)) / length) * speed;
-      player.velocity.z =
-        ((-dx * Math.sin(yaw) + dz * Math.cos(yaw)) / length) * speed;
-      if (this.grounded(player) && this.elapsed - this.lastJump > 0.12)
-        this.lastGround = this.elapsed;
-      if (dx || dz || this.jumpQueuedUntil >= this.elapsed) player.wakeUp();
-      if (
-        this.jumpQueuedUntil >= this.elapsed &&
-        this.elapsed - this.lastGround < 0.1
-      ) {
-        this.jumpQueuedUntil = -100;
-        this.lastGround = -100;
-        this.lastJump = this.elapsed;
-        player.velocity.y = this.options.jumpSpeed;
-        keys.delete(" ");
+      /* Jogos podem assumir o movimento (playerStep). Sem hook instalado o
+         caminho abaixo é o mesmo de sempre e nada muda para os projetos atuais. */
+      const custom =
+        this.playerStep?.({
+          dt,
+          keys,
+          yaw,
+          body: player,
+          node: config,
+          grounded: this.grounded(player),
+          jumpQueued: this.jumpQueuedUntil >= this.elapsed,
+          consumeJump: () => {
+            this.jumpQueuedUntil = -100;
+            this.lastGround = -100;
+            this.lastJump = this.elapsed;
+          },
+        }) === true;
+      if (!custom) {
+        const dx =
+          Number(keys.has("d") || keys.has("arrowright")) -
+          Number(keys.has("a") || keys.has("arrowleft"));
+        const dz =
+          Number(keys.has("s") || keys.has("arrowdown")) -
+          Number(keys.has("w") || keys.has("arrowup"));
+        const length = Math.hypot(dx, dz) || 1;
+        const speed =
+          config.speed *
+          this.options.moveMultiplier *
+          (keys.has("shift") ? this.options.sprintMultiplier : 1);
+        player.velocity.x =
+          ((dx * Math.cos(yaw) + dz * Math.sin(yaw)) / length) * speed;
+        player.velocity.z =
+          ((-dx * Math.sin(yaw) + dz * Math.cos(yaw)) / length) * speed;
+        if (this.grounded(player) && this.elapsed - this.lastJump > 0.12)
+          this.lastGround = this.elapsed;
+        if (dx || dz || this.jumpQueuedUntil >= this.elapsed) player.wakeUp();
+        if (
+          this.jumpQueuedUntil >= this.elapsed &&
+          this.elapsed - this.lastGround < 0.1
+        ) {
+          this.jumpQueuedUntil = -100;
+          this.lastGround = -100;
+          this.lastJump = this.elapsed;
+          player.velocity.y = this.options.jumpSpeed;
+          keys.delete(" ");
+        }
       }
       if (player.position.y < -18) this.respawn();
     }
@@ -1618,12 +1663,19 @@ export class World {
           ? c.patch.kind
           : "box";
       const human = c.patch.actor && c.patch.actor.humanoid === true;
+      /* Um spawn NOVO pode nascer já elástico: o patch de um nó existente não
+         troca o tipo do rig (recriaria corpos em uso), mas aqui não há rig. */
+      const rigType =
+        c.patch.deform?.type === "jelly" || c.patch.deform?.type === "ragdoll"
+          ? (c.patch.deform.type as "jelly" | "ragdoll")
+          : null;
       const n = makeNode(kind, {
         id: c.id,
         name:
           typeof c.patch.name === "string" ? c.patch.name.slice(0, 100) : c.id,
         physics: "none",
         ...(human ? { actor: { ...actorDefaults, humanoid: true } } : {}),
+        ...(rigType ? { deform: { ...deformDefaults, type: rigType } } : {}),
       });
       const o = human
         ? humanoid(n)
@@ -1636,6 +1688,10 @@ export class World {
       this.objects.set(n.id, o);
       this.configs.push(n);
       this.applyNodePatch(n.id, c.patch);
+      if (rigType) {
+        n.deform = validateDeform({ ...n.deform, ...c.patch.deform, type: rigType });
+        if (n.physics === "dynamic") this.activateRig(n.id, rigType);
+      }
     }
     if (
       c.type === "remove" &&

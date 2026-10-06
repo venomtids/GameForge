@@ -328,6 +328,159 @@ const recipes: Record<string, Recipe> = {
     for (let i = 0; i < 3; i++)
       s.noise({ dur: 0.12, gain: 0.22 * v, delay: i * 0.18, filter: { type: "bandpass", from: 420, to: 900, q: 2 } });
   },
+  /* --- 0.9: arsenal sintetizado (sons de combate, impacto e foley) ------- */
+  "disparo.pistola": (s, v, p) => {
+    s.noise({ dur: 0.09, gain: 0.5 * v, filter: { type: "highpass", from: 900 * p } });
+    s.tone({ type: "square", from: 220 * p, to: 60, dur: 0.09, gain: 0.24 * v, filter: { type: "lowpass", from: 2200 } });
+  },
+  "disparo.fuzil": (s, v, p) => {
+    s.noise({ dur: 0.07, gain: 0.42 * v, filter: { type: "bandpass", from: 1500 * p, to: 600, q: 1.1 } });
+    s.tone({ type: "sawtooth", from: 180 * p, to: 52, dur: 0.08, gain: 0.2 * v, filter: { type: "lowpass", from: 1600 } });
+  },
+  "disparo.smg": (s, v, p) => {
+    s.noise({ dur: 0.05, gain: 0.3 * v, filter: { type: "highpass", from: 1200 * p } });
+    s.tone({ type: "square", from: 260 * p, to: 90, dur: 0.05, gain: 0.12 * v });
+  },
+  "disparo.escopeta": (s, v, p) => {
+    s.noise({ dur: 0.26, gain: 0.62 * v, filter: { type: "lowpass", from: 1800 * p, to: 320 } });
+    s.tone({ type: "sine", from: 120 * p, to: 34, dur: 0.3, gain: 0.4 * v });
+  },
+  "disparo.estaca": (s, v, p) => {
+    s.tone({ type: "sawtooth", from: 900 * p, to: 120, dur: 0.22, gain: 0.22 * v, filter: { type: "lowpass", from: 2600, q: 3 } });
+    s.noise({ dur: 0.3, gain: 0.3 * v, filter: { type: "highpass", from: 2400 }, tremolo: { rate: 30, depth: 0.6 } });
+  },
+  "disparo.lancador": (s, v, p) => {
+    s.tone({ type: "sine", from: 90 * p, to: 40, dur: 0.34, gain: 0.5 * v });
+    s.noise({ dur: 0.3, gain: 0.34 * v, filter: { type: "lowpass", from: 900 }, tremolo: { rate: 18, depth: 0.4 } });
+  },
+  "recarga.leve": (s, v, p) => {
+    for (let i = 0; i < 3; i++)
+      s.noise({ dur: 0.05, gain: 0.22 * v, delay: i * 0.14, filter: { type: "bandpass", from: 1500 * p, q: 5 } });
+  },
+  "recarga.pesada": (s, v, p) => {
+    s.noise({ dur: 0.07, gain: 0.3 * v, filter: { type: "bandpass", from: 900 * p, q: 4 } });
+    s.tone({ type: "square", from: 150, to: 110, dur: 0.1, gain: 0.12 * v, delay: 0.16 });
+    s.noise({ dur: 0.06, gain: 0.24 * v, delay: 0.4, filter: { type: "bandpass", from: 2200, q: 6 } });
+  },
+  "recarga.escopeta": (s, v, p) => {
+    for (let i = 0; i < 2; i++)
+      s.noise({ dur: 0.06, gain: 0.26 * v, delay: 0.1 + i * 0.22, filter: { type: "bandpass", from: 1700 * p, q: 6 } });
+  },
+  equipar: (s, v, p) => {
+    s.noise({ dur: 0.08, gain: 0.2 * v, filter: { type: "bandpass", from: 1200 * p, q: 3 } });
+    s.tone({ type: "triangle", from: 420 * p, to: 640, dur: 0.1, gain: 0.08 * v });
+  },
+  "gelatina.tiro": (s, v, p) => {
+    s.tone({ type: "sine", from: 260 * p, to: 520, dur: 0.18, gain: 0.2 * v });
+    s.noise({ dur: 0.14, gain: 0.16 * v, filter: { type: "lowpass", from: 1400 * p } });
+  },
+  "gelatina.recarga": (s, v, p) => s.noise({ dur: 0.3, gain: 0.2 * v, filter: { type: "lowpass", from: 700 * p, to: 1400 }, tremolo: { rate: 12, depth: 0.5 } }),
+  "gelatina.impacto": (s, v, p) => {
+    s.tone({ type: "sine", from: 420 * p, to: 90, dur: 0.24, gain: 0.26 * v });
+    s.noise({ dur: 0.2, gain: 0.14 * v, filter: { type: "lowpass", from: 900 * p } });
+  },
+  "cabra.golpe": (s, v, p) => {
+    s.noise({ dur: 0.12, gain: 0.36 * v, filter: { type: "bandpass", from: 2200 * p, q: 2.5 } });
+    s.tone({ type: "square", from: 320, to: 90, dur: 0.14, gain: 0.2 * v });
+  },
+  "impacto.metal": (s, v, p) => {
+    s.tone({ type: "triangle", from: 2400 * p, to: 900, dur: 0.16, gain: 0.2 * v });
+    s.noise({ dur: 0.14, gain: 0.24 * v, filter: { type: "highpass", from: 1800 } });
+  },
+  "impacto.concreto": (s, v, p) => {
+    s.noise({ dur: 0.12, gain: 0.3 * v, filter: { type: "lowpass", from: 1200 * p, to: 400 } });
+    s.tone({ type: "sine", from: 160, to: 70, dur: 0.12, gain: 0.14 * v });
+  },
+  "impacto.vidro": (s, v, p) => {
+    for (let i = 0; i < 4; i++)
+      s.noise({ dur: 0.05, gain: 0.2 * v, delay: i * 0.03, filter: { type: "bandpass", from: (2600 + i * 700) * p, q: 9 } });
+  },
+  "impacto.carne": (s, v, p) => {
+    s.noise({ dur: 0.1, gain: 0.3 * v, filter: { type: "lowpass", from: 620 * p, to: 200 } });
+    s.tone({ type: "sine", from: 130 * p, to: 60, dur: 0.12, gain: 0.16 * v });
+  },
+  "osso.quebrar": (s, v, p) => {
+    for (let i = 0; i < 3; i++)
+      s.noise({ dur: 0.04, gain: 0.26 * v, delay: i * 0.05, filter: { type: "bandpass", from: (900 + i * 500) * p, q: 11 } });
+  },
+  "carne.rasgar": (s, v, p) => {
+    s.noise({ dur: 0.44, gain: 0.3 * v, filter: { type: "lowpass", from: 760 * p, to: 240 }, tremolo: { rate: 26, depth: 0.6 } });
+  },
+  "sangue.splash": (s, v, p) => {
+    s.noise({ dur: 0.2, gain: 0.26 * v, filter: { type: "bandpass", from: 480 * p, to: 260, q: 1.6 } });
+    s.tone({ type: "sine", from: 220, to: 90, dur: 0.18, gain: 0.1 * v });
+  },
+  "morte.grito": (s, v, p) => {
+    s.tone({ type: "sawtooth", from: 320 * p, to: 120, dur: 0.5, gain: 0.16 * v, filter: { type: "lowpass", from: 1400, to: 500, q: 3 }, vibrato: { rate: 12, depth: 22 } });
+    s.noise({ dur: 0.4, gain: 0.14 * v, filter: { type: "bandpass", from: 900, q: 2 } });
+  },
+  "corpo.cair": (s, v, p) => {
+    s.noise({ dur: 0.2, gain: 0.32 * v, filter: { type: "lowpass", from: 620 * p, to: 180 } });
+    s.tone({ type: "sine", from: 110 * p, to: 48, dur: 0.26, gain: 0.22 * v });
+  },
+  explosao: (s, v, p) => {
+    s.noise({ dur: 1, gain: 0.9 * v, filter: { type: "lowpass", from: 1600 * p, to: 90 } });
+    s.tone({ type: "sine", from: 120 * p, to: 26, dur: 1.2, gain: 0.7 * v });
+    s.noise({ dur: 0.3, gain: 0.3 * v, delay: 0.05, filter: { type: "highpass", from: 2600 }, tremolo: { rate: 40, depth: 0.7 } });
+  },
+  "explosao.pequena": (s, v, p) => {
+    s.noise({ dur: 0.4, gain: 0.5 * v, filter: { type: "lowpass", from: 1200 * p, to: 200 } });
+    s.tone({ type: "sine", from: 160 * p, to: 50, dur: 0.4, gain: 0.34 * v });
+  },
+  "dano.jogador": (s, v) => {
+    s.tone({ type: "square", from: 180, to: 70, dur: 0.22, gain: 0.2 * v, filter: { type: "lowpass", from: 900 } });
+    s.noise({ dur: 0.2, gain: 0.16 * v, filter: { type: "bandpass", from: 700, q: 2 } });
+  },
+  "dash.ar": (s, v, p) => s.noise({ dur: 0.26, gain: 0.24 * v, filter: { type: "bandpass", from: 900 * p, to: 2400, q: 1.4 }, tremolo: { rate: 24, depth: 0.5 } }),
+  "pulo.ar": (s, v, p) => s.noise({ dur: 0.14, gain: 0.18 * v, filter: { type: "bandpass", from: 620 * p, to: 1400, q: 1.6 } }),
+  "aterrissar.pesado": (s, v, p) => {
+    s.noise({ dur: 0.24, gain: 0.4 * v, filter: { type: "lowpass", from: 700 * p, to: 160 } });
+    s.tone({ type: "sine", from: 96 * p, to: 40, dur: 0.3, gain: 0.28 * v });
+  },
+  "gravador.agarrar": (s, v, p) => {
+    s.tone({ type: "triangle", from: 340 * p, to: 780, dur: 0.22, gain: 0.16 * v, vibrato: { rate: 9, depth: 14 } });
+    s.noise({ dur: 0.2, gain: 0.12 * v, filter: { type: "bandpass", from: 1500, q: 3 } });
+  },
+  "gravador.soltar": (s, v, p) => {
+    s.tone({ type: "triangle", from: 620 * p, to: 180, dur: 0.2, gain: 0.14 * v });
+    s.noise({ dur: 0.16, gain: 0.16 * v, filter: { type: "highpass", from: 900 } });
+  },
+  dissolver: (s, v, p) => {
+    s.noise({ dur: 0.36, gain: 0.24 * v, filter: { type: "bandpass", from: 400 * p, to: 3600, q: 2.4 }, tremolo: { rate: 34, depth: 0.7 } });
+    s.tone({ type: "sawtooth", from: 620, to: 180, dur: 0.3, gain: 0.1 * v, filter: { type: "lowpass", from: 2200 } });
+  },
+  solda: (s, v, p) => {
+    for (let i = 0; i < 5; i++)
+      s.noise({ dur: 0.03, gain: 0.16 * v, delay: i * 0.045, filter: { type: "bandpass", from: 3200 * p, q: 12 } });
+    s.tone({ type: "square", from: 460, to: 300, dur: 0.16, gain: 0.06 * v });
+  },
+  duplicar: (s, v, p) => {
+    s.tone({ type: "triangle", from: 520 * p, dur: 0.1, gain: 0.14 * v });
+    s.tone({ type: "triangle", from: 780 * p, dur: 0.14, gain: 0.12 * v, delay: 0.08 });
+  },
+  "spawn.item": (s, v, p) => {
+    s.tone({ type: "sine", from: 660 * p, to: 990, dur: 0.16, gain: 0.14 * v });
+    s.noise({ dur: 0.1, gain: 0.1 * v, filter: { type: "highpass", from: 2000 } });
+  },
+  "ui.clique": (s, v) => {
+    s.noise({ dur: 0.03, gain: 0.18 * v, filter: { type: "highpass", from: 2600 } });
+    s.tone({ type: "square", from: 880, to: 620, dur: 0.05, gain: 0.06 * v });
+  },
+  "ui.hover": (s, v) => s.tone({ type: "sine", from: 1320, dur: 0.035, gain: 0.035 * v }),
+  "ui.abrir": (s, v) => {
+    s.tone({ type: "triangle", from: 420, to: 840, dur: 0.14, gain: 0.1 * v });
+    s.noise({ dur: 0.16, gain: 0.1 * v, filter: { type: "bandpass", from: 1800, q: 2 } });
+  },
+  "ui.fechar": (s, v) => s.tone({ type: "triangle", from: 840, to: 380, dur: 0.14, gain: 0.09 * v }),
+  "ui.erro": (s, v) => {
+    s.tone({ type: "square", from: 220, to: 160, dur: 0.12, gain: 0.12 * v });
+    s.tone({ type: "square", from: 180, to: 140, dur: 0.16, gain: 0.1 * v, delay: 0.12 });
+  },
+  "recorde": (s, v, p) => {
+    s.tone({ type: "triangle", from: 660 * p, dur: 0.14, gain: 0.14 * v });
+    s.tone({ type: "triangle", from: 990 * p, dur: 0.18, gain: 0.12 * v, delay: 0.1 });
+    s.tone({ type: "triangle", from: 1320 * p, dur: 0.24, gain: 0.1 * v, delay: 0.22 });
+  },
 };
 const intervalLoops: Record<string, { gap: number; sound: string }> = {
   coracao: { gap: 1, sound: "coracao" },
