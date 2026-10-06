@@ -12,7 +12,7 @@ Um Studio **independente, inspirado no fluxo de criação do Roblox Studio**, co
 4. **F5** executa, **F8** volta à edição. WASD/setas, Espaço e Shift controlam o jogador; telas estreitas têm botões de toque.
 5. **Ctrl+S** salva um projeto editável. **Exportar jogo** gera um HTML independente que pode ser aberto offline.
 
-Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md). Física atual e referência adaptada: [docs/GELATINA-0.8.2.md](docs/GELATINA-0.8.2.md). Mapa e base: [docs/GELATINA-0.8.1.md](docs/GELATINA-0.8.1.md).
+Guia completo: [docs/GUIA-STUDIO-0.8.md](docs/GUIA-STUDIO-0.8.md). Física atual e escopo: [docs/GELATINA-0.8.3.md](docs/GELATINA-0.8.3.md). Histórico: [0.8.2](docs/GELATINA-0.8.2.md) e [mapa/base 0.8.1](docs/GELATINA-0.8.1.md).
 
 ## Correção dos braços e física volumétrica · 0.8.3
 
@@ -20,7 +20,9 @@ O personagem de gelatina agora dobra os cotovelos e ergue os braços **para a fr
 
 Após inspecionar os quatro repositórios indicados, acrescentamos **6 tetraedros com volume assinado/XPBD** à gaiola, preset **Gota viscosa** (pressão em um corpo fechado) e uma consulta de **ponto mais próximo por triângulo da malha deformada** para o jogador contra corpos de gelatina *livres*. Essa consulta complementa os colisores Cannon existentes, não os substitui: é discreta e aproximada no formato do jogador, não é FEM de material contínuo, água livre nem colisão global/CCD/IPC exato. Plataformas do parkour mantêm a superfície de apoio sólida, que não afunda.
 
-**130 testes unitários**, build e testes de navegador `test:jelly`, `test:studio06`, `test:studio08` e `test:export:studio08` passaram. O teste offline móvel (390px) verifica pixels reais da cena depois do resize, não só o HUD; testes de braço por 1.000 passos rejeitam giros para trás/flicker. [Comparação dos quatro projetos, parâmetros, escopo real e limites](docs/GELATINA-0.8.3.md). O instalador público 0.8.2 foi publicado antes destas alterações; **não inclui a 0.8.3**. A versão atual só receberá link de instalador após validação do aplicativo instalado no Windows CI.
+**130 testes unitários**, build e testes de navegador `test:jelly`, `test:studio06`, `test:studio08` e `test:export:studio08` passaram. O teste offline móvel (390px) verifica pixels reais da cena depois do resize, não só o HUD; testes de braço por 1.000 passos rejeitam giros para trás/flicker. [Comparação dos quatro projetos, parâmetros, escopo real e limites](docs/GELATINA-0.8.3.md). **O instalador 0.8.3 foi instalado, validado e publicado**: [Windows x64](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.3/GameForge-Studio-0.8.3-Windows-x64-Setup.exe) · [CI nativo](https://github.com/venomtids/GameForge/actions/runs/37501148172). A antiga 0.8.2 não contém essas correções.
+
+![Visão em primeira pessoa com as mãos à frente](docs/screenshots/jelly-first-person.png)
 
 ## Gelatina mais mole e reativa · 0.8.2
 
@@ -33,8 +35,6 @@ Adaptados os algoritmos do [Jelly-Mesh-System de Roundy](https://github.com/roun
 - Novos valores no jogador/plataformas da Toolbox e no Jelly Jump. Exportação HTML independente com a mesma física e avisos MIT.
 
 **121 testes**, build e navegador de gelatina/Studio 0.6/0.8; percurso completo por controles reais a 30/60/144 cadências, saltos repetidos, mobile/offline e layout 320–1920. A gelatina continua uma aproximação híbrida, não FEM nem MeshCollider deformável exato. [Implementação, parâmetros, comparação e limites](docs/GELATINA-0.8.2.md).
-
-![Visão em primeira pessoa com as mãos à frente](docs/screenshots/jelly-first-person.png)
 
 ## Correção de salto/colisão · 06/10/2026
 
@@ -69,7 +69,11 @@ A base anterior foi preservada: gizmos, hierarquia, snapping, câmeras ortográf
 
 ## Windows — usuário final
 
-**Instalador atualizado 0.8.2 — entregue:** [baixar Windows x64](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.2/GameForge-Studio-0.8.2-Windows-x64-Setup.exe) · [release/checksum/instruções](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.2). **Gerado, instalado e validado no executável instalado** no [Windows CI](https://github.com/venomtids/GameForge/actions/runs/37466047048), incluindo abrir/salvar/backup, gelatina e exportação. 103.753.986 bytes, SHA-256 `598f6cb27b00190fb8a7f64687ed686bffc404ddf359f6a31d606272632c819d`. Esta versão contém a nova física e todas as correções de salto/salvamento. A 0.8.1 não teve publicação validada; a 0.8.0 abaixo é histórica.
+**Instalador atualizado 0.8.3 — entregue:** [baixar GameForge Studio para Windows x64](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.3/GameForge-Studio-0.8.3-Windows-x64-Setup.exe) · [release/checksum/instruções](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.3). [Windows CI](https://github.com/venomtids/GameForge/actions/runs/37501148172) concluiu instalação NSIS e teste do **executável instalado**, inclusive salvamento UTF-8/backup, gelatina, IPC e exportação. Tamanho: **103.759.512 bytes**. SHA-256: `4d188ac60c79230a7b74811a6814e17b1e61e5cf643e1bcfc91f3c0d6021bf1e`. [Resumo desta entrega](ENTREGA-GELATINA-0.8.3.md). Prévia sem assinatura digital: confira a origem e o hash, sem desativar o antivírus.
+
+### Versão anterior 0.8.2 (histórico)
+
+**Instalador 0.8.2 (histórico):** [baixar Windows x64](https://github.com/venomtids/GameForge/releases/download/studio-v0.8.2/GameForge-Studio-0.8.2-Windows-x64-Setup.exe) · [release/checksum/instruções](https://github.com/venomtids/GameForge/releases/tag/studio-v0.8.2). **Gerado, instalado e validado no executável instalado** no [Windows CI](https://github.com/venomtids/GameForge/actions/runs/37466047048), incluindo abrir/salvar/backup, gelatina e exportação. 103.753.986 bytes, SHA-256 `598f6cb27b00190fb8a7f64687ed686bffc404ddf359f6a31d606272632c819d`. Esta versão contém a física 0.8.2 e a correção de salto; não inclui o ajuste posterior de braços/primeira pessoa/salvamento rápido 0.8.3. A 0.8.1 não teve publicação validada; a 0.8.0 abaixo é histórica.
 
 [Resumo da entrega 0.8.2](ENTREGA-GELATINA-0.8.2.md). Prévia sem assinatura digital; confira a origem e o checksum, sem desativar o antivírus.
 

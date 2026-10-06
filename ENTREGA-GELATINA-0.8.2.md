@@ -1,3 +1,5 @@
+> **Entrega anterior (histórica).** A versão atual é [GameForge Studio 0.8.3](ENTREGA-GELATINA-0.8.3.md): inclui a correção dos braços/primeira pessoa, volume tetraédrico e novo instalador.
+
 # Entrega · GameForge Studio 0.8.2
 
 06/10/2026. Gelatina mais mole, móvel e reativa, baseada nos algoritmos inspecionados do Roundy/Jelly-Mesh-System e adaptada para Three.js/Cannon.
