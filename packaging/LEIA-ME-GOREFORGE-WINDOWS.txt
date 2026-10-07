@@ -52,7 +52,20 @@ SOBRE O PACOTE
 --------------
 Instalador NSIS gerado com Electron @@ELECTRON@@, sem assinatura digital: o
 Windows SmartScreen pode avisar na primeira vez ("Mais informacoes" >
-"Executar assim mesmo"). Confira o hash SHA-256 antes de instalar.
-Alvo: Windows 10/11 x64. Validacao automatizada instala o NSIS, testa o
-executavel instalado (abertura, fisica, tiro, spawn, dano, HUD, tela cheia) e
-desinstala - nao e certificacao em todo hardware.
+"Executar assim mesmo"). Nao desative o antivirus para instalar.
+
+CONFERIR O ARQUIVO BAIXADO
+--------------------------
+No PowerShell, na pasta do Setup.exe:
+
+  Get-FileHash .\GORE-FORGE-@@VERSAO@@-Windows-x64-Setup.exe -Algorithm SHA256
+
+Compare com a linha do mesmo arquivo no SHA256SUMS.txt que vem junto. O SHA-256
+do .exe publicado e conferido pelo proprio CI antes de instalar e testar, entao
+esse e o hash do build que passou pela validacao.
+
+Alvo: Windows 10/11 x64. Validacao automatizada no Windows: instala o Setup.exe
+em silencio (/S), confere pasta, recursos, atalho e registro de desinstalacao,
+abre o proprio GORE FORGE.exe instalado e joga (abertura, fisica, tiro, spawn,
+dano, HUD, tela cheia, ajustes salvos) e desinstala - nao e certificacao em todo
+hardware nem benchmark de GPU.
