@@ -1,0 +1,129 @@
+{
+  "format": "gameforge",
+  "version": 3,
+  "name": "Laboratório Lua + JavaScript",
+  "activeScene": "52619f22-a7fb-4582-904c-953d99c1ff3c",
+  "scenes": [
+    {
+      "id": "52619f22-a7fb-4582-904c-953d99c1ff3c",
+      "name": "Scripts em ação",
+      "nodes": [
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "0f8bde27-2fe1-49b3-bcc5-2ea4782f9700",
+          "name": "Base",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            12,
+            0.4,
+            10
+          ],
+          "color": "#506a60",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "lua",
+            "enabled": true,
+            "source": "-- Lua 5.3 via Fengari\nfunction update(dt, time, input)\n  self.ry = self.ry + dt * 50\n  self.y = 1.5 + math.sin(time) * 0.5\nend"
+          },
+          "id": "c2533bdb-b8dd-4144-928f-0d4e94a1267a",
+          "name": "Cubo • Lua",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -2,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#7fb7ed",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "javascript",
+            "enabled": true,
+            "source": "function update(dt, time, input) {\n  self.y = 1.5 + Math.cos(time) * 0.5;\n  self.rx += dt * 40;\n}"
+          },
+          "id": "feab2f55-ef4f-4daa-ab10-2be8f14e7065",
+          "name": "Esfera • JavaScript",
+          "kind": "sphere",
+          "parent": null,
+          "visible": true,
+          "position": [
+            2,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#e7ba80",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "background": "#202a30",
+    "gravity": -9.81
+  }
+}

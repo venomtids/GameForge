@@ -1,0 +1,445 @@
+{
+  "format": "gameforge",
+  "version": 7,
+  "name": "Motion Lab",
+  "activeScene": "14c27d44-bd16-435e-b98d-1e93c6530803",
+  "scenes": [
+    {
+      "id": "14c27d44-bd16-435e-b98d-1e93c6530803",
+      "name": "Experimentos de movimento",
+      "nodes": [
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "4895f0ea-b661-4d2b-9be3-ad10d3dbf23a",
+          "name": "Gramado",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.5,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            40,
+            1,
+            40
+          ],
+          "color": "#819b90",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": true,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "72d1d520-7ae3-4aab-af29-9e97f1e09f63",
+          "name": "Jogador articulado",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.8,
+            1.8,
+            0.65
+          ],
+          "color": "#69a6ad",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 15,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 6,
+          "amplitude": 0.4
+        },
+        {
+          "animation": {
+            "name": "Movimento",
+            "duration": 4,
+            "loop": true,
+            "autoplay": true,
+            "interpolation": "smooth",
+            "frames": [
+              {
+                "time": 0,
+                "position": [
+                  -3,
+                  1,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  3,
+                  0.4,
+                  3
+                ]
+              },
+              {
+                "time": 2,
+                "position": [
+                  -3,
+                  3,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  3,
+                  0.4,
+                  3
+                ]
+              },
+              {
+                "time": 4,
+                "position": [
+                  -3,
+                  1,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  3,
+                  0.4,
+                  3
+                ]
+              }
+            ]
+          },
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.7,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "a9d21ca7-b156-4b54-898e-747ffe2c369b",
+          "name": "Plataforma móvel",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            -3,
+            1,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            3,
+            0.4,
+            3
+          ],
+          "color": "#84d7c5",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": {
+            "name": "Movimento",
+            "duration": 4,
+            "loop": true,
+            "autoplay": true,
+            "interpolation": "linear",
+            "frames": [
+              {
+                "time": 0,
+                "position": [
+                  3,
+                  2,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  2,
+                  2,
+                  2
+                ]
+              },
+              {
+                "time": 4,
+                "position": [
+                  3,
+                  2,
+                  0
+                ],
+                "rotation": [
+                  0,
+                  360,
+                  0
+                ],
+                "scale": [
+                  2,
+                  2,
+                  2
+                ]
+              }
+            ]
+          },
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "31246fd1-8535-4ab6-98e4-df8306531429",
+          "name": "Anel animado",
+          "kind": "torus",
+          "parent": null,
+          "visible": true,
+          "position": [
+            3,
+            2,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            2,
+            2,
+            2
+          ],
+          "color": "#d8b582",
+          "roughness": 0.6,
+          "metalness": 0.6,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0.15,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "moveMultiplier": 1,
+    "sprintMultiplier": 1.5,
+    "jumpSpeed": 6.5,
+    "mouseSensitivity": 1.5,
+    "orbitSpeed": 1.5,
+    "panSpeed": 2.5,
+    "flySpeed": 12,
+    "editorLook": 1.5,
+    "zoomSpeed": 1.5,
+    "followSpeed": 8,
+    "fov": 78,
+    "physicsHz": 120,
+    "solverIterations": 15,
+    "background": "#202a30",
+    "gravity": -9.81,
+    "sky": {
+      "enabled": true,
+      "sunElevation": 50,
+      "sunAzimuth": 35,
+      "clouds": true
+    },
+    "gameCamera": "third",
+    "playerId": "72d1d520-7ae3-4aab-af29-9e97f1e09f63"
+  }
+}
