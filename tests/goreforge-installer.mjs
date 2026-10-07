@@ -223,12 +223,16 @@ for (const nome of [
   "scripts/instalar-e-verificar-goreforge.ps1",
   "scripts/desinstalar-e-verificar-goreforge.ps1",
 ]) {
-  const conteudo = (await readFile(path.join(root, nome))).toString("utf8");
-  assert.ok(!conteudo.includes("\r\n"), `${nome} deveria estar em LF`);
+  // o checkout do Windows traz CRLF (core.autocrlf): normalizamos antes de
+  // conferir, senão o teste passaria no Linux e quebraria no CI
+  const conteudo = (await readFile(path.join(root, nome)))
+    .toString("utf8")
+    .replace(/\r\n/g, "\n");
   assert.ok(
-    !/[^\x09\x0a\x0d\x20-\x7e]/.test(conteudo),
+    !/[^\x09\x0a\x20-\x7e]/.test(conteudo),
     `${nome} tem byte não-ASCII (o Windows PowerShell 5.1 leria errado sem BOM)`,
   );
+  assert.ok(!conteudo.startsWith("\uFEFF"), `${nome} não deveria ter BOM`);
   balancear(conteudo, nome);
   assert.ok(
     conteudo.includes("::error title="),
