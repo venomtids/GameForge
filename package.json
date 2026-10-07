@@ -31,11 +31,13 @@
     "test:studio08": "node tests/studio08-browser.mjs",
     "examples:studio08": "tsx scripts/generate-studio08.ts",
     "build:player": "vite build --config vite.player.config.ts",
+    "build:goreforge": "vite build --config vite.goreforge.config.ts",
     "predev": "npm run build:player",
     "test:desktop:studio08": "node tests/studio08-desktop.mjs",
     "test:export:studio08": "node tests/studio08-export.mjs",
     "test:jelly": "node tests/jelly-browser.mjs",
     "test:goreforge": "node tests/goreforge-browser.mjs",
+    "test:export:goreforge": "node tests/goreforge-export.mjs",
     "shots:goreforge": "node tests/goreforge-shots.mjs"
   },
   "dependencies": {

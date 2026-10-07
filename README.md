@@ -23,8 +23,9 @@ pátio com 74 corpos dinâmicos, 12 rigs elásticos, gore com desmembramento rea
 edita tema, HUD e presets de gore ao vivo.
 
 ```bash
-npm run dev             # abra http://localhost:5173/goreforge.html
-npm run test:goreforge  # valida física, gelatina, fratura, tiro e tema no navegador
+npm run dev              # abra http://localhost:5173/goreforge.html
+npm run build:goreforge  # arquivo único offline: entregas/goreforge.html (dá dois cliques)
+npm run test:goreforge   # valida física, gelatina, fratura, tiro e tema no navegador
 ```
 
 Estrutura de arquivos, decisões e como estender: [docs/GOREFORGE.md](docs/GOREFORGE.md).

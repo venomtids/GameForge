@@ -201,10 +201,22 @@ escala de cada painel. Nada mais muda.
 
 ---
 
-## 6. Comandos
+## 6. Jogar sem servidor (arquivo único)
+
+```bash
+npm run build:goreforge   # gera entregas/goreforge.html (engine + jogo + UI embutidos)
+npm run test:export:goreforge   # valida o arquivo abrindo por file:// num navegador real
+```
+
+`entregas/goreforge.html` é **autossuficiente** (~1 MB): dá dois cliques e o jogo abre offline —
+física, gelatina, gore, menus e temas funcionando. Salve, mande por e-mail ou ponha num pendrive.
+`entregas/goreforge-codigo.zip` traz o código-fonte completo do jogo junto.
+
+## 7. Comandos
 
 ```bash
 npm run dev             # servidor (http://localhost:5173/goreforge.html)
+npm run build:goreforge # arquivo único offline em entregas/goreforge.html
 npm test                # unitários (config, catálogos, pátio, estado, presets de gore)
 npm run typecheck
 npm run test:goreforge  # navegador: física rodando, gelatina deformando, fratura, tiros, tema ao vivo
