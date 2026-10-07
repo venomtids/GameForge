@@ -131,11 +131,21 @@ jobs:
         run: |
           $version = (Get-Content package.json | ConvertFrom-Json).version
           $tag = "goreforge-v$version"
+          $setup = "dist/windows-goreforge/GORE-FORGE-$version-Windows-x64-Setup.exe"
+          $somas = "dist/windows-goreforge/SHA256SUMS.txt"
+          $leia = "dist/windows-goreforge/LEIA-ME-WINDOWS.txt"
+          $leve = "dist/windows-goreforge/GORE-FORGE-Instalador.cmd"
           gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $tag "dist/windows-goreforge/GORE-FORGE-$version-Windows-x64-Setup.exe" "dist/windows-goreforge/SHA256SUMS.txt" "dist/windows-goreforge/LEIA-ME-WINDOWS.txt" "dist/windows-goreforge/GORE-FORGE-Instalador.cmd" --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "GORE FORGE $version — Windows x64" --prerelease --notes-file "packaging/NOTAS-GOREFORGE-$version.md"
+            gh release create $tag $setup $somas $leia $leve --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "GORE FORGE $version — Windows x64" --prerelease --notes-file "packaging/NOTAS-GOREFORGE-$version.md"
             if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           }
+          # o binario que acabou de passar por instalar/jogar/desinstalar e o que fica publicado:
+          # reenvia sempre (--clobber), em vez de deixar a release com o build de uma execucao antiga
+          gh release upload $tag $setup $somas $leia $leve --repo $env:GITHUB_REPOSITORY --clobber
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          gh release edit $tag --repo $env:GITHUB_REPOSITORY --notes-file "packaging/NOTAS-GOREFORGE-$version.md"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           exit 0
       - name: Evidências e logs
         if: always()

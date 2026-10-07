@@ -33,13 +33,27 @@ npm run installer:goreforge  # instalador Windows: entregas/GORE-FORGE-Instalado
 em base64: dois cliques e instala — sem internet, sem descompactar, sem administrador. (O mesmo
 conteúdo também sai como pacote ZIP, para quem prefere auditar arquivo por arquivo.)
 
-O `.exe` de verdade (Electron + NSIS, com atalhos e desinstalador no painel de controle) é compilado
-pelo mesmo plano do Studio — automação em `windows-latest` que empacota, **instala o próprio
-instalador**, testa o jogo instalado, desinstala e publica a release `goreforge-v<versão>`:
+O `.exe` de verdade (Electron + NSIS, com atalhos e desinstalador no painel de controle) segue o
+mesmo plano que funcionou para o Studio, em `windows-latest`: empacota, **instala o próprio
+instalador**, abre o jogo **a partir do executável instalado**, desinstala e publica a release
+`goreforge-v<versão>` — e ficou pronto:
+
+**Instalador GORE FORGE 0.8.3 entregue:** [baixar Windows x64](https://github.com/venomtids/GameForge/releases/download/goreforge-v0.8.3/GORE-FORGE-0.8.3-Windows-x64-Setup.exe)
+· [release com checksum e instruções](https://github.com/venomtids/GameForge/releases/tag/goreforge-v0.8.3)
+· [CI verde, ponta a ponta](https://github.com/venomtids/GameForge/actions/runs/37636204182). Tamanho
+**112.721.242 bytes**, SHA-256 `0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc`.
+O CI instalou em silêncio (`/S` em `%LOCALAPPDATA%\Programs\GORE FORGE`), conferiu SHA-256, recursos,
+atalho no Menu Iniciar e registro de desinstalação, jogou o jogo **pelo `.exe` instalado** (pátio,
+física, tiro, spawn, dano, HUD, tela cheia, localStorage) e desinstalou provando que exe/atalho/registro
+sumiram.
+
+Para reproduzir/validar:
 
 ```bash
 npm run desktop:goreforge        # no Windows: gera dist/windows-goreforge/*-Setup.exe + somas
-npm run test:electron:goreforge  # abre e joga o jogo dentro do Electron (instalado ou não)
+npm run test:electron:goreforge  # abre e joga o jogo dentro do Electron (empacotado)
+GOREFORGE_TEST_EXE="C:\...\GORE FORGE\GORE FORGE.exe" npm run test:electron:goreforge
+                                 # ...ou contra o aplicativo INSTALADO, pelo executável
 ```
 
 O instalador leve é um pacote pequeno e auditável (lançador `.cmd` + `Instalador.ps1` + o HTML): instala

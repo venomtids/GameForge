@@ -343,10 +343,22 @@ em `windows-latest` — o caminho que já funcionou para o Studio. O fluxo é:
 1. `npm ci`, `npm test` e `npm run installer:goreforge` (instalador leve + validação);
 2. `npm run desktop:goreforge` (build do jogo, `dist/goreforge-desktop`, NSIS x64, somas);
 3. `npm run test:electron:goreforge` no app **empacotado**;
-4. instalação **silenciosa** do próprio `Setup.exe`, conferência de atalho/registro/recursos e
-   `npm run test:electron:goreforge` de novo, agora contra o app **instalado**;
-5. desinstalação silenciosa e prova de que saiu do sistema;
-6. publicação da release `goreforge-v<versão>` com o `.exe`, o `.cmd` leve, as somas e o leia-me.
+4. instalação **silenciosa** do próprio `Setup.exe` (`scripts/instalar-e-verificar-goreforge.ps1`):
+   confere o SHA-256 do binário contra o `SHA256SUMS.txt`, roda `/S`, acha a pasta pelo registro
+   (com fallback em `%LOCALAPPDATA%`\`Programs`, `ProgramFiles` e `x86`), valida exe, recursos,
+   atalho no Menu Iniciar e entrada de desinstalação;
+5. `npm run test:electron:goreforge` de novo, agora contra o app **instalado** — abre o
+   `GORE FORGE.exe` (não a pasta: instalado, o jogo vive em `resources\app.asar`) e joga;
+6. desinstalação silenciosa (`scripts/desinstalar-e-verificar-goreforge.ps1`) e prova de que
+   executável, atalho e registro sumiram;
+7. publicação da release `goreforge-v<versão>` com o `.exe`, o `.cmd` leve, as somas e o leia-me —
+   sempre reenviando (`--clobber`) o binário que acabou de passar pelos passos acima.
+
+**Resultado da 0.8.3:** [CI 37636204182](https://github.com/venomtids/GameForge/actions/runs/37636204182),
+todos os passos verdes — instalação (código 0), jogo aberto pelo **executável instalado**
+(`PASS electron: GORE FORGE rodando a partir do aplicativo INSTALADO`) e desinstalação limpa.
+Binário: **112.721.242 bytes**, SHA-256 `0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc`,
+em [releases/tag/goreforge-v0.8.3](https://github.com/venomtids/GameForge/releases/tag/goreforge-v0.8.3).
 
 Compilar a partir do Linux exige Wine/NSIS (o `Setup.exe` é um alvo Windows); sem eles,
 `npm run desktop:goreforge` falha ao baixar/rodar o ferramental — por isso o CI é o caminho.
@@ -358,8 +370,13 @@ Detalhes que valem registro:
   gerar — assim o mesmo commit produz bytes idênticos no Linux e no Windows (verificado);
 - os arquivos dentro do ZIP usam um timestamp fixo (`SOURCE_DATE_EPOCH` ou 2026-01-01): dois
   builds do mesmo conteúdo têm o mesmo SHA-256;
-- o teste Electron serve os dois casos (`GOREFORGE_TEST_APP`): app empacotado e app instalado —
-  é o que transforma "compilou" em "instala e joga".
+- o teste Electron serve os dois casos: `GOREFORGE_TEST_APP`/`GOREFORGE_TEST_EXE` (app instalado) e
+  a pasta `dist/goreforge-desktop` (empacotado) — é o que transforma "compilou" em "instala e joga";
+- scripts PowerShell do CI são **ASCII puro, sem BOM e em LF**, e o teste de instalador recusa
+  `"$var:"`/`"$var::"` dentro de string (o PowerShell lê como escopo — foi o que quebrou uma execução
+  inteira até o log aparecer como anotação);
+- todo `.log` do job é reemitido em passos `if: always()` **no fim** (um por arquivo: o GitHub aceita
+  10 anotações por passo), então uma falha no Windows chega legível sem baixar log nenhum.
 
 ## 8. Comandos
 

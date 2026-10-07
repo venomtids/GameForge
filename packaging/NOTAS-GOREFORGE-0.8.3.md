@@ -46,10 +46,23 @@ Automação `.github/workflows/goreforge-windows.yml`, em `windows-latest`:
    e empacotamento **Electron 44.4.3 + NSIS x64**, com `SHA256SUMS.txt`;
 3. `npm run test:electron:goreforge` contra o app empacotado (abertura, física,
    tiro, spawn, dano da engine convertido em vida, HUD, tela cheia, localStorage);
-4. instalação **silenciosa** do próprio `Setup.exe`, verificação do executável
-   instalado (mesmo teste Electron, agora na pasta instalada), desinstalação e
-   conferência de que a pasta saiu;
-5. publicação dos artefatos e desta release.
+4. instalação **silenciosa** do próprio `Setup.exe` (`/S`), com conferência do
+   SHA-256, da pasta instalada, dos recursos, do atalho no Menu Iniciar e da
+   entrada de desinstalação no registro;
+5. `npm run test:electron:goreforge` **contra o aplicativo instalado**, abrindo o
+   `GORE FORGE.exe` que o atalho chama (pátio, física avançando, tiro, spawn,
+   dano da engine convertido em vida, HUD, tela cheia, localStorage);
+6. desinstalação silenciosa (`/S`) e prova de que executável, atalho e registro
+   sumiram;
+7. publicação dos artefatos e desta release — sempre a partir do binário que
+   acabou de passar por esses passos.
+
+O que foi verificado nesta versão ([CI 37636204182](https://github.com/venomtids/GameForge/actions/runs/37636204182),
+todos os passos verdes): o `Setup.exe` de **112.721.242 bytes** e SHA-256
+`0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc` instalou em
+`%LOCALAPPDATA%\Programs\GORE FORGE`, apareceu como "GORE FORGE 0.8.3" em
+*Aplicativos instalados*, criou o atalho no Menu Iniciar, abriu o jogo a partir do
+**executável instalado** (instalador retornou 0) e desinstalou limpo.
 
 Compilar a partir do Linux exige Wine/NSIS (`npm run desktop:goreforge`); o
 usuário do instalador não precisa de nada disso.
