@@ -88,7 +88,7 @@ assert.notDeepEqual(
   [0xef, 0xbb, 0xbf],
   "Instalar GORE FORGE.cmd tem BOM: o cmd.exe não executa o arquivo direito",
 );
-const cmd = bytesCmd.toString("latin1");
+const cmd = bytesCmd.toString("latin1").replace(/\r\n/g, "\n");
 assert.ok(
   !/[^\x09\x0a\x0d\x20-\x7e]/.test(cmd),
   "Instalar GORE FORGE.cmd tem byte não-ASCII",
@@ -105,8 +105,12 @@ for (const trecho of [
     cmd.includes(trecho),
     `lançador .cmd sem o trecho obrigatório: ${trecho}`,
   );
+assert.ok(
+  bytesCmd.toString("latin1").includes("\r\n"),
+  "o lançador .cmd deveria sair com CRLF (formato do cmd.exe)",
+);
 console.log(
-  "PASS instalador: lançador .cmd é ASCII puro, sem BOM, com desbloqueio de arquivo",
+  "PASS instalador: lançador .cmd é ASCII puro, sem BOM, CRLF e com desbloqueio de arquivo",
 );
 
 // 4) PowerShell: BOM obrigatório (é assim que o Windows PowerShell 5.1 lê os acentos)
@@ -116,7 +120,7 @@ assert.deepEqual(
   [0xef, 0xbb, 0xbf],
   "Instalador.ps1 precisa de BOM UTF-8 para os acentos saírem certos no console",
 );
-const ps = bytesPs.toString("utf8");
+const ps = bytesPs.toString("utf8").replace(/\r\n/g, "\n");
 for (const trecho of [
   "param(",
   "$Desinstalar",
@@ -240,9 +244,9 @@ console.log(
 );
 
 // 6) leia-me
-const leiaMe = (await readFile(path.join(pastaPacote, "LEIA-ME.txt"))).toString(
-  "utf8",
-);
+const leiaMe = (await readFile(path.join(pastaPacote, "LEIA-ME.txt")))
+  .toString("utf8")
+  .replace(/\r\n/g, "\n");
 assert.ok(
   leiaMe.startsWith("\uFEFF"),
   "LEIA-ME.txt sem BOM (acentos saem errados no Notepad)",
@@ -336,7 +340,7 @@ assert.ok(
   !bytesUnico.includes(0x1a),
   `${NOME_UNICO} tem byte 0x1A (Ctrl-Z): o cmd.exe pode parar de ler antes do fim`,
 );
-const unico = bytesUnico.toString("latin1");
+const unico = bytesUnico.toString("latin1").replace(/\r\n/g, "\n");
 assert.ok(
   !/[^\x09\x0a\x0d\x20-\x7e]/.test(unico),
   `${NOME_UNICO} tem byte não-ASCII`,

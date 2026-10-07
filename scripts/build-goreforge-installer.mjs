@@ -50,7 +50,12 @@ if (!infoJogo || infoJogo.size < 300_000)
 const infoIcone = await stat(icone).catch(() => null);
 if (!infoIcone) throw new Error(`ícone não encontrado: ${icone}`);
 
-const comVersao = (texto) => texto.replaceAll("@@VERSAO@@", versao);
+// O checkout do Windows (core.autocrlf) entrega os templates com CRLF; o build
+// precisa ser idêntico em qualquer sistema: normalizamos tudo para LF e só os
+// `.cmd` saem em CRLF (o formato que o cmd.exe espera).
+const LF = (texto) => texto.replace(/\r\n/g, "\n");
+const CRLF = (texto) => texto.replace(/\n/g, "\r\n");
+const comVersao = (texto) => LF(texto).replaceAll("@@VERSAO@@", versao);
 const semMarcador = (texto, nome) => {
   if (texto.includes("@@"))
     throw new Error(`${nome} ainda tem marcador não substituído (@@...@@)`);
@@ -73,7 +78,7 @@ if (/[^\x09\x0a\x0d\x20-\x7e]/.test(lancador))
   );
 await writeFile(
   path.join(destino, "Instalar GORE FORGE.cmd"),
-  lancador,
+  CRLF(lancador),
   "latin1",
 );
 
@@ -116,12 +121,19 @@ await writeFile(
 
 // 6) zip (com a pasta por dentro, para extrair limpo no Windows)
 const caminhoZip = path.join(root, "entregas", nomeZip);
+// Timestamp fixo para as entradas do ZIP: sem isso o artefato mudaria a cada
+// build (o HTML é regerado) e dois builds do mesmo conteúdo teriam hashes
+// diferentes. SOURCE_DATE_EPOCH (segundos) permite carimbar a data da release.
+const dataFixa = process.env.SOURCE_DATE_EPOCH
+  ? Number(process.env.SOURCE_DATE_EPOCH) * 1000
+  : Date.UTC(2026, 0, 1);
+
 const entradasZip = [];
 for (const arquivo of [...arquivos, "SHA256SUMS.txt"])
   entradasZip.push({
     caminho: `${pastaZip}/${arquivo}`,
     dados: await readFile(path.join(destino, arquivo)),
-    data: infoJogo.mtimeMs,
+    data: dataFixa,
   });
 const dadosZip = escreverZip(entradasZip);
 await writeFile(caminhoZip, dadosZip);
@@ -156,7 +168,7 @@ if (cabecalho.includes(MARCA_FIM))
   );
 const base64 = (await readFile(caminhoZip)).toString("base64");
 const linhas = base64.match(/.{1,100}/g).join("\n");
-const unico = `${cabecalho}${linhas}\n${MARCA_FIM}\n`;
+const unico = CRLF(`${cabecalho}${linhas}\n${MARCA_FIM}\n`);
 await writeFile(path.join(destino, "..", NOME_UNICO), unico, "latin1");
 const caminhoUnico = path.join(root, "entregas", NOME_UNICO);
 const infoUnico = await stat(caminhoUnico);

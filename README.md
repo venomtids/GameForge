@@ -33,7 +33,16 @@ npm run installer:goreforge  # instalador Windows: entregas/GORE-FORGE-Instalado
 em base64: dois cliques e instala — sem internet, sem descompactar, sem administrador. (O mesmo
 conteúdo também sai como pacote ZIP, para quem prefere auditar arquivo por arquivo.)
 
-O instalador é um pacote pequeno e auditável (lançador `.cmd` + `Instalador.ps1` + o HTML): instala
+O `.exe` de verdade (Electron + NSIS, com atalhos e desinstalador no painel de controle) é compilado
+pelo mesmo plano do Studio — automação em `windows-latest` que empacota, **instala o próprio
+instalador**, testa o jogo instalado, desinstala e publica a release `goreforge-v<versão>`:
+
+```bash
+npm run desktop:goreforge        # no Windows: gera dist/windows-goreforge/*-Setup.exe + somas
+npm run test:electron:goreforge  # abre e joga o jogo dentro do Electron (instalado ou não)
+```
+
+O instalador leve é um pacote pequeno e auditável (lançador `.cmd` + `Instalador.ps1` + o HTML): instala
 por usuário em `%LOCALAPPDATA%\GORE FORGE`, cria atalhos na Área de Trabalho e no Menu Iniciar
 (janela de aplicativo quando há Edge/Chrome), registra a desinstalação em *Aplicativos instalados* —
 sem administrador e sem runtime nenhum. Para remover, use o próprio Windows ou
@@ -143,6 +152,8 @@ npm run test:goreforge       # GORE FORGE: física, gelatina, destruição, HUD 
 npm run shots:goreforge      # capturas do GORE FORGE em test-results/
 npm run installer:goreforge  # instalador único (.cmd) + pacote ZIP, em entregas/
 npm run test:installer:goreforge # valida o instalador: arquivos, SHA256, ZIP e carga embutida
+npm run desktop:goreforge    # .EXE real (Electron + NSIS): rode no Windows; o CI faz isso
+npm run test:electron:goreforge # testa o jogo dentro do Electron (empacotado ou instalado)
 npm run test:studio08        # fluxos do Studio; servidor dev precisa estar aberto
 npm run test:export:studio08 # downloads + jogo file:// offline, Unicode e toque
 npm run test:update          # regressões/scripts; servidor dev precisa estar aberto

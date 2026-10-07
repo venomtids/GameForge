@@ -74,6 +74,13 @@ packaging/goreforge-installer/
 scripts/build-goreforge-installer.mjs  injeta a versão, gera SHA256SUMS.txt, monta o ZIP e embute
                                        o pacote em base64 no instalador único (com self-check)
 tests/zip-helper.mjs                   leitor mínimo de ZIP usado pelos testes do instalador
+scripts/lib/zip.mjs                    escritor de ZIP portátil (o CI Windows não tem `zip`)
+desktop/goreforge-main.cjs             processo principal do app Electron (janela, F11, pointer lock)
+scripts/stage-goreforge-desktop.mjs    prepara dist/goreforge-desktop para o electron-builder
+electron-builder.goreforge.json        receita do .exe NSIS do GORE FORGE (x64, por usuário)
+scripts/checksum-goreforge-installer.mjs  fecha a entrega em dist/windows-goreforge/
+tests/goreforge-electron.mjs           testa o jogo DENTRO do Electron (empacotado e instalado)
+.github/workflows/goreforge-windows.yml compila, instala, testa, desinstala e publica a release
 vite.goreforge.config.ts               build do arquivo único (single-file, base "./", outDir entregas)
 tests/goreforge-installer.mjs          valida o instalador sem Windows (arquivos, somas, ZIP byte a byte)
 tests/goreforge-export.mjs             abre entregas/goreforge.html por file:// num navegador real
@@ -306,13 +313,53 @@ arquivo enquanto executa) e, se a pasta ainda estiver em uso, agenda a limpeza f
 
 Opções avançadas: `-Destino "D:\Jogos\GORE FORGE"` e `-NaoAbrir` (instalar sem abrir).
 
-### Por que não um `.exe`?
+### 7.3 O instalador de verdade (`.exe`, Electron + NSIS)
 
-O pipeline do Studio (`npm run desktop:win`, Electron + NSIS + wine) já existe no repositório e
-funciona em máquina Windows/cross-build com wine — o alvo é o Studio, não este jogo. Para o GORE
-FORGE, o instalador acima evita depender de runtime nenhum: o jogo é HTML, então instalar é copiar
-um arquivo e criar atalhos. Num Windows com Node, `npm run desktop:win` continua disponível para
-gerar o `.exe` do Studio normalmente.
+O GORE FORGE também sai como **instalador Windows nativo**, com o mesmo pipeline do Studio
+(Electron 44.4.3 + NSIS, provado nas releases 0.8.x):
+
+```bash
+npm run desktop:goreforge        # jogo + instalador leve + app empacotado + NSIS + somas
+npm run test:electron:goreforge  # abre o jogo DENTRO do Electron e joga (abertura, tiro,
+                                 # spawn, dano, HUD, tela cheia, localStorage)
+```
+
+Saída em `dist/windows-goreforge/`:
+
+```
+GORE-FORGE-<versão>-Windows-x64-Setup.exe   instalador Electron/NSIS (x64, por usuário)
+GORE-FORGE-Instalador.cmd                   o instalador leve (arquivo único)
+SHA256SUMS.txt                              hashes do .exe e do .cmd leve
+LEIA-ME-WINDOWS.txt                         instruções do usuário
+```
+
+O aplicativo é só isto: `desktop/goreforge-main.cjs` (janela, F11, pointer lock, menu, CSP local)
++ o `goreforge.html` de sempre em `extraResources` + o instalador leve ao lado. Nada de
+`node_modules` de desenvolvimento e nenhuma dependência de runtime.
+
+**Onde esse `.exe` é compilado:** o projeto compila em `.github/workflows/goreforge-windows.yml`,
+em `windows-latest` — o caminho que já funcionou para o Studio. O fluxo é:
+
+1. `npm ci`, `npm test` e `npm run installer:goreforge` (instalador leve + validação);
+2. `npm run desktop:goreforge` (build do jogo, `dist/goreforge-desktop`, NSIS x64, somas);
+3. `npm run test:electron:goreforge` no app **empacotado**;
+4. instalação **silenciosa** do próprio `Setup.exe`, conferência de atalho/registro/recursos e
+   `npm run test:electron:goreforge` de novo, agora contra o app **instalado**;
+5. desinstalação silenciosa e prova de que saiu do sistema;
+6. publicação da release `goreforge-v<versão>` com o `.exe`, o `.cmd` leve, as somas e o leia-me.
+
+Compilar a partir do Linux exige Wine/NSIS (o `Setup.exe` é um alvo Windows); sem eles,
+`npm run desktop:goreforge` falha ao baixar/rodar o ferramental — por isso o CI é o caminho.
+O usuário do instalador não precisa de nada disso.
+
+Detalhes que valem registro:
+
+- o `.cmd` leve sai **em CRLF e ASCII puro**, e o build normaliza os templates para LF antes de
+  gerar — assim o mesmo commit produz bytes idênticos no Linux e no Windows (verificado);
+- os arquivos dentro do ZIP usam um timestamp fixo (`SOURCE_DATE_EPOCH` ou 2026-01-01): dois
+  builds do mesmo conteúdo têm o mesmo SHA-256;
+- o teste Electron serve os dois casos (`GOREFORGE_TEST_APP`): app empacotado e app instalado —
+  é o que transforma "compilou" em "instala e joga".
 
 ## 8. Comandos
 
@@ -325,6 +372,9 @@ npm run test:goreforge  # navegador: física rodando, gelatina deformando, fratu
 npm run shots:goreforge # turnê com capturas em test-results/
 npm run installer:goreforge # instalador único (.cmd) + pacote ZIP, em entregas/
 npm run test:installer:goreforge # valida o instalador: arquivos, somas, ZIP e carga embutida
+npm run stage:goreforge # prepara dist/goreforge-desktop (jogo + processo principal)
+npm run desktop:goreforge # INSTALADOR .EXE (Electron + NSIS) + somas: rode no Windows
+npm run test:electron:goreforge # testa o jogo dentro do Electron (empacotado ou instalado)
 ```
 
 ### Limites conhecidos (honestos)
