@@ -150,9 +150,12 @@ try {
     () => window.goreforge.world.bodies.size,
   );
   await janela.evaluate(() => {
-    window.goreforge.spawner.spawn("crate", {
-      position: [0, 6, 0],
-      kind: "dynamic",
+    // mesma chamada dos testes de navegador/offline: `position` é Vector3
+    // (o spawner usa .clone()), e `ahead(dist, altura)` devolve um ponto à frente
+    const runtime = window.goreforge;
+    runtime.spawner.spawn("crate", {
+      position: runtime.ahead(8, 1),
+      kind: "prop",
     });
   });
   await janela.waitForFunction(
