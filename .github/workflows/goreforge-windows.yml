@@ -1,0 +1,147 @@
+name: Instalador GORE FORGE (Windows)
+on:
+  push:
+    branches: [arena/4e96fac9-gameforge]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: goreforge-windows-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows:
+    name: Empacotar, instalar e validar o GORE FORGE
+    runs-on: windows-latest
+    timeout-minutes: 40
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Versão do aplicativo
+        id: version
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          "version=$version" >> $env:GITHUB_OUTPUT
+      - name: Dependências
+        run: npm ci
+      - name: Testes da engine e do jogo
+        run: npm test
+      - name: Instalador leve (arquivo único) e sua validação
+        run: |
+          npm run installer:goreforge
+          npm run test:installer:goreforge
+      - name: Build do jogo e instalador NSIS (Electron)
+        run: npm run desktop:goreforge
+      - name: Validar jogo no aplicativo empacotado
+        run: npm run test:electron:goreforge
+        env:
+          GOREFORGE_TEST_APP: dist/goreforge-desktop
+      - name: Instalar o próprio Setup.exe (silencioso) e validar o executável instalado
+        shell: pwsh
+        run: |
+          $pacote = (Get-Content package.json | ConvertFrom-Json)
+          $version = $pacote.version
+          $setup = "dist/windows-goreforge/GORE-FORGE-$version-Windows-x64-Setup.exe"
+          if (-not (Test-Path $setup)) { throw "Setup.exe não encontrado em $setup" }
+          # o hash publicado tem de ser o do arquivo que vamos instalar
+          $esperado = (Get-Content dist/windows-goreforge/SHA256SUMS.txt | Where-Object { $_ -match 'Setup\.exe' })
+          $hash = (Get-FileHash $setup -Algorithm SHA256).Hash.ToLower()
+          if ($esperado -notmatch $hash) { throw "SHA-256 do Setup.exe não confere com SHA256SUMS.txt" }
+          Write-Host "Instalando $setup ..."
+          $processo = Start-Process $setup -ArgumentList "/S" -Wait -PassThru
+          if ($processo.ExitCode -ne 0) { throw "instalador retornou $($processo.ExitCode)" }
+          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+          $instalado = $null
+          for ($i = 0; $i -lt 20 -and -not $instalado; $i++) {
+            $entrada = Get-ChildItem $registro -ErrorAction SilentlyContinue |
+              Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" } |
+              Select-Object -First 1
+            if ($entrada) {
+              $onde = (Get-ItemProperty $entrada.PSPath).InstallLocation
+              if ($onde -and (Test-Path (Join-Path $onde "GORE FORGE.exe"))) { $instalado = $onde }
+            }
+            if (-not $instalado) { Start-Sleep -Seconds 1 }
+          }
+          if (-not $instalado) {
+            $candidatos = @(
+              (Join-Path $env:LOCALAPPDATA "Programs\GORE FORGE"),
+              (Join-Path $env:LOCALAPPDATA "GORE FORGE"),
+              (Join-Path $env:ProgramFiles "GORE FORGE"),
+              (Join-Path ${env:ProgramFiles(x86)} "GORE FORGE")
+            )
+            $instalado = $candidatos | Where-Object { Test-Path (Join-Path $_ "GORE FORGE.exe") } | Select-Object -First 1
+          }
+          if (-not $instalado) { throw "não achei GORE FORGE.exe (registro e candidatos falharam)" }
+          $exe = Join-Path $instalado "GORE FORGE.exe"
+          Write-Host "Instalado em $instalado"
+          $atalho = Join-Path ([Environment]::GetFolderPath("Desktop")) "GORE FORGE.lnk"
+          if (-not (Test-Path $atalho)) { throw "atalho da Área de Trabalho não foi criado" }
+          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+          $entrada = Get-ChildItem $registro | Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" }
+          if (-not $entrada) { throw "entrada de desinstalação não registrada" }
+          $recursos = Join-Path $instalado "resources"
+          if (-not (Test-Path (Join-Path $recursos "goreforge.html"))) { throw "o jogo não foi instalado" }
+          if (-not (Test-Path (Join-Path $recursos "LEIA-ME.txt"))) { throw "leia-me não foi instalado" }
+          "GOREFORGE_TEST_APP=$instalado" >> $env:GITHUB_ENV
+          "GOREFORGE_INSTALADO=$instalado" >> $env:GITHUB_ENV
+          Write-Host "OK: instalado, atalho, registro e recursos conferidos"
+      - name: Jogar a partir do aplicativo INSTALADO
+        run: npm run test:electron:goreforge
+      - name: Desinstalar e conferir que saiu do sistema
+        shell: pwsh
+        run: |
+          $instalado = $env:GOREFORGE_INSTALADO
+          $desinstalador = Get-ChildItem $instalado -Filter "Uninstall*.exe" | Select-Object -First 1
+          if (-not $desinstalador) { throw "desinstalador não encontrado em $instalado" }
+          Write-Host "Rodando $($desinstalador.Name) /S ..."
+          $processo = Start-Process $desinstalador.FullName -ArgumentList "/S" -Wait -PassThru
+          if ($processo.ExitCode -ne 0) { throw "desinstalador retornou $($processo.ExitCode)" }
+          for ($i = 0; $i -lt 30 -and (Test-Path (Join-Path $instalado "GORE FORGE.exe")); $i++) {
+            Start-Sleep -Seconds 2
+          }
+          if (Test-Path (Join-Path $instalado "GORE FORGE.exe")) { throw "o executável continua instalado" }
+          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
+          $entrada = Get-ChildItem $registro -ErrorAction SilentlyContinue | Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" }
+          if ($entrada) { throw "entrada de desinstalação ficou para trás" }
+          Write-Host "OK: desinstalação limpa"
+      - name: Entregar instalador, checksum e instruções
+        uses: actions/upload-artifact@v4
+        with:
+          name: GORE-FORGE-${{ steps.version.outputs.version }}-Windows-x64
+          path: |
+            dist/windows-goreforge/*-Setup.exe
+            dist/windows-goreforge/SHA256SUMS.txt
+            dist/windows-goreforge/LEIA-ME-WINDOWS.txt
+            dist/windows-goreforge/GORE-FORGE-Instalador.cmd
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+      - name: Publicar download da prévia Windows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $tag = "goreforge-v$version"
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag "dist/windows-goreforge/GORE-FORGE-$version-Windows-x64-Setup.exe" "dist/windows-goreforge/SHA256SUMS.txt" "dist/windows-goreforge/LEIA-ME-WINDOWS.txt" "dist/windows-goreforge/GORE-FORGE-Instalador.cmd" --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "GORE FORGE $version — Windows x64" --prerelease --notes-file "packaging/NOTAS-GOREFORGE-$version.md"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          exit 0
+      - name: Evidências e logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Validacao-GOREFORGE-Windows-${{ steps.version.outputs.version }}
+          path: test-results
+          if-no-files-found: ignore
+          retention-days: 14

@@ -1,0 +1,58 @@
+==============================================================================
+  GORE FORGE @@VERSAO@@ - WINDOWS x64
+  sandbox de fisica, gelatina e gore - roda 100% offline
+==============================================================================
+
+O QUE FOI INSTALADO
+-------------------
+O GORE FORGE agora e um aplicativo de verdade no seu computador, com atalho na
+Area de Trabalho e no Menu Iniciar. Ele roda em janela propria (Electron), sem
+navegador e sem internet: fisica, gelatina, gore, menus e temas funcionam
+offline. Nada de Node.js, Python ou servidor.
+
+COMO JOGAR
+----------
+Dois cliques no atalho "GORE FORGE". F11 alterna tela cheia. O menu (barra
+superior, aparece com Alt) tem Reiniciar o patio, Controles e Sair.
+
+CONTROLES
+---------
+Movimento      W A S D andar | Shift correr | Ctrl/C agachar (correndo:
+               escorriao) | Q dash | Space pular (duplo no ar) | G noclip |
+               V 1a/3a pessoa
+Combate        Botao esquerdo atirar/usar | Botao direito mira (ADS)/
+               arremessar | 1..9 armas | 0 ciclar ferramentas |
+               roda do mouse trocar arma | F curar | X alternar gore
+Menus          Tab menu de spawn | Esc pausa, ajustes e interface |
+               F5 reiniciar o patio | H esconder HUD | M mutar som
+Dica           Shift+clique num item do menu de spawn marca favorito.
+
+O QUE A INSTALACAO CONTEM
+-------------------------
+  GORE FORGE.exe            o jogo
+  resources/goreforge.html  o jogo em arquivo unico (eng + jogo + interface)
+  resources/LEIA-ME.txt     este arquivo (na pasta de instalacao)
+  Instalador leve (sem Electron).cmd
+                            versao alternativa que nao usa Electron: instala so
+                            o arquivo HTML e abre no navegador
+
+REQUISITOS
+----------
+Windows 10/11 x64 (Intel/AMD). Espaco em disco: ~280 MB. A instalacao e por
+usuario: nao precisa de senha de administrador.
+
+DESINSTALAR
+-----------
+Configuracoes > Aplicativos > Aplicativos instalados > GORE FORGE > Desinstalar.
+Os seus ajustes (tema, favoritos, recordes) ficam guardados e voltam se voce
+instalar de novo. Para apagar tudo, remova tambem a pasta
+%APPDATA%\GORE FORGE depois da desinstalacao.
+
+SOBRE O PACOTE
+--------------
+Instalador NSIS gerado com Electron @@ELECTRON@@, sem assinatura digital: o
+Windows SmartScreen pode avisar na primeira vez ("Mais informacoes" >
+"Executar assim mesmo"). Confira o hash SHA-256 antes de instalar.
+Alvo: Windows 10/11 x64. Validacao automatizada instala o NSIS, testa o
+executavel instalado (abertura, fisica, tiro, spawn, dano, HUD, tela cheia) e
+desinstala - nao e certificacao em todo hardware.

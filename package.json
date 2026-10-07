@@ -40,7 +40,10 @@
     "test:export:goreforge": "node tests/goreforge-export.mjs",
     "shots:goreforge": "node tests/goreforge-shots.mjs",
     "installer:goreforge": "npm run build:goreforge && node scripts/build-goreforge-installer.mjs",
-    "test:installer:goreforge": "node tests/goreforge-installer.mjs"
+    "test:installer:goreforge": "node tests/goreforge-installer.mjs",
+    "stage:goreforge": "node scripts/stage-goreforge-desktop.mjs",
+    "desktop:goreforge": "npm run build:goreforge && node scripts/build-goreforge-installer.mjs && node scripts/stage-goreforge-desktop.mjs && electron-builder --config electron-builder.goreforge.json --win nsis --x64 --publish never && node scripts/checksum-goreforge-installer.mjs",
+    "test:electron:goreforge": "node tests/goreforge-electron.mjs"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

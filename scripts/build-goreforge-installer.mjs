@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { execFileSync } from "node:child_process";
+import { escreverZip } from "./lib/zip.mjs";
 import {
   copyFile,
   mkdir,
@@ -116,10 +116,15 @@ await writeFile(
 
 // 6) zip (com a pasta por dentro, para extrair limpo no Windows)
 const caminhoZip = path.join(root, "entregas", nomeZip);
-await rm(caminhoZip, { force: true });
-execFileSync("zip", ["-q", "-r", "-X", nomeZip, pastaZip], {
-  cwd: path.join(root, "entregas"),
-});
+const entradasZip = [];
+for (const arquivo of [...arquivos, "SHA256SUMS.txt"])
+  entradasZip.push({
+    caminho: `${pastaZip}/${arquivo}`,
+    dados: await readFile(path.join(destino, arquivo)),
+    data: infoJogo.mtimeMs,
+  });
+const dadosZip = escreverZip(entradasZip);
+await writeFile(caminhoZip, dadosZip);
 const infoZip = await stat(caminhoZip);
 
 // 7) instalador ÚNICO: o mesmo .cmd carrega o ZIP inteiro embutido em base64
