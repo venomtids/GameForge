@@ -41,9 +41,34 @@ jobs:
       - name: Build do jogo e instalador NSIS (Electron)
         run: npm run desktop:goreforge
       - name: Validar jogo no aplicativo empacotado
-        run: npm run test:electron:goreforge
+        shell: pwsh
         env:
           GOREFORGE_TEST_APP: dist/goreforge-desktop
+        run: |
+          New-Item -ItemType Directory -Force -Path test-results | Out-Null
+          npm run test:electron:goreforge 2>&1 | Tee-Object -FilePath test-results\electron-empacotado.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Diagnóstico do Electron (só quando algo falha)
+        if: failure()
+        shell: pwsh
+        run: |
+          $arquivos = @(Get-ChildItem test-results -Filter "electron*.log" -ErrorAction SilentlyContinue)
+          foreach ($arquivo in $arquivos) {
+            Write-Host "::error title=Log $($arquivo.Name)::$(($arquivo.FullName -replace '%','%25'))"
+            Get-Content $arquivo.FullName | Select-Object -Last 40 | ForEach-Object {
+              $linha = ($_ -replace '%','%25') -replace "`r?`n",' '
+              if ($linha.Trim()) { Write-Host "::error title=Electron::[$($arquivo.Name)] $linha" }
+            }
+          }
+          if (Test-Path dist/goreforge-desktop) {
+            Write-Host "Conteúdo de dist/goreforge-desktop:"
+            Get-ChildItem dist/goreforge-desktop -Recurse | Select-Object -First 20 FullName | ForEach-Object { Write-Host "  $($_.FullName)" }
+          }
+          if (Test-Path dist/windows-goreforge) {
+            Write-Host "Conteúdo de dist/windows-goreforge:"
+            Get-ChildItem dist/windows-goreforge | ForEach-Object { Write-Host "  $($_.Name) $($_.Length)" }
+          }
+          exit 0
       - name: Instalar o próprio Setup.exe (silencioso) e validar o executável instalado
         shell: pwsh
         run: |
@@ -94,7 +119,11 @@ jobs:
           "GOREFORGE_INSTALADO=$instalado" >> $env:GITHUB_ENV
           Write-Host "OK: instalado, atalho, registro e recursos conferidos"
       - name: Jogar a partir do aplicativo INSTALADO
-        run: npm run test:electron:goreforge
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path test-results | Out-Null
+          npm run test:electron:goreforge 2>&1 | Tee-Object -FilePath test-results\electron-instalado.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Desinstalar e conferir que saiu do sistema
         shell: pwsh
         run: |

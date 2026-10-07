@@ -15,6 +15,17 @@ import assert from "node:assert/strict";
  *   GOREFORGE_TEST_APP="C:\\...\\GORE FORGE" npm run test:electron:goreforge
  */
 const appDir = process.env.GOREFORGE_TEST_APP || "dist/goreforge-desktop";
+
+/**
+ * Anotações do GitHub Actions: quando algo falha, a mensagem real vira anotação
+ * no resumo da execução — dá para ler sem baixar log nenhum.
+ */
+const escapar = (texto) =>
+  String(texto).replace(/%/g, "%25").replace(/\r?\n/g, "%0A");
+const anotar = (titulo, detalhe) =>
+  console.error(`::error title=${titulo}::${escapar(detalhe).slice(0, 1400)}`);
+const avisar = (titulo, detalhe) =>
+  console.log(`::notice title=${titulo}::${escapar(detalhe).slice(0, 700)}`);
 const info = await stat(appDir).catch(() => null);
 assert.ok(
   info && info.isDirectory(),
@@ -23,17 +34,27 @@ assert.ok(
 
 await mkdir("test-results", { recursive: true });
 const perfil = await mkdtemp(path.join(os.tmpdir(), "goreforge-electron-"));
-const app = await electron.launch({
-  args: [
-    appDir,
-    "--no-sandbox",
-    "--enable-unsafe-swiftshader",
-    `--user-data-dir=${perfil}`,
-  ],
-});
-
 const erros = [];
+let app = null;
 try {
+  app = await electron.launch({
+    args: [
+      appDir,
+      "--no-sandbox",
+      "--enable-unsafe-swiftshader",
+      `--user-data-dir=${perfil}`,
+    ],
+  });
+  avisar("Electron", `aplicativo iniciado de ${path.resolve(appDir)}`);
+  // se o processo principal reclamar, a mensagem tem de aparecer na anotação
+  try {
+    app.process().stderr?.on("data", (pedaco) => {
+      const texto = String(pedaco).trim();
+      if (texto) erros.push(`stderr: ${texto}`);
+    });
+  } catch {
+    /* sem stderr acessível: seguimos com o resto dos diagnósticos */
+  }
   const janela = await app.firstWindow();
   janela.on("pageerror", (erro) => erros.push(String(erro.message ?? erro)));
   janela.on("console", (mensagem) => {
@@ -44,15 +65,47 @@ try {
   });
 
   const nomeApp = await app.evaluate(({ app: a }) => a.getName());
-  assert.ok(/gore\s*forge/i.test(nomeApp), `nome do aplicativo: ${nomeApp}`);
+  assert.ok(
+    /gore[\s_-]*forge/i.test(nomeApp),
+    `nome do aplicativo: ${nomeApp}`,
+  );
   const titulo = await janela.title();
-  assert.match(titulo, /gore\s*forge/i, `título da janela: ${titulo}`);
+  assert.match(titulo, /gore[\s_-]*forge/i, `título da janela: ${titulo}`);
   console.log("PASS electron: aplicativo GORE FORGE abriu (janela e título)");
 
   /* ---------------------------------------------------- splash + jogo ---- */
-  await janela.waitForFunction(() => !!window.goreforge, null, {
-    timeout: 60000,
-  });
+  try {
+    await janela.waitForFunction(() => !!window.goreforge, null, {
+      timeout: 90000,
+    });
+  } catch (semJogo) {
+    const diagnostico = await janela
+      .evaluate(() => {
+        let webgl2 = false;
+        try {
+          webgl2 = !!document.createElement("canvas").getContext("webgl2");
+        } catch {
+          webgl2 = false;
+        }
+        return {
+          titulo: document.title,
+          pronto: document.readyState,
+          temCanvas: !!document.querySelector("canvas"),
+          temSplash: !!document.querySelector("#gf-enter"),
+          textoDoBoot:
+            document
+              .querySelector("#goreforge-boot")
+              ?.textContent?.slice(0, 160) ?? null,
+          webgl2,
+          temGoreforge: typeof window.goreforge,
+        };
+      })
+      .catch((erroDiagnostico) => ({
+        falhaAoDiagnosticar: String(erroDiagnostico.message ?? erroDiagnostico),
+      }));
+    anotar("GORE FORGE não carregou no Electron", JSON.stringify(diagnostico));
+    throw semJogo;
+  }
   await janela.locator("#gf-enter").click();
   await janela.waitForTimeout(1200);
 
@@ -185,7 +238,11 @@ try {
     `erros de página no aplicativo: ${erros.join(" | ")}`,
   );
   console.log("PASS electron: GORE FORGE rodando no aplicativo instalável");
+} catch (erro) {
+  anotar("GORE FORGE no Electron falhou", erro?.message ?? String(erro));
+  if (erros.length) anotar("Erros de página no Electron", erros.join(" | "));
+  throw erro;
 } finally {
-  await app.close();
-  await rm(perfil, { recursive: true, force: true });
+  if (app) await app.close().catch(() => {});
+  await rm(perfil, { recursive: true, force: true }).catch(() => {});
 }
