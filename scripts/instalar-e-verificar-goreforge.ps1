@@ -156,8 +156,11 @@ if ($falhas.Count -gt 0) {
 
 Write-Host "[5/5] Exportando o caminho para os proximos passos"
 if ($GithubEnv) {
+    # o teste do Electron abre o app pelo EXECUTAVEL: a pasta instalada sozinha nao
+    # e carregavel (nao tem package.json na raiz; o jogo vive em resources\app.asar)
     "GOREFORGE_TEST_APP=$instalado" >> $GithubEnv
     "GOREFORGE_INSTALADO=$instalado" >> $GithubEnv
+    "GOREFORGE_TEST_EXE=$exe" >> $GithubEnv
 }
 
 Write-Host "OK: instalado, atalhos, registro e recursos conferidos (codigo $codigo)"

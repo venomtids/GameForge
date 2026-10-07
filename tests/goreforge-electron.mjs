@@ -1,5 +1,5 @@
 import { _electron as electron } from "@playwright/test";
-import { mkdir, mkdtemp, rm, stat } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, rm, stat } from "node:fs/promises";
 import os from "node:os";
 import path from "node:path";
 import assert from "node:assert/strict";
@@ -17,6 +17,33 @@ import assert from "node:assert/strict";
 const appDir = process.env.GOREFORGE_TEST_APP || "dist/goreforge-desktop";
 
 /**
+ * Instalado pelo NSIS, o app NÃO é uma pasta carregável pelo Electron: não há
+ * package.json na raiz, o jogo vive dentro de resources\app.asar. Então, quando
+ * existe um executável na pasta (ou GOREFORGE_TEST_EXE aponta um), abrimos o app
+ * pelo próprio .exe — é o que o usuário clica no Menu Iniciar.
+ */
+const acharExecutavel = async (pasta) => {
+  const arquivos = await readdir(pasta).catch(() => []);
+  return (
+    arquivos.find(
+      (nome) => /\.exe$/i.test(nome) && !/^uninstall/i.test(nome),
+    ) ?? null
+  );
+};
+
+/** A pasta preparada por `installer:goreforge:desktop` tem package.json e é carregável. */
+const ehPastaDeApp = async (pasta) =>
+  Boolean(await stat(path.join(pasta, "package.json")).catch(() => null));
+
+const exeDoAmbiente = process.env.GOREFORGE_TEST_EXE || "";
+// pasta com package.json = app de desenvolvimento/empacotado (carrega a pasta);
+// pasta instalada pelo NSIS = abrir pelo .exe (o jogo está em resources\app.asar)
+const instaladoNaPasta = exeDoAmbiente ? false : !(await ehPastaDeApp(appDir));
+const exeNaPasta = instaladoNaPasta ? await acharExecutavel(appDir) : null;
+const executavel =
+  exeDoAmbiente || (exeNaPasta ? path.join(appDir, exeNaPasta) : "");
+
+/**
  * Anotações do GitHub Actions: quando algo falha, a mensagem real vira anotação
  * no resumo da execução — dá para ler sem baixar log nenhum.
  */
@@ -26,10 +53,11 @@ const anotar = (titulo, detalhe) =>
   console.error(`::error title=${titulo}::${escapar(detalhe).slice(0, 1400)}`);
 const avisar = (titulo, detalhe) =>
   console.log(`::notice title=${titulo}::${escapar(detalhe).slice(0, 700)}`);
-const info = await stat(appDir).catch(() => null);
+const alvo = executavel || appDir;
+const info = await stat(alvo).catch(() => null);
 assert.ok(
-  info && info.isDirectory(),
-  `app não encontrado em ${appDir}: rode \`npm run installer:goreforge:desktop\` antes`,
+  info && (executavel ? info.isFile() : info.isDirectory()),
+  `app não encontrado em ${alvo}: rode \`npm run installer:goreforge:desktop\` antes`,
 );
 
 await mkdir("test-results", { recursive: true });
@@ -37,15 +65,54 @@ const perfil = await mkdtemp(path.join(os.tmpdir(), "goreforge-electron-"));
 const erros = [];
 let app = null;
 try {
-  app = await electron.launch({
-    args: [
-      appDir,
-      "--no-sandbox",
-      "--enable-unsafe-swiftshader",
-      `--user-data-dir=${perfil}`,
-    ],
-  });
-  avisar("Electron", `aplicativo iniciado de ${path.resolve(appDir)}`);
+  const sinalizadores = [
+    "--no-sandbox",
+    "--enable-unsafe-swiftshader",
+    `--user-data-dir=${perfil}`,
+  ];
+  // Instalado, o app abre pelo .exe (o que o usuario clica). O Playwright nao
+  // injeta o loader nesse caso, entao se isso travar caímos para o app.asar
+  // instalado, que e exatamente o que o Electron carrega ao abrir o .exe.
+  const asar = path.join(appDir, "resources", "app.asar");
+  const tentativas = executavel
+    ? [
+        {
+          nome: `executavel instalado (${executavel})`,
+          opcoes: {
+            executablePath: executavel,
+            args: sinalizadores,
+            timeout: 90000,
+          },
+        },
+        {
+          nome: `app.asar instalado (${asar})`,
+          opcoes: { args: [asar, ...sinalizadores], timeout: 90000 },
+        },
+      ]
+    : [
+        {
+          nome: `pasta ${path.resolve(appDir)}`,
+          opcoes: { args: [appDir, ...sinalizadores], timeout: 90000 },
+        },
+      ];
+
+  const recusas = [];
+  for (const tentativa of tentativas) {
+    try {
+      app = await electron.launch(tentativa.opcoes);
+      avisar("Electron", `aplicativo aberto por ${tentativa.nome}`);
+      break;
+    } catch (falha) {
+      recusas.push(`${tentativa.nome}: ${falha?.message ?? falha}`);
+    }
+  }
+  if (!app) {
+    anotar(
+      "Nenhuma forma de abrir o GORE FORGE funcionou",
+      recusas.join(" | "),
+    );
+    throw new Error(`nao consegui abrir o aplicativo: ${recusas.join(" | ")}`);
+  }
   // se o processo principal reclamar, a mensagem tem de aparecer na anotação
   try {
     app.process().stderr?.on("data", (pedaco) => {
@@ -240,7 +307,11 @@ try {
     [],
     `erros de página no aplicativo: ${erros.join(" | ")}`,
   );
-  console.log("PASS electron: GORE FORGE rodando no aplicativo instalável");
+  console.log(
+    executavel
+      ? "PASS electron: GORE FORGE rodando a partir do aplicativo INSTALADO"
+      : "PASS electron: GORE FORGE rodando no aplicativo instalável",
+  );
 } catch (erro) {
   anotar("GORE FORGE no Electron falhou", erro?.message ?? String(erro));
   if (erros.length) anotar("Erros de página no Electron", erros.join(" | "));
