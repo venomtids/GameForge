@@ -48,27 +48,6 @@ jobs:
           New-Item -ItemType Directory -Force -Path test-results | Out-Null
           npm run test:electron:goreforge 2>&1 | Tee-Object -FilePath test-results\electron-empacotado.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Diagnóstico do Electron (só quando algo falha)
-        if: failure()
-        shell: pwsh
-        run: |
-          $arquivos = @(Get-ChildItem test-results -Filter "*.log" -ErrorAction SilentlyContinue)
-          foreach ($arquivo in $arquivos) {
-            Write-Host "::error title=Log $($arquivo.Name)::$(($arquivo.FullName -replace '%','%25'))"
-            Get-Content $arquivo.FullName | Select-Object -Last 40 | ForEach-Object {
-              $linha = ($_ -replace '%','%25') -replace "`r?`n",' '
-              if ($linha.Trim()) { Write-Host "::error title=Electron::[$($arquivo.Name)] $linha" }
-            }
-          }
-          if (Test-Path dist/goreforge-desktop) {
-            Write-Host "Conteúdo de dist/goreforge-desktop:"
-            Get-ChildItem dist/goreforge-desktop -Recurse | Select-Object -First 20 FullName | ForEach-Object { Write-Host "  $($_.FullName)" }
-          }
-          if (Test-Path dist/windows-goreforge) {
-            Write-Host "Conteúdo de dist/windows-goreforge:"
-            Get-ChildItem dist/windows-goreforge | ForEach-Object { Write-Host "  $($_.Name) $($_.Length)" }
-          }
-          exit 0
       - name: Instalar o próprio Setup.exe (silencioso) e validar o executável instalado
         shell: pwsh
         run: |
@@ -88,6 +67,24 @@ jobs:
           pwsh -NoProfile -File scripts/desinstalar-e-verificar-goreforge.ps1 *>&1 |
             Tee-Object -FilePath test-results\desinstalador.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Eco dos logs (sempre, para o erro aparecer no resumo)
+        if: always()
+        shell: pwsh
+        run: |
+          $nomes = @("instalador.log", "desinstalador.log", "electron-empacotado.log", "electron-instalado.log")
+          foreach ($nome in $nomes) {
+            $arquivo = Join-Path "test-results" $nome
+            if (-not (Test-Path $arquivo)) { continue }
+            Write-Host "::notice title=$nome::$(($arquivo -replace '%','%25'))"
+            Get-Content $arquivo | Select-Object -Last 30 | ForEach-Object {
+              $linha = ($_ -replace '%','%25') -replace "`r?`n",' '
+              if ($linha.Trim()) { Write-Host "::error title=CI::[$nome] $linha" }
+            }
+          }
+          if (Test-Path dist/windows-goreforge) {
+            Get-ChildItem dist/windows-goreforge | ForEach-Object { Write-Host "::notice title=Pacote::$($_.Name) $($_.Length)" }
+          }
+          exit 0
       - name: Entregar instalador, checksum e instruções
         uses: actions/upload-artifact@v4
         with:
