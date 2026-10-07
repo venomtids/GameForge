@@ -26,8 +26,12 @@ edita tema, HUD e presets de gore ao vivo.
 npm run dev              # abra http://localhost:5173/goreforge.html
 npm run build:goreforge  # arquivo único offline: entregas/goreforge.html (dá dois cliques)
 npm run test:goreforge   # valida física, gelatina, fratura, tiro e tema no navegador
-npm run installer:goreforge  # instalador Windows: entregas/GORE-FORGE-Instalador-Windows.zip
+npm run installer:goreforge  # instalador Windows: entregas/GORE-FORGE-Instalador.cmd (arquivo único)
 ```
+
+`GORE-FORGE-Instalador.cmd` é **um só arquivo** (~0,42 MB) com o jogo, o ícone e a lógica embutidos
+em base64: dois cliques e instala — sem internet, sem descompactar, sem administrador. (O mesmo
+conteúdo também sai como pacote ZIP, para quem prefere auditar arquivo por arquivo.)
 
 O instalador é um pacote pequeno e auditável (lançador `.cmd` + `Instalador.ps1` + o HTML): instala
 por usuário em `%LOCALAPPDATA%\GORE FORGE`, cria atalhos na Área de Trabalho e no Menu Iniciar
@@ -137,8 +141,8 @@ npm run preview             # produção local
 npm run test:jelly           # Toolbox, personagem/mapa, câmeras e HTML offline
 npm run test:goreforge       # GORE FORGE: física, gelatina, destruição, HUD e tema no navegador
 npm run shots:goreforge      # capturas do GORE FORGE em test-results/
-npm run installer:goreforge  # monta o instalador Windows (entregas/GORE-FORGE-Instalador-Windows.zip)
-npm run test:installer:goreforge # valida o instalador: arquivos, SHA256 e o ZIP byte a byte
+npm run installer:goreforge  # instalador único (.cmd) + pacote ZIP, em entregas/
+npm run test:installer:goreforge # valida o instalador: arquivos, SHA256, ZIP e carga embutida
 npm run test:studio08        # fluxos do Studio; servidor dev precisa estar aberto
 npm run test:export:studio08 # downloads + jogo file:// offline, Unicode e toque
 npm run test:update          # regressões/scripts; servidor dev precisa estar aberto

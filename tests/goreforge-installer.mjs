@@ -1,8 +1,8 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
-import { inflateRawSync } from "node:zlib";
 import assert from "node:assert/strict";
+import { lerEntradasZip } from "./zip-helper.mjs";
 import path from "node:path";
 
 /**
@@ -281,67 +281,169 @@ console.log("PASS instalador: SHA256SUMS.txt confere com os 5 arquivos");
 
 // 8) o ZIP que o usuário baixa: lê o índice central e descomprime tudo de volta
 const zip = await readFile(caminhoZip);
-const fim = (() => {
-  for (let i = zip.length - 22; i >= Math.max(0, zip.length - 65557); i--)
-    if (zip.readUInt32LE(i) === 0x06054b50) return i;
-  return -1;
-})();
-assert.ok(fim >= 0, "não achei o índice central do ZIP");
-const totalEntradas = zip.readUInt16LE(fim + 10);
-let ponteiro = zip.readUInt32LE(fim + 16);
-const dentro = new Map();
-for (let i = 0; i < totalEntradas; i++) {
+
+async function conferirZip(buffer, rotulo) {
+  const { entradas, bytes } = lerEntradasZip(buffer);
   assert.equal(
-    zip.readUInt32LE(ponteiro),
-    0x02014b50,
-    "entrada inválida no índice central",
+    entradas.size,
+    arquivosEsperados.length,
+    `${rotulo}: ${entradas.size} arquivos (esperado ${arquivosEsperados.length})`,
   );
-  const metodo = zip.readUInt16LE(ponteiro + 10);
-  const comprimido = zip.readUInt32LE(ponteiro + 20);
-  const tamanho = zip.readUInt32LE(ponteiro + 24);
-  const nomeTamanho = zip.readUInt16LE(ponteiro + 28);
-  const extraTamanho = zip.readUInt16LE(ponteiro + 30);
-  const comentarioTamanho = zip.readUInt16LE(ponteiro + 32);
-  const local = zip.readUInt32LE(ponteiro + 42);
-  const nome = zip.toString("utf8", ponteiro + 46, ponteiro + 46 + nomeTamanho);
-  assert.ok(
-    nome.startsWith("GORE-FORGE-Instalador/"),
-    `entrada fora da pasta do pacote: ${nome}`,
-  );
-  const nomeLocal = zip.readUInt16LE(local + 26);
-  const extraLocal = zip.readUInt16LE(local + 28);
-  const inicio = local + 30 + nomeLocal + extraLocal;
-  const dados = zip.subarray(inicio, inicio + comprimido);
-  if (!nome.endsWith("/"))
-    dentro.set(nome.split("/").pop(), {
-      metodo,
-      tamanho,
-      conteudo: metodo === 0 ? dados : inflateRawSync(dados),
-    });
-  ponteiro += 46 + nomeTamanho + extraTamanho + comentarioTamanho;
+  for (const arquivo of arquivosEsperados) {
+    const entrada = entradas.get(arquivo);
+    assert.ok(entrada, `${rotulo}: não tem ${arquivo}`);
+    assert.ok(
+      entrada.caminho.startsWith("GORE-FORGE-Instalador/"),
+      `${rotulo}: entrada fora da pasta do pacote: ${entrada.caminho}`,
+    );
+    const emDisco = await readFile(path.join(pastaPacote, arquivo));
+    assert.equal(
+      entrada.tamanho,
+      emDisco.length,
+      `${rotulo}: ${arquivo} está com tamanho diferente`,
+    );
+    assert.equal(
+      sha256(entrada.conteudo),
+      sha256(emDisco),
+      `${rotulo}: ${arquivo} difere do arquivo montado`,
+    );
+  }
+  return { arquivos: entradas.size, bytes };
 }
-assert.equal(
-  dentro.size,
-  arquivosEsperados.length,
-  `ZIP com ${dentro.size} arquivos (esperado ${arquivosEsperados.length})`,
-);
-for (const arquivo of arquivosEsperados) {
-  const entrada = dentro.get(arquivo);
-  assert.ok(entrada, `o ZIP não tem ${arquivo}`);
-  const emDisco = await readFile(path.join(pastaPacote, arquivo));
-  assert.equal(
-    entrada.tamanho,
-    emDisco.length,
-    `${arquivo} está com tamanho diferente no ZIP`,
-  );
-  assert.equal(
-    sha256(entrada.conteudo),
-    sha256(emDisco),
-    `${arquivo} dentro do ZIP difere do arquivo montado`,
-  );
-}
+const conferido = await conferirZip(zip, "ZIP baixado");
 console.log(
-  `PASS instalador: ZIP íntegro (${totalEntradas} arquivos conferidos byte a byte, ${(zip.length / 1024 / 1024).toFixed(2)} MB)`,
+  `PASS instalador: ZIP íntegro (${conferido.arquivos} arquivos conferidos byte a byte, ${(conferido.bytes / 1024 / 1024).toFixed(2)} MB)`,
+);
+
+// 9) INSTALADOR ÚNICO: um só .cmd com o pacote inteiro embutido em base64
+const NOME_UNICO = "GORE-FORGE-Instalador.cmd";
+const MARCA_INICIO = "---GORE-FORGE:INICIO---";
+const MARCA_FIM = "---GORE-FORGE:FIM---";
+const caminhoUnico = path.join(root, "entregas", NOME_UNICO);
+const infoUnico = await stat(caminhoUnico).catch(() => null);
+assert.ok(
+  infoUnico,
+  `não existe ${NOME_UNICO}: rode npm run installer:goreforge`,
+);
+assert.ok(
+  infoUnico.size > 300_000,
+  `${NOME_UNICO} pequeno demais (${infoUnico.size} bytes): o jogo não estaria embutido`,
+);
+
+const bytesUnico = await readFile(caminhoUnico);
+// ASCII puro, sem Ctrl-Z (0x1A): o cmd.exe lê o arquivo inteiro para executar
+assert.ok(
+  !bytesUnico.includes(0x1a),
+  `${NOME_UNICO} tem byte 0x1A (Ctrl-Z): o cmd.exe pode parar de ler antes do fim`,
+);
+const unico = bytesUnico.toString("latin1");
+assert.ok(
+  !/[^\x09\x0a\x0d\x20-\x7e]/.test(unico),
+  `${NOME_UNICO} tem byte não-ASCII`,
+);
+assert.ok(
+  unico.startsWith("@echo off\n"),
+  `${NOME_UNICO} não começa com @echo off`,
+);
+
+// cada marcador uma única vez: se aparecer antes (comentário/comando), o IndexOf
+// do PowerShell acharia o lugar errado e a extração pegaria lixo
+for (const marca of [MARCA_INICIO, MARCA_FIM])
+  assert.equal(
+    unico.split(marca).length - 1,
+    1,
+    `${NOME_UNICO} deveria ter exatamente 1 "${marca}"`,
+  );
+
+const a = unico.indexOf(MARCA_INICIO);
+const b = unico.indexOf(MARCA_FIM);
+assert.ok(
+  a < b,
+  "no instalador único o marcador de início vem depois do de fim",
+);
+const cabecalho = unico.slice(0, a);
+const carga = unico.slice(a + MARCA_INICIO.length, b);
+assert.match(
+  carga.replace(/\r?\n/g, ""),
+  /^[A-Za-z0-9+/]+={0,2}$/,
+  "a carga embutida tem coisa que não é base64",
+);
+assert.ok(
+  /(^|\n)exit \/b 0\r?\n/.test(cabecalho),
+  `${NOME_UNICO} precisa sair (exit /b 0) antes da carga embutida`,
+);
+assert.ok(
+  cabecalho.trimEnd().endsWith("exit /b 1"),
+  `${NOME_UNICO} precisa terminar o trecho executável em ":falhou ... exit /b 1"`,
+);
+
+for (const trecho of [
+  "chcp 65001",
+  'set "GF_SELF=%~f0"',
+  String.raw`set "GF_PASTA=%TEMP%\GORE-FORGE-Instalador"`,
+  String.raw`set "GF_PACOTE=%TEMP%\GORE-FORGE-Instalador.zip"`,
+  "-ExecutionPolicy Bypass",
+  "[IO.File]::ReadAllText",
+  "[Convert]::FromBase64String",
+  "Expand-Archive",
+  "Instalador.ps1",
+  "rmdir /s /q",
+  "goto :falhou",
+  "pause",
+])
+  assert.ok(
+    cabecalho.includes(trecho),
+    `${NOME_UNICO} sem o trecho obrigatório: ${trecho}`,
+  );
+
+// os comandos PowerShell vão entre aspas duplas para o cmd.exe: nada de aspas
+// duplas dentro deles, senão o cmd quebra a linha no meio
+const comandos = [...cabecalho.matchAll(/-Command "([^"]*)"/g)].map(
+  (m) => m[1],
+);
+assert.equal(
+  comandos.length,
+  2,
+  `esperava 2 comandos PowerShell, achei ${comandos.length}`,
+);
+for (const comando of comandos)
+  assert.ok(
+    !comando.includes('"') && !comando.includes("%"),
+    "comando PowerShell com aspas duplas ou % dentro (o cmd.exe não perdoa)",
+  );
+
+// toda variável $env: usada precisa ter sido definida com "set" no cabeçalho
+const usadas = new Set(
+  [...cabecalho.matchAll(/\$env:([A-Za-z_][A-Za-z0-9_]*)/g)].map((m) => m[1]),
+);
+assert.ok(
+  usadas.size >= 3,
+  "o instalador único quase não usa variáveis de ambiente",
+);
+for (const nome of usadas)
+  assert.ok(
+    cabecalho.includes(`set "${nome}=`),
+    `o instalador único usa $env:${nome} mas nunca faz set "${nome}=..." (a variável chegaria vazia)`,
+  );
+console.log(
+  `PASS instalador único: ${NOME_UNICO} executável, ASCII, ${comandos.length} comandos PowerShell e ${usadas.size} variáveis coerentes`,
+);
+
+// a carga embutida, decodificada como o PowerShell faria, tem de dar o ZIP
+const embutido = Buffer.from(carga.replace(/[^A-Za-z0-9+/=]/g, ""), "base64");
+assert.equal(
+  sha256(embutido),
+  sha256(zip),
+  "o pacote embutido no instalador único não é igual ao ZIP montado",
+);
+const conferido2 = await conferirZip(embutido, "pacote embutido no .cmd");
+assert.equal(
+  conferido2.arquivos,
+  conferido.arquivos,
+  "o pacote embutido tem menos arquivos que o ZIP",
+);
+console.log(
+  `PASS instalador único: pacote embutido idêntico ao ZIP (${(infoUnico.size / 1024 / 1024).toFixed(2)} MB, ${conferido2.arquivos} arquivos conferidos byte a byte)`,
 );
 
 console.log("PASS instalador do GORE FORGE pronto para o Windows");

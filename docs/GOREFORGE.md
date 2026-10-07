@@ -66,10 +66,14 @@ Arquivos do arquivo único e do instalador Windows:
 packaging/goreforge-installer/
 ├── Instalar GORE FORGE.cmd            lançador do instalador (ASCII puro: o cmd.exe não lê
 │                                      acentos com segurança) + desbloqueio de arquivos do ZIP
+├── Instalador-Unico.cmd               esqueleto do INSTALADOR ÚNICO: cabeçalho batch (ASCII puro)
+│                                      até o ":falhou" + o marcador onde a carga base64 entra
 ├── Instalador.ps1                     instalar/desinstalar (BOM UTF-8, para o Windows PowerShell
 │                                      5.1 ler os acentos; HKCU, sem administrador)
 └── LEIA-ME.txt                        instruções do pacote em PT-BR (BOM UTF-8)
-scripts/build-goreforge-installer.mjs  injeta a versão, gera SHA256SUMS.txt e monta o ZIP
+scripts/build-goreforge-installer.mjs  injeta a versão, gera SHA256SUMS.txt, monta o ZIP e embute
+                                       o pacote em base64 no instalador único (com self-check)
+tests/zip-helper.mjs                   leitor mínimo de ZIP usado pelos testes do instalador
 vite.goreforge.config.ts               build do arquivo único (single-file, base "./", outDir entregas)
 tests/goreforge-installer.mjs          valida o instalador sem Windows (arquivos, somas, ZIP byte a byte)
 tests/goreforge-export.mjs             abre entregas/goreforge.html por file:// num navegador real
@@ -230,20 +234,61 @@ física, gelatina, gore, menus e temas funcionando. Salve, mande por e-mail ou p
 ## 7. Instalador no Windows (sem precisar de servidor)
 
 ```bash
-npm run installer:goreforge        # monta o pacote do instalador
-npm run test:installer:goreforge   # confere arquivos, somas e o ZIP inteiro
+npm run installer:goreforge        # monta o instalador único + o pacote ZIP
+npm run test:installer:goreforge   # confere arquivos, somas, o ZIP e a carga embutida
 ```
 
 Saída:
 
 ```
+entregas/GORE-FORGE-Instalador.cmd         -> INSTALADOR ÚNICO (~0,42 MB): dois cliques e instala
 entregas/GORE-FORGE-Instalador/            pasta do pacote (para auditar)
-entregas/GORE-FORGE-Instalador-Windows.zip -> o que o usuário baixa (~0,3 MB)
+entregas/GORE-FORGE-Instalador-Windows.zip -> a mesma coisa em pacote ZIP (~0,31 MB)
 ```
 
-O usuário extrai o ZIP e dá dois cliques em **`Instalar GORE FORGE.cmd`**. O instalador é
-deliberadamente **pequeno e auditável** (o jogo é um arquivo único, então não existe payload opaco):
-um lançador `.cmd` (ASCII puro, para o `cmd.exe`), a lógica em `Instalador.ps1` e o próprio HTML.
+### 7.1 O instalador único (`.cmd` poliglota)
+
+`GORE-FORGE-Instalador.cmd` é, ao mesmo tempo, o programa de instalação **e** o pacote: o jogo, o
+ícone, o leia-me e o `Instalador.ps1` viajam dentro dele, em base64, abaixo da linha
+`---GORE-FORGE:INICIO---`. Não há download, dependência nem arquivo irmão.
+
+```
+@echo off                     ← o cmd.exe executa o cabeçalho (ASCII puro) e sai antes da carga
+... instala, cria atalhos, registra a desinstalação ...
+exit /b 0
+:falhou
+... mensagens de erro ...
+---GORE-FORGE:INICIO---       ← daqui para baixo o cmd.exe NUNCA lê (o arquivo já saiu)
+<ZIP do pacote em base64>
+---GORE-FORGE:FIM---
+```
+
+Três passos, todos em PowerShell, disparados pelo próprio `.cmd`:
+
+1. `[IO.File]::ReadAllText($env:GF_SELF)` lê o arquivo inteiro e recorta o trecho entre os dois
+   marcadores (`IndexOf`), limpa tudo que não é base64 (`[^A-Za-z0-9+/=]`) e decodifica em
+   `%TEMP%\GORE-FORGE-Instalador.zip`;
+2. `Expand-Archive` abre o ZIP em `%TEMP%\GORE-FORGE-Instalador`;
+3. roda o `Instalador.ps1` de lá (o mesmo da seção abaixo, já testado) e apaga os temporários.
+
+Detalhes que fazem isso funcionar (e que o teste vigia):
+
+- **ASCII puro, sem BOM e sem o byte `0x1A`** — o `cmd.exe` lê o arquivo para executar; `0x1A`
+  (Ctrl-Z) faria ele parar de ler antes da hora.
+- **`exit /b 0` antes da carga**: as linhas de base64 nunca são interpretadas como comandos.
+- **cada marcador aparece exatamente uma vez** — o `IndexOf` pega a *primeira* ocorrência, então um
+  marcador citado num comentário (ou dentro do próprio comando) apontaria para o lugar errado e a
+  extração quebraria. A string do marcador é montada por concatenação no PowerShell justamente para
+  não aparecer literalmente ali.
+- **os comandos PowerShell não podem ter `"` nem `%`**: eles vão entre aspas duplas para o `cmd.exe`.
+- **toda `$env:` usada tem `set` correspondente** no cabeçalho — senão a variável chegaria vazia.
+
+### 7.2 O que o instalador faz (igual nos dois formatos)
+
+O usuário do ZIP extrai e dá dois cliques em **`Instalar GORE FORGE.cmd`**; o do instalador único dá
+dois cliques no próprio `.cmd`. O pacote é deliberadamente **pequeno e auditável** (o jogo é um
+arquivo único, então não existe payload opaco): um lançador `.cmd` (ASCII puro, para o `cmd.exe`), a
+lógica em `Instalador.ps1` e o próprio HTML.
 
 O que ele faz, sem pedir senha de administrador:
 
@@ -278,8 +323,8 @@ npm test                # unitários (config, catálogos, pátio, estado, preset
 npm run typecheck
 npm run test:goreforge  # navegador: física rodando, gelatina deformando, fratura, tiros, tema ao vivo
 npm run shots:goreforge # turnê com capturas em test-results/
-npm run installer:goreforge # pacote do instalador Windows (ZIP + pasta em entregas/)
-npm run test:installer:goreforge # valida o instalador (arquivos, somas, ZIP íntegro)
+npm run installer:goreforge # instalador único (.cmd) + pacote ZIP, em entregas/
+npm run test:installer:goreforge # valida o instalador: arquivos, somas, ZIP e carga embutida
 ```
 
 ### Limites conhecidos (honestos)

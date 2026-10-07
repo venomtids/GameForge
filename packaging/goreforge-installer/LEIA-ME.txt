@@ -11,10 +11,18 @@ depois de instalado, ele NAO precisa de internet, servidor ou dependencias.
 
 COMO INSTALAR
 -------------
-1. Extraia TODOS os arquivos deste ZIP para uma pasta qualquer.
-   (Botao direito no ZIP > "Extrair Tudo...")
-2. De dois cliques em:  Instalar GORE FORGE.cmd
-3. A instalacao e automatica e, no fim, o jogo abre sozinho.
+Ha dois caminhos; o resultado e identico.
+
+A) INSTALADOR UNICO (mais simples): se voce baixou o arquivo
+   "GORE-FORGE-Instalador.cmd", de dois cliques nele. O jogo, o icone e este
+   leia-me vem embutidos dentro dele (em base64) - ele extrai o pacote para
+   %TEMP%, instala e limpa tudo sozinho. Nao precisa descompactar nada.
+
+B) ESTE PACOTE ZIP: extraia TODOS os arquivos para uma pasta qualquer
+   (botao direito no ZIP > "Extrair Tudo..."), de dois cliques em
+   "Instalar GORE FORGE.cmd" e pronto.
+
+Nos dois casos a instalacao e automatica e, no fim, o jogo abre sozinho.
 
 Nao precisa de senha de administrador: tudo e gravado na sua pasta de usuario
 (%LOCALAPPDATA%\GORE FORGE) e a desinstalacao fica registrada em "Aplicativos

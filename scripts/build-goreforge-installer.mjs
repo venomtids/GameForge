@@ -33,6 +33,9 @@ const destino = path.join(root, "entregas/GORE-FORGE-Instalador");
 const nomeZip = "GORE-FORGE-Instalador-Windows.zip";
 const pastaZip = path.basename(destino);
 const BOM = "\uFEFF";
+const MARCA_INICIO = "---GORE-FORGE:INICIO---";
+const MARCA_FIM = "---GORE-FORGE:FIM---";
+const NOME_UNICO = "GORE-FORGE-Instalador.cmd";
 
 const pacote = JSON.parse(
   await readFile(path.join(root, "package.json"), "utf8"),
@@ -119,6 +122,61 @@ execFileSync("zip", ["-q", "-r", "-X", nomeZip, pastaZip], {
 });
 const infoZip = await stat(caminhoZip);
 
+// 7) instalador ÚNICO: o mesmo .cmd carrega o ZIP inteiro embutido em base64
+const cabecalho = semMarcador(
+  comVersao(await readFile(path.join(origem, "Instalador-Unico.cmd"), "utf8")),
+  "Instalador-Unico.cmd",
+);
+if (/[^\x09\x0a\x0d\x20-\x7e]/.test(cabecalho))
+  throw new Error(
+    "Instalador-Unico.cmd precisa ser ASCII puro (o cmd.exe lê o arquivo por inteiro)",
+  );
+if (!cabecalho.includes(MARCA_INICIO + "\n"))
+  throw new Error(
+    `Instalador-Unico.cmd precisa terminar com a linha ${MARCA_INICIO}`,
+  );
+if (/[^\x09\x0a\x0d\x20-\x7e]/.test(cabecalho.split(MARCA_INICIO)[0]))
+  throw new Error("o cabeçalho do instalador único tem byte não-ASCII");
+// o marcador de início só pode existir UMA vez no cabeçalho: se aparecer antes
+// (comentário, comando do PowerShell...), o IndexOf acha o lugar errado e a
+// extração pega lixo. O de fim é acrescentado aqui embaixo.
+const vezesInicio = cabecalho.split(MARCA_INICIO).length - 1;
+if (vezesInicio !== 1)
+  throw new Error(
+    `o cabeçalho do instalador único tem ${vezesInicio} ocorrência(s) de ${MARCA_INICIO} (esperado exatamente 1)`,
+  );
+if (cabecalho.includes(MARCA_FIM))
+  throw new Error(
+    `o cabeçalho do instalador único não pode conter ${MARCA_FIM}`,
+  );
+const base64 = (await readFile(caminhoZip)).toString("base64");
+const linhas = base64.match(/.{1,100}/g).join("\n");
+const unico = `${cabecalho}${linhas}\n${MARCA_FIM}\n`;
+await writeFile(path.join(destino, "..", NOME_UNICO), unico, "latin1");
+const caminhoUnico = path.join(root, "entregas", NOME_UNICO);
+const infoUnico = await stat(caminhoUnico);
+
+// 7b) o próprio builder confere que o que foi escrito volta a ser o ZIP (mesma
+// conta que o bootstrap do PowerShell faz: IndexOf + limpeza + FromBase64String)
+const relido = await readFile(caminhoUnico, "latin1");
+const a = relido.indexOf(MARCA_INICIO);
+const b = relido.indexOf(MARCA_FIM);
+const volta = Buffer.from(
+  relido.slice(a + MARCA_INICIO.length, b).replace(/[^A-Za-z0-9+/=]/g, ""),
+  "base64",
+);
+if (sha256(volta) !== sha256(await readFile(caminhoZip)))
+  throw new Error(
+    "o pacote embutido no instalador único não volta idêntico ao ZIP",
+  );
+for (const marca of [MARCA_INICIO, MARCA_FIM]) {
+  const vezes = unico.split(marca).length - 1;
+  if (vezes !== 1)
+    throw new Error(
+      `${NOME_UNICO} tem ${vezes} ocorrência(s) de ${marca} (esperado exatamente 1)`,
+    );
+}
+
 console.log(`Instalador do GORE FORGE ${versao} montado`);
 console.log(`  pasta: ${path.relative(root, destino)}`);
 for (const arquivo of [...arquivos, "SHA256SUMS.txt"]) {
@@ -130,5 +188,9 @@ console.log(
 );
 console.log(`  sha256: ${sha256(await readFile(caminhoZip))}`);
 console.log(
-  "Instale no Windows com dois cliques em `Instalar GORE FORGE.cmd`.",
+  `  único : ${path.relative(root, caminhoUnico)} (${mb(infoUnico.size)}) -> dois cliques e instala`,
+);
+console.log(`  sha256: ${sha256(await readFile(caminhoUnico))}`);
+console.log(
+  "Instale no Windows com dois cliques no instalador único (ou no `Instalar GORE FORGE.cmd` do pacote).",
 );
