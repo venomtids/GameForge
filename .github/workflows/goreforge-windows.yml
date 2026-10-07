@@ -67,22 +67,49 @@ jobs:
           pwsh -NoProfile -File scripts/desinstalar-e-verificar-goreforge.ps1 *>&1 |
             Tee-Object -FilePath test-results\desinstalador.log
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-      - name: Eco dos logs (sempre, para o erro aparecer no resumo)
+      - name: "Eco do log: instalador NSIS"
         if: always()
         shell: pwsh
         run: |
-          $nomes = @("instalador.log", "desinstalador.log", "electron-empacotado.log", "electron-instalado.log")
-          foreach ($nome in $nomes) {
-            $arquivo = Join-Path "test-results" $nome
-            if (-not (Test-Path $arquivo)) { continue }
-            Write-Host "::notice title=$nome::$(($arquivo -replace '%','%25'))"
-            Get-Content $arquivo | Select-Object -Last 30 | ForEach-Object {
-              $linha = ($_ -replace '%','%25') -replace "`r?`n",' '
-              if ($linha.Trim()) { Write-Host "::error title=CI::[$nome] $linha" }
-            }
+          $arquivo = "test-results\instalador.log"
+          if (-not (Test-Path $arquivo)) { Write-Host "::notice title=instalador NSIS::(sem log)"; exit 0 }
+          $linhas = Get-Content $arquivo
+          # 10 anotacoes por passo e o limite do GitHub: mostramos o que interessa
+          $interessantes = $linhas | Where-Object { $_ -match "(?i)(error|erro|falha|falhou|fail|exception|AssertionError|ParserError|TypeError|nao encontrado|not found)" } | Select-Object -Last 6
+          $cauda = $linhas | Select-Object -Last 4
+          foreach ($linha in ($interessantes + $cauda | Select-Object -Unique)) {
+            $limpo = ($linha -replace '%','%25') -replace "`r?`n",' '
+            if ($limpo.Trim()) { Write-Host "::error title=instalador NSIS::[$nome_arquivo] $limpo" }
           }
-          if (Test-Path dist/windows-goreforge) {
-            Get-ChildItem dist/windows-goreforge | ForEach-Object { Write-Host "::notice title=Pacote::$($_.Name) $($_.Length)" }
+          exit 0
+      - name: "Eco do log: jogo no app INSTALADO"
+        if: always()
+        shell: pwsh
+        run: |
+          $arquivo = "test-results\electron-instalado.log"
+          if (-not (Test-Path $arquivo)) { Write-Host "::notice title=jogo no app INSTALADO::(sem log)"; exit 0 }
+          $linhas = Get-Content $arquivo
+          # 10 anotacoes por passo e o limite do GitHub: mostramos o que interessa
+          $interessantes = $linhas | Where-Object { $_ -match "(?i)(error|erro|falha|falhou|fail|exception|AssertionError|ParserError|TypeError|nao encontrado|not found)" } | Select-Object -Last 6
+          $cauda = $linhas | Select-Object -Last 4
+          foreach ($linha in ($interessantes + $cauda | Select-Object -Unique)) {
+            $limpo = ($linha -replace '%','%25') -replace "`r?`n",' '
+            if ($limpo.Trim()) { Write-Host "::error title=jogo no app INSTALADO::[$nome_arquivo] $limpo" }
+          }
+          exit 0
+      - name: "Eco do log: desinstalador"
+        if: always()
+        shell: pwsh
+        run: |
+          $arquivo = "test-results\desinstalador.log"
+          if (-not (Test-Path $arquivo)) { Write-Host "::notice title=desinstalador::(sem log)"; exit 0 }
+          $linhas = Get-Content $arquivo
+          # 10 anotacoes por passo e o limite do GitHub: mostramos o que interessa
+          $interessantes = $linhas | Where-Object { $_ -match "(?i)(error|erro|falha|falhou|fail|exception|AssertionError|ParserError|TypeError|nao encontrado|not found)" } | Select-Object -Last 6
+          $cauda = $linhas | Select-Object -Last 4
+          foreach ($linha in ($interessantes + $cauda | Select-Object -Unique)) {
+            $limpo = ($linha -replace '%','%25') -replace "`r?`n",' '
+            if ($limpo.Trim()) { Write-Host "::error title=desinstalador::[$nome_arquivo] $limpo" }
           }
           exit 0
       - name: Entregar instalador, checksum e instruções
