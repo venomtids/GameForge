@@ -52,7 +52,13 @@ function EntradasDeDesinstalacao {
     }
 }
 
+# ------------------------------------------------------------------- execucao
+# Tudo roda dentro de try/catch: qualquer excecao (inclusive Start-Process recusando
+# o instalador) vira anotacao com a mensagem real, em vez de um "exit code 1" mudo.
+try {
+
 # ------------------------------------------------------------------ o pacote
+Write-Host "[1/5] Procurando o Setup.exe em $Pacote"
 if (-not (Test-Path $Pacote)) { Falhar "pasta do pacote nao encontrada: $Pacote" }
 $setup = Get-ChildItem $Pacote -Filter "*-Setup.exe" | Select-Object -First 1
 if (-not $setup) { Falhar "nenhum *-Setup.exe em ${Pacote} (tem: $(Listar $Pacote))" }
@@ -71,11 +77,12 @@ $antes = @(EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FOR
 if ($antes.Count -gt 0) { Write-Host "Aviso: ja existia instalacao anterior (sera atualizada)" }
 
 # ---------------------------------------------------------------- instalacao
-Write-Host "Instalando em silencio (/S) ..."
+Write-Host "[2/5] Instalando em silencio (/S) ..."
 $processo = Start-Process -FilePath $setup.FullName -ArgumentList "/S" -Wait -PassThru
 $codigo = $processo.ExitCode
 Write-Host "instalador retornou $codigo"
 
+Write-Host "[3/5] Procurando a pasta instalada"
 $instalado = $null
 $entrada = $null
 for ($i = 0; $i -lt $Tentativas -and -not $instalado; $i++) {
@@ -104,7 +111,7 @@ if (-not $instalado) {
 }
 Write-Host "Instalado em: $instalado"
 
-# ------------------------------------------------------------ verificacoes
+# ------------------------------------------------- [4/5] verificacoes
 $falhas = @()
 $exe = Join-Path $instalado "GORE FORGE.exe"
 if (-not (Test-Path $exe)) { $falhas += "sem GORE FORGE.exe" }
@@ -130,6 +137,7 @@ if ($falhas.Count -gt 0) {
         ". Conteudo de $instalado: $(Listar $instalado)")
 }
 
+Write-Host "[5/5] Exportando o caminho para os proximos passos"
 if ($GithubEnv) {
     "GOREFORGE_TEST_APP=$instalado" >> $GithubEnv
     "GOREFORGE_INSTALADO=$instalado" >> $GithubEnv
@@ -137,3 +145,10 @@ if ($GithubEnv) {
 
 Write-Host "OK: instalado, atalhos, registro e recursos conferidos (codigo $codigo)"
 exit 0
+
+}
+catch {
+    Anotar "Instalador GORE FORGE (excecao)" ("$($_.Exception.GetType().Name): $($_.Exception.Message) | linha: $($_.InvocationInfo.ScriptLineNumber)")
+    if ($_.ScriptStackTrace) { Anotar "Instalador GORE FORGE (pilha)" $_.ScriptStackTrace }
+    exit 1
+}

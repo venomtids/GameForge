@@ -52,7 +52,7 @@ jobs:
         if: failure()
         shell: pwsh
         run: |
-          $arquivos = @(Get-ChildItem test-results -Filter "electron*.log" -ErrorAction SilentlyContinue)
+          $arquivos = @(Get-ChildItem test-results -Filter "*.log" -ErrorAction SilentlyContinue)
           foreach ($arquivo in $arquivos) {
             Write-Host "::error title=Log $($arquivo.Name)::$(($arquivo.FullName -replace '%','%25'))"
             Get-Content $arquivo.FullName | Select-Object -Last 40 | ForEach-Object {
@@ -71,7 +71,11 @@ jobs:
           exit 0
       - name: Instalar o próprio Setup.exe (silencioso) e validar o executável instalado
         shell: pwsh
-        run: pwsh -NoProfile -File scripts/instalar-e-verificar-goreforge.ps1 -Pacote dist/windows-goreforge
+        run: |
+          New-Item -ItemType Directory -Force -Path test-results | Out-Null
+          pwsh -NoProfile -File scripts/instalar-e-verificar-goreforge.ps1 -Pacote dist/windows-goreforge *>&1 |
+            Tee-Object -FilePath test-results\instalador.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Jogar a partir do aplicativo INSTALADO
         shell: pwsh
         run: |
@@ -80,7 +84,10 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Desinstalar e conferir que saiu do sistema
         shell: pwsh
-        run: pwsh -NoProfile -File scripts/desinstalar-e-verificar-goreforge.ps1
+        run: |
+          pwsh -NoProfile -File scripts/desinstalar-e-verificar-goreforge.ps1 *>&1 |
+            Tee-Object -FilePath test-results\desinstalador.log
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Entregar instalador, checksum e instruções
         uses: actions/upload-artifact@v4
         with:

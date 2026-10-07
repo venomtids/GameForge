@@ -43,6 +43,8 @@ function EntradasDeDesinstalacao {
     }
 }
 
+try {
+
 if (-not $Pasta) {
     $entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FORGE" } | Select-Object -First 1
     if ($entrada) { $Pasta = $entrada.InstallLocation }
@@ -75,3 +77,9 @@ if ($falhas.Count -gt 0) { Falhar ("desinstalacao incompleta (codigo $codigo): "
 
 Write-Host "OK: desinstalacao limpa (codigo $codigo)"
 exit 0
+
+}
+catch {
+    Anotar "Desinstalador GORE FORGE (excecao)" ("$($_.Exception.GetType().Name): $($_.Exception.Message) | linha: $($_.InvocationInfo.ScriptLineNumber)")
+    exit 1
+}
