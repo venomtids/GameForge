@@ -40,12 +40,12 @@ instalador**, abre o jogo **a partir do executável instalado**, desinstala e pu
 
 **Instalador GORE FORGE 0.8.3 entregue:** [baixar Windows x64](https://github.com/venomtids/GameForge/releases/download/goreforge-v0.8.3/GORE-FORGE-0.8.3-Windows-x64-Setup.exe)
 · [release com checksum e instruções](https://github.com/venomtids/GameForge/releases/tag/goreforge-v0.8.3)
-· [CI verde, ponta a ponta](https://github.com/venomtids/GameForge/actions/runs/37636204182). Tamanho
-**112.721.242 bytes**, SHA-256 `0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc`.
-O CI instalou em silêncio (`/S` em `%LOCALAPPDATA%\Programs\GORE FORGE`), conferiu SHA-256, recursos,
-atalho no Menu Iniciar e registro de desinstalação, jogou o jogo **pelo `.exe` instalado** (pátio,
-física, tiro, spawn, dano, HUD, tela cheia, localStorage) e desinstalou provando que exe/atalho/registro
-sumiram.
+· [CI verde, ponta a ponta](https://github.com/venomtids/GameForge/actions/runs/37636204182).
+O CI instalou em silêncio (`/S` em `%LOCALAPPDATA%\Programs\GORE FORGE`), conferiu o SHA-256 contra o
+`SHA256SUMS.txt`, os recursos, o atalho no Menu Iniciar e o registro de desinstalação, jogou o jogo
+**pelo `.exe` instalado** (pátio, física, tiro, spawn, dano, HUD, tela cheia, localStorage) e
+desinstalou provando que exe/atalho/registro sumiram. Tamanho e hash do arquivo que você baixa estão
+no `SHA256SUMS.txt` da própria release — o CI confere esse mesmo hash antes de instalar.
 
 Para reproduzir/validar:
 

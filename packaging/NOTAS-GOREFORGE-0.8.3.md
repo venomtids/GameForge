@@ -58,11 +58,16 @@ Automação `.github/workflows/goreforge-windows.yml`, em `windows-latest`:
    acabou de passar por esses passos.
 
 O que foi verificado nesta versão ([CI 37636204182](https://github.com/venomtids/GameForge/actions/runs/37636204182),
-todos os passos verdes): o `Setup.exe` de **112.721.242 bytes** e SHA-256
-`0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc` instalou em
-`%LOCALAPPDATA%\Programs\GORE FORGE`, apareceu como "GORE FORGE 0.8.3" em
-*Aplicativos instalados*, criou o atalho no Menu Iniciar, abriu o jogo a partir do
-**executável instalado** (instalador retornou 0) e desinstalou limpo.
+todos os passos verdes): o `Setup.exe` instalou em `%LOCALAPPDATA%\Programs\GORE FORGE`,
+apareceu como "GORE FORGE 0.8.3" em *Aplicativos instalados*, criou o atalho no Menu
+Iniciar, abriu o jogo a partir do **executável instalado** (instalador retornou 0) e
+desinstalou limpo.
+
+**Tamanho e SHA-256 do arquivo que você está baixando estão no `SHA256SUMS.txt`
+desta release.** É esse mesmo hash que o CI confere antes de instalar (o log do passo
+imprime `SHA-256 confere com SHA256SUMS.txt`) — e cada execução verde reescreve os
+arquivos da release com o binário que acabou de passar por instalar, jogar e
+desinstalar, para nunca ficar publicado um build que não passou pelo teste.
 
 Compilar a partir do Linux exige Wine/NSIS (`npm run desktop:goreforge`); o
 usuário do instalador não precisa de nada disso.

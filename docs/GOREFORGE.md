@@ -357,8 +357,10 @@ em `windows-latest` — o caminho que já funcionou para o Studio. O fluxo é:
 **Resultado da 0.8.3:** [CI 37636204182](https://github.com/venomtids/GameForge/actions/runs/37636204182),
 todos os passos verdes — instalação (código 0), jogo aberto pelo **executável instalado**
 (`PASS electron: GORE FORGE rodando a partir do aplicativo INSTALADO`) e desinstalação limpa.
-Binário: **112.721.242 bytes**, SHA-256 `0fcbc4cc1cb54c2bf30d7412642fb945cfcc6fce14dd429a4c9546311c9cb9dc`,
-em [releases/tag/goreforge-v0.8.3](https://github.com/venomtids/GameForge/releases/tag/goreforge-v0.8.3).
+Baixe em [releases/tag/goreforge-v0.8.3](https://github.com/venomtids/GameForge/releases/tag/goreforge-v0.8.3);
+o SHA-256 e o tamanho do arquivo publicado estão no `SHA256SUMS.txt` da própria release (o CI confere
+esse mesmo hash antes de instalar — a release é reescrita a cada execução verde com o binário que
+acabou de passar por instalar/jogar/desinstalar).
 
 Compilar a partir do Linux exige Wine/NSIS (o `Setup.exe` é um alvo Windows); sem eles,
 `npm run desktop:goreforge` falha ao baixar/rodar o ferramental — por isso o CI é o caminho.
