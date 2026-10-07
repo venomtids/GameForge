@@ -38,7 +38,9 @@
     "test:jelly": "node tests/jelly-browser.mjs",
     "test:goreforge": "node tests/goreforge-browser.mjs",
     "test:export:goreforge": "node tests/goreforge-export.mjs",
-    "shots:goreforge": "node tests/goreforge-shots.mjs"
+    "shots:goreforge": "node tests/goreforge-shots.mjs",
+    "installer:goreforge": "npm run build:goreforge && node scripts/build-goreforge-installer.mjs",
+    "test:installer:goreforge": "node tests/goreforge-installer.mjs"
   },
   "dependencies": {
     "@codemirror/autocomplete": "^6.20.3",

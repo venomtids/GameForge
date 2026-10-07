@@ -1,0 +1,90 @@
+==============================================================================
+  GORE FORGE @@VERSAO@@ - INSTALADOR PARA WINDOWS
+  sandbox de fisica, gelatina e gore - roda 100% offline
+==============================================================================
+
+O QUE E
+-------
+Este pacote instala o jogo GORE FORGE no seu usuario do Windows. O jogo e um
+unico arquivo HTML autossuficiente (engine + jogo + interface embutidos):
+depois de instalado, ele NAO precisa de internet, servidor ou dependencias.
+
+COMO INSTALAR
+-------------
+1. Extraia TODOS os arquivos deste ZIP para uma pasta qualquer.
+   (Botao direito no ZIP > "Extrair Tudo...")
+2. De dois cliques em:  Instalar GORE FORGE.cmd
+3. A instalacao e automatica e, no fim, o jogo abre sozinho.
+
+Nao precisa de senha de administrador: tudo e gravado na sua pasta de usuario
+(%LOCALAPPDATA%\GORE FORGE) e a desinstalacao fica registrada em "Aplicativos
+instalados".
+
+Se aparecer o aviso azul "O Windows protegeu o seu PC": clique em
+"Mais informacoes" > "Executar assim mesmo".
+Se o antivirus reclamar: os arquivos sao texto simples (instalador .cmd e
+PowerShell .ps1, sem executavel compilado). Abra qualquer um no Bloco de Notas
+para conferir linha por linha antes de rodar - sao poucas linhas e comentadas.
+Se preferir nao instalar nada: de dois cliques no proprio goreforge.html.
+
+O QUE O INSTALADOR FAZ (exatamente)
+-----------------------------------
+- copia goreforge.html e o icone para %LOCALAPPDATA%\GORE FORGE
+- cria os atalhos "GORE FORGE" na Area de Trabalho e no Menu Iniciar
+  (em Edge/Chrome o atalho abre em janela de aplicativo, sem barra de
+  endereco; se nao houver nenhum dos dois, abre no navegador padrao)
+- cria a pasta "GORE FORGE" no Menu Iniciar com: abrir no navegador,
+  pasta de instalacao e Desinstalar
+- registra a entrada de desinstalacao em HKCU (por usuario)
+- cria "Desinstalar GORE FORGE.cmd" dentro da pasta instalada
+Nada e baixado da internet e nada e escrito fora dessas pastas.
+
+DESINSTALAR
+-----------
+Opcao A: Configuracoes > Aplicativos > Aplicativos instalados > GORE FORGE >
+         Desinstalar.
+Opcao B: Menu Iniciar > GORE FORGE > Desinstalar GORE FORGE.
+Opcao C: dois cliques em "Desinstalar GORE FORGE.cmd" na pasta de instalacao.
+
+REQUISITOS
+----------
+- Windows 10 ou 11 (64 bits). Testado com Edge/Chrome/Firefox atuais.
+- Navegador com WebGL2 (qualquer navegador atualizado tem).
+- Teclado e mouse.
+
+CONTROLES
+---------
+Movimento      W A S D andar | Shift correr | Ctrl/C agachar (correndo:
+               escorriao) | Q dash | Space pular (duplo no ar) | G noclip |
+               R recarregar/renascer | V 1a/3a pessoa
+Combate        Botao esquerdo atirar/usar | Botao direito mira (ADS)/
+               arremessar | 1..9 armas | 0 ciclar ferramentas |
+               roda do mouse trocar arma | F curar | X alternar gore |
+               T modo de spawn (mira/pe)
+Menus          Tab menu de spawn | Esc pausa, ajustes e interface |
+               F5 reiniciar o patio | H esconder HUD | M mutar som
+Dica           Shift+clique num item do menu de spawn marca favorito;
+               o grafico do HUD (frames, corpos, rigs, particulas) liga e
+               desliga no proprio HUD.
+
+INSTALAR EM OUTRA PASTA (avancado)
+----------------------------------
+Abra o Prompt de Comando nesta pasta e rode:
+  powershell -ExecutionPolicy Bypass -File Instalador.ps1 -Destino "D:\Jogos\GORE FORGE"
+Ou, pelo lancador:
+  "Instalar GORE FORGE.cmd" -Destino "D:\Jogos\GORE FORGE"
+Outras opcoes: -NaoAbrir (instala sem abrir o jogo no final).
+
+CONTEUDO DO PACOTE
+------------------
+  Instalar GORE FORGE.cmd   lancador do instalador (texto simples)
+  Instalador.ps1            logica de instalar/desinstalar
+  goreforge.html            o jogo completo (engine + jogo + UI)
+  gameforge.ico             icone usado nos atalhos
+  LEIA-ME.txt               este arquivo
+  SHA256SUMS.txt            conferencia de integridade dos arquivos
+
+VERSAO
+------
+GORE FORGE @@VERSAO@@ - construido a partir do repositorio GameForge.
+Arquitetura do jogo e guia de extensao: docs/GOREFORGE.md no codigo-fonte.

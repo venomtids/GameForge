@@ -60,6 +60,21 @@ src/goreforge/
     └── GameRuntime.ts                loop, ordem dos sistemas, hotkeys e a tradução ação-de-UI → jogo
 ```
 
+Arquivos do arquivo único e do instalador Windows:
+
+```
+packaging/goreforge-installer/
+├── Instalar GORE FORGE.cmd            lançador do instalador (ASCII puro: o cmd.exe não lê
+│                                      acentos com segurança) + desbloqueio de arquivos do ZIP
+├── Instalador.ps1                     instalar/desinstalar (BOM UTF-8, para o Windows PowerShell
+│                                      5.1 ler os acentos; HKCU, sem administrador)
+└── LEIA-ME.txt                        instruções do pacote em PT-BR (BOM UTF-8)
+scripts/build-goreforge-installer.mjs  injeta a versão, gera SHA256SUMS.txt e monta o ZIP
+vite.goreforge.config.ts               build do arquivo único (single-file, base "./", outDir entregas)
+tests/goreforge-installer.mjs          valida o instalador sem Windows (arquivos, somas, ZIP byte a byte)
+tests/goreforge-export.mjs             abre entregas/goreforge.html por file:// num navegador real
+```
+
 Fora de `src/goreforge/`, a mudança de engine que o jogo precisou:
 
 | Arquivo | Mudança |
@@ -212,7 +227,49 @@ npm run test:export:goreforge   # valida o arquivo abrindo por file:// num naveg
 física, gelatina, gore, menus e temas funcionando. Salve, mande por e-mail ou ponha num pendrive.
 `entregas/goreforge-codigo.zip` traz o código-fonte completo do jogo junto.
 
-## 7. Comandos
+## 7. Instalador no Windows (sem precisar de servidor)
+
+```bash
+npm run installer:goreforge        # monta o pacote do instalador
+npm run test:installer:goreforge   # confere arquivos, somas e o ZIP inteiro
+```
+
+Saída:
+
+```
+entregas/GORE-FORGE-Instalador/            pasta do pacote (para auditar)
+entregas/GORE-FORGE-Instalador-Windows.zip -> o que o usuário baixa (~0,3 MB)
+```
+
+O usuário extrai o ZIP e dá dois cliques em **`Instalar GORE FORGE.cmd`**. O instalador é
+deliberadamente **pequeno e auditável** (o jogo é um arquivo único, então não existe payload opaco):
+um lançador `.cmd` (ASCII puro, para o `cmd.exe`), a lógica em `Instalador.ps1` e o próprio HTML.
+
+O que ele faz, sem pedir senha de administrador:
+
+- copia o jogo e o ícone para `%LOCALAPPDATA%\GORE FORGE`;
+- cria atalhos na Área de Trabalho e no Menu Iniciar — quando há Edge/Chrome o atalho principal usa
+  `--app=file:///…`, ou seja, abre em **janela de aplicativo** (sem barra de endereço), com o HTML
+  direto como reserva;
+- cria `Menu Iniciar > GORE FORGE` com abrir no navegador, pasta de instalação e desinstalar;
+- registra a desinstalação em `HKCU\…\Uninstall\GORE FORGE` (aparece em *Aplicativos instalados*);
+- no fim, abre o jogo.
+
+Desinstalar: *Configurações > Aplicativos*, o atalho do Menu Iniciar ou `Desinstalar GORE FORGE.cmd`
+dentro da pasta. O desinstalador roda a partir de uma cópia em `%TEMP%` (o `cmd.exe` trava o próprio
+arquivo enquanto executa) e, se a pasta ainda estiver em uso, agenda a limpeza final.
+
+Opções avançadas: `-Destino "D:\Jogos\GORE FORGE"` e `-NaoAbrir` (instalar sem abrir).
+
+### Por que não um `.exe`?
+
+O pipeline do Studio (`npm run desktop:win`, Electron + NSIS + wine) já existe no repositório e
+funciona em máquina Windows/cross-build com wine — o alvo é o Studio, não este jogo. Para o GORE
+FORGE, o instalador acima evita depender de runtime nenhum: o jogo é HTML, então instalar é copiar
+um arquivo e criar atalhos. Num Windows com Node, `npm run desktop:win` continua disponível para
+gerar o `.exe` do Studio normalmente.
+
+## 8. Comandos
 
 ```bash
 npm run dev             # servidor (http://localhost:5173/goreforge.html)
@@ -221,6 +278,8 @@ npm test                # unitários (config, catálogos, pátio, estado, preset
 npm run typecheck
 npm run test:goreforge  # navegador: física rodando, gelatina deformando, fratura, tiros, tema ao vivo
 npm run shots:goreforge # turnê com capturas em test-results/
+npm run installer:goreforge # pacote do instalador Windows (ZIP + pasta em entregas/)
+npm run test:installer:goreforge # valida o instalador (arquivos, somas, ZIP íntegro)
 ```
 
 ### Limites conhecidos (honestos)
