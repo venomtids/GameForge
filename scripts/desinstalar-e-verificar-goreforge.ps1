@@ -46,7 +46,7 @@ function EntradasDeDesinstalacao {
 try {
 
 if (-not $Pasta) {
-    $entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FORGE" } | Select-Object -First 1
+    $entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -like "GORE FORGE*" } | Select-Object -First 1
     if ($entrada) { $Pasta = $entrada.InstallLocation }
 }
 if (-not $Pasta) { Falhar "nao sei onde o GORE FORGE foi instalado (GOREFORGE_INSTALADO vazio e sem registro)" }
@@ -67,7 +67,7 @@ for ($i = 0; $i -lt $Tentativas -and (Test-Path $exe); $i++) { Start-Sleep -Seco
 
 $falhas = @()
 if (Test-Path $exe) { $falhas += "o executavel continua instalado em $Pasta" }
-$entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FORGE" } | Select-Object -First 1
+$entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -like "GORE FORGE*" } | Select-Object -First 1
 if ($entrada) { $falhas += "a entrada de desinstalacao ficou no registro ($($entrada.Chave))" }
 
 $atalho = Join-Path ([Environment]::GetFolderPath("Desktop")) "GORE FORGE.lnk"

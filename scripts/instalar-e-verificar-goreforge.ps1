@@ -31,25 +31,37 @@ function Listar([string] $caminho, [int] $limite = 20) {
 }
 
 function EntradasDeDesinstalacao {
+    # varre as tres raizes possiveis: o instalador assistido do electron-builder grava
+    # a chave no contexto do shell (HKCU na instalacao por usuario) e o nome de
+    # DisplayName vem do productName.
     $chaves = @(
         "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall",
         "HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall",
         "HKLM:\Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
     )
     foreach ($chave in $chaves) {
-        Get-ChildItem $chave -ErrorAction SilentlyContinue | ForEach-Object {
-            $propriedades = Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue
-            if ($propriedades -and $propriedades.DisplayName) {
-                [pscustomobject]@{
-                    Chave           = $_.PSPath
-                    DisplayName     = $propriedades.DisplayName
-                    DisplayVersion  = $propriedades.DisplayVersion
-                    InstallLocation = $propriedades.InstallLocation
-                    UninstallString = $propriedades.UninstallString
-                }
+        foreach ($filho in (Get-ChildItem $chave -ErrorAction SilentlyContinue)) {
+            $propriedades = Get-ItemProperty $filho.PSPath -ErrorAction SilentlyContinue
+            [pscustomobject]@{
+                Chave           = $chave
+                NomeChave       = $filho.PSChildName
+                DisplayName     = if ($propriedades) { $propriedades.DisplayName } else { $null }
+                DisplayVersion  = if ($propriedades) { $propriedades.DisplayVersion } else { $null }
+                InstallLocation = if ($propriedades) { $propriedades.InstallLocation } else { $null }
+                UninstallString = if ($propriedades) { $propriedades.UninstallString } else { $null }
             }
         }
     }
+}
+
+function ProcurarEntradaGoreForge {
+    EntradasDeDesinstalacao | Where-Object { $_.DisplayName -like "GORE FORGE*" } | Select-Object -First 1
+}
+
+function ResumoDoRegistro {
+    $todas = @(EntradasDeDesinstalacao | Where-Object { $_.DisplayName })
+    if (-not $todas.Count) { return "(nenhuma entrada de desinstalacao na maquina)" }
+    return (($todas | Select-Object -First 30 | ForEach-Object { "$($_.Chave.Split(':')[0])\$($_.NomeChave)=$($_.DisplayName)" }) -join " | ")
 }
 
 # ------------------------------------------------------------------- execucao
@@ -73,8 +85,9 @@ if ($linha -notmatch $hash) { Falhar "SHA-256 do Setup.exe nao confere: arquivo 
 Write-Host "SHA-256 confere com SHA256SUMS.txt ($hash)"
 
 # antes de instalar: para comparar depois
-$antes = @(EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FORGE" })
+$antes = @(EntradasDeDesinstalacao | Where-Object { $_.DisplayName -like "GORE FORGE*" })
 if ($antes.Count -gt 0) { Write-Host "Aviso: ja existia instalacao anterior (sera atualizada)" }
+Write-Host "Entradas GORE FORGE antes: $($antes.Count)"
 
 # ---------------------------------------------------------------- instalacao
 Write-Host "[2/5] Instalando em silencio (/S) ..."
@@ -86,7 +99,7 @@ Write-Host "[3/5] Procurando a pasta instalada"
 $instalado = $null
 $entrada = $null
 for ($i = 0; $i -lt $Tentativas -and -not $instalado; $i++) {
-    $entrada = EntradasDeDesinstalacao | Where-Object { $_.DisplayName -eq "GORE FORGE" } | Select-Object -First 1
+    $entrada = ProcurarEntradaGoreForge
     if ($entrada -and $entrada.InstallLocation -and (Test-Path (Join-Path $entrada.InstallLocation "GORE FORGE.exe"))) {
         $instalado = $entrada.InstallLocation
     }
@@ -104,7 +117,7 @@ if (-not $instalado) {
 }
 
 if (-not $instalado) {
-    $nomes = (EntradasDeDesinstalacao | Select-Object -ExpandProperty DisplayName) -join " | "
+    $nomes = ResumoDoRegistro
     Falhar ("nao achei GORE FORGE.exe (codigo do instalador: $codigo). " +
         "Programs: $(Listar (Join-Path $env:LOCALAPPDATA 'Programs')). " +
         "Entradas de desinstalacao: $nomes")
@@ -130,7 +143,7 @@ $menu = Get-ChildItem $programas -Recurse -Filter "GORE FORGE*.lnk" -ErrorAction
 if (-not $menu) { $falhas += "sem atalho no Menu Iniciar (procurei em $programas)" }
 else { Write-Host "Atalho no Menu Iniciar: $($menu.FullName)" }
 
-if (-not $entrada) { $falhas += "sem entrada de desinstalacao no registro" }
+if (-not $entrada) { $falhas += "sem entrada de desinstalacao (registro: $(ResumoDoRegistro))" }
 else {
     Write-Host "Registro: $($entrada.DisplayName) $($entrada.DisplayVersion) -> $($entrada.UninstallString)"
     if (-not $entrada.UninstallString) { $falhas += "entrada de desinstalacao sem UninstallString" }
