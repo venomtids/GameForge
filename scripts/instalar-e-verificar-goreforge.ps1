@@ -16,7 +16,7 @@ $ErrorActionPreference = "Continue"
 
 function Anotar([string] $titulo, [string] $texto) {
     $limpo = ($texto -replace '%', '%25') -replace "`r?`n", ' '
-    Write-Host "::error title=$titulo::$limpo"
+    Write-Host ("::error title=" + $titulo + "::" + $limpo)
 }
 
 function Falhar([string] $texto) {
@@ -123,8 +123,12 @@ $areaTrabalho = [Environment]::GetFolderPath("Desktop")
 $atalho = Join-Path $areaTrabalho "GORE FORGE.lnk"
 if (-not (Test-Path $atalho)) { $falhas += "sem atalho na Area de Trabalho ($atalho)" }
 
-$menu = Join-Path ([Environment]::GetFolderPath("Programs")) "GORE FORGE.lnk"
-if (-not (Test-Path $menu)) { $falhas += "sem atalho no Menu Iniciar ($menu)" }
+# o instalador assistido (oneClick: false) cria uma pasta no Menu Iniciar com o
+# atalho dentro; procuramos em qualquer nivel abaixo de Programas
+$programas = [Environment]::GetFolderPath("Programs")
+$menu = Get-ChildItem $programas -Recurse -Filter "GORE FORGE*.lnk" -ErrorAction SilentlyContinue | Select-Object -First 1
+if (-not $menu) { $falhas += "sem atalho no Menu Iniciar (procurei em $programas)" }
+else { Write-Host "Atalho no Menu Iniciar: $($menu.FullName)" }
 
 if (-not $entrada) { $falhas += "sem entrada de desinstalacao no registro" }
 else {
@@ -134,7 +138,7 @@ else {
 
 if ($falhas.Count -gt 0) {
     Falhar ("instalacao incompleta (codigo $codigo): " + ($falhas -join "; ") +
-        ". Conteudo de $instalado: $(Listar $instalado)")
+        ". Conteudo de ${instalado}: $(Listar $instalado)")
 }
 
 Write-Host "[5/5] Exportando o caminho para os proximos passos"

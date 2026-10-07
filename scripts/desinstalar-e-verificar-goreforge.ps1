@@ -14,7 +14,7 @@ $ErrorActionPreference = "Continue"
 
 function Anotar([string] $titulo, [string] $texto) {
     $limpo = ($texto -replace '%', '%25') -replace "`r?`n", ' '
-    Write-Host "::error title=$titulo::$limpo"
+    Write-Host ("::error title=" + $titulo + "::" + $limpo)
 }
 
 function Falhar([string] $texto) {

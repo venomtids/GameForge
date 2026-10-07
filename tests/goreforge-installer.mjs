@@ -234,6 +234,14 @@ for (const nome of [
   );
   assert.ok(!conteudo.startsWith("\uFEFF"), `${nome} não deveria ter BOM`);
   balancear(conteudo, nome);
+  // "$var:" e "$var::" dentro de string são erro de sintaxe no PowerShell
+  // (ele lê como escopo/membro estático). Só "$env:" é legítimo.
+  for (const suspeita of conteudo.matchAll(/\$([A-Za-z_][A-Za-z0-9_]*)(::?)/g))
+    assert.equal(
+      suspeita[1],
+      "env",
+      `${nome}: "$${suspeita[1]}${suspeita[2]}" é inválido no PowerShell (use \${...})`,
+    );
   assert.ok(
     conteudo.includes("::error title="),
     `${nome} não anota o erro no GitHub`,
