@@ -71,53 +71,7 @@ jobs:
           exit 0
       - name: Instalar o próprio Setup.exe (silencioso) e validar o executável instalado
         shell: pwsh
-        run: |
-          $pacote = (Get-Content package.json | ConvertFrom-Json)
-          $version = $pacote.version
-          $setup = "dist/windows-goreforge/GORE-FORGE-$version-Windows-x64-Setup.exe"
-          if (-not (Test-Path $setup)) { throw "Setup.exe não encontrado em $setup" }
-          # o hash publicado tem de ser o do arquivo que vamos instalar
-          $esperado = (Get-Content dist/windows-goreforge/SHA256SUMS.txt | Where-Object { $_ -match 'Setup\.exe' })
-          $hash = (Get-FileHash $setup -Algorithm SHA256).Hash.ToLower()
-          if ($esperado -notmatch $hash) { throw "SHA-256 do Setup.exe não confere com SHA256SUMS.txt" }
-          Write-Host "Instalando $setup ..."
-          $processo = Start-Process $setup -ArgumentList "/S" -Wait -PassThru
-          if ($processo.ExitCode -ne 0) { throw "instalador retornou $($processo.ExitCode)" }
-          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
-          $instalado = $null
-          for ($i = 0; $i -lt 20 -and -not $instalado; $i++) {
-            $entrada = Get-ChildItem $registro -ErrorAction SilentlyContinue |
-              Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" } |
-              Select-Object -First 1
-            if ($entrada) {
-              $onde = (Get-ItemProperty $entrada.PSPath).InstallLocation
-              if ($onde -and (Test-Path (Join-Path $onde "GORE FORGE.exe"))) { $instalado = $onde }
-            }
-            if (-not $instalado) { Start-Sleep -Seconds 1 }
-          }
-          if (-not $instalado) {
-            $candidatos = @(
-              (Join-Path $env:LOCALAPPDATA "Programs\GORE FORGE"),
-              (Join-Path $env:LOCALAPPDATA "GORE FORGE"),
-              (Join-Path $env:ProgramFiles "GORE FORGE"),
-              (Join-Path ${env:ProgramFiles(x86)} "GORE FORGE")
-            )
-            $instalado = $candidatos | Where-Object { Test-Path (Join-Path $_ "GORE FORGE.exe") } | Select-Object -First 1
-          }
-          if (-not $instalado) { throw "não achei GORE FORGE.exe (registro e candidatos falharam)" }
-          $exe = Join-Path $instalado "GORE FORGE.exe"
-          Write-Host "Instalado em $instalado"
-          $atalho = Join-Path ([Environment]::GetFolderPath("Desktop")) "GORE FORGE.lnk"
-          if (-not (Test-Path $atalho)) { throw "atalho da Área de Trabalho não foi criado" }
-          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
-          $entrada = Get-ChildItem $registro | Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" }
-          if (-not $entrada) { throw "entrada de desinstalação não registrada" }
-          $recursos = Join-Path $instalado "resources"
-          if (-not (Test-Path (Join-Path $recursos "goreforge.html"))) { throw "o jogo não foi instalado" }
-          if (-not (Test-Path (Join-Path $recursos "LEIA-ME.txt"))) { throw "leia-me não foi instalado" }
-          "GOREFORGE_TEST_APP=$instalado" >> $env:GITHUB_ENV
-          "GOREFORGE_INSTALADO=$instalado" >> $env:GITHUB_ENV
-          Write-Host "OK: instalado, atalho, registro e recursos conferidos"
+        run: pwsh -NoProfile -File scripts/instalar-e-verificar-goreforge.ps1 -Pacote dist/windows-goreforge
       - name: Jogar a partir do aplicativo INSTALADO
         shell: pwsh
         run: |
@@ -126,21 +80,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Desinstalar e conferir que saiu do sistema
         shell: pwsh
-        run: |
-          $instalado = $env:GOREFORGE_INSTALADO
-          $desinstalador = Get-ChildItem $instalado -Filter "Uninstall*.exe" | Select-Object -First 1
-          if (-not $desinstalador) { throw "desinstalador não encontrado em $instalado" }
-          Write-Host "Rodando $($desinstalador.Name) /S ..."
-          $processo = Start-Process $desinstalador.FullName -ArgumentList "/S" -Wait -PassThru
-          if ($processo.ExitCode -ne 0) { throw "desinstalador retornou $($processo.ExitCode)" }
-          for ($i = 0; $i -lt 30 -and (Test-Path (Join-Path $instalado "GORE FORGE.exe")); $i++) {
-            Start-Sleep -Seconds 2
-          }
-          if (Test-Path (Join-Path $instalado "GORE FORGE.exe")) { throw "o executável continua instalado" }
-          $registro = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall"
-          $entrada = Get-ChildItem $registro -ErrorAction SilentlyContinue | Where-Object { (Get-ItemProperty $_.PSPath).DisplayName -eq "GORE FORGE" }
-          if ($entrada) { throw "entrada de desinstalação ficou para trás" }
-          Write-Host "OK: desinstalação limpa"
+        run: pwsh -NoProfile -File scripts/desinstalar-e-verificar-goreforge.ps1
       - name: Entregar instalador, checksum e instruções
         uses: actions/upload-artifact@v4
         with:

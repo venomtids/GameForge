@@ -217,7 +217,31 @@ const balancear = (texto, nome) => {
   );
 };
 balancear(ps, "Instalador.ps1");
-console.log("PASS instalador: PowerShell com delimitadores balanceados");
+
+// os scripts do CI (usados no Windows) também entram na conferência de estrutura
+for (const nome of [
+  "scripts/instalar-e-verificar-goreforge.ps1",
+  "scripts/desinstalar-e-verificar-goreforge.ps1",
+]) {
+  const conteudo = (await readFile(path.join(root, nome))).toString("utf8");
+  assert.ok(!conteudo.includes("\r\n"), `${nome} deveria estar em LF`);
+  assert.ok(
+    !/[^\x09\x0a\x0d\x20-\x7e]/.test(conteudo),
+    `${nome} tem byte não-ASCII (o Windows PowerShell 5.1 leria errado sem BOM)`,
+  );
+  balancear(conteudo, nome);
+  assert.ok(
+    conteudo.includes("::error title="),
+    `${nome} não anota o erro no GitHub`,
+  );
+  assert.ok(
+    /exit [01]/.test(conteudo),
+    `${nome} precisa terminar com exit 0/1 explícito`,
+  );
+}
+console.log(
+  "PASS instalador: PowerShell com delimitadores balanceados (instalador + scripts do CI)",
+);
 
 // 5b) nenhum helper chamado por engano (pega erro de digitação tipo Escrever-Oks)
 const definidos = new Set(
