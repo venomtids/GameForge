@@ -1,0 +1,76 @@
+name: Instalador Windows
+on:
+  push:
+    branches: [arena/01a0f29f-gameforge]
+    paths-ignore:
+      - "**/*.md"
+      - "docs/**"
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: gameforge-windows-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  windows:
+    name: Validar e empacotar Windows x64
+    runs-on: windows-latest
+    timeout-minutes: 25
+    env:
+      CSC_IDENTITY_AUTO_DISCOVERY: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Versão do aplicativo
+        id: version
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          "version=$version" >> $env:GITHUB_OUTPUT
+      - name: Dependências
+        run: npm ci
+      - name: Testes da engine e armazenamento
+        run: npm test
+      - name: Build e instalador NSIS
+        run: npm run desktop:win
+      - name: Instalar NSIS e verificar recursos distribuídos
+        run: node scripts/verify-windows-install.mjs
+      - name: Validar aplicativo Windows, IPC, backup e exportação
+        run: npm run test:desktop:studio08
+        env:
+          GAMEFORGE_TEST_APP: dist/desktop-app
+      - name: Entregar instalador, checksum e instruções
+        uses: actions/upload-artifact@v4
+        with:
+          name: GameForge-Studio-${{ steps.version.outputs.version }}-Windows-x64
+          path: |
+            dist/windows/*-Setup.exe
+            dist/windows/SHA256SUMS.txt
+            dist/windows/LEIA-ME-WINDOWS.txt
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 30
+      - name: Publicar download da prévia Windows
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: pwsh
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $tag = "studio-v$version"
+          gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $tag "dist/windows/GameForge-Studio-$version-Windows-x64-Setup.exe" "dist/windows/SHA256SUMS.txt" "dist/windows/LEIA-ME-WINDOWS.txt" --repo $env:GITHUB_REPOSITORY --target $env:GITHUB_SHA --title "GameForge Studio $version — Windows x64" --prerelease --notes-file "packaging/NOTAS-STUDIO-$version.md"
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          exit 0
+      - name: Evidências e logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Validacao-Windows-${{ steps.version.outputs.version }}
+          path: test-results
+          if-no-files-found: ignore
+          retention-days: 14

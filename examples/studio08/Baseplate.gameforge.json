@@ -1,0 +1,189 @@
+{
+  "format": "gameforge",
+  "version": 7,
+  "name": "Meu novo mundo",
+  "activeScene": "c53abaaa-1b49-4ea8-a497-0ecb759ebcc2",
+  "scenes": [
+    {
+      "id": "c53abaaa-1b49-4ea8-a497-0ecb759ebcc2",
+      "name": "Baseplate",
+      "nodes": [
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": false,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "db2b3be2-a00d-4d43-84ce-ac60cca90c6f",
+          "name": "Gramado",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            -0.5,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            40,
+            1,
+            40
+          ],
+          "color": "#819b90",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "static",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "animation": null,
+          "actor": {
+            "humanoid": true,
+            "skin": "#ddb48d",
+            "animationSpeed": 1,
+            "health": 100,
+            "ragdollOnDeath": true,
+            "bot": "off",
+            "radius": 4,
+            "detection": 16,
+            "attackRange": 1.6,
+            "damage": 8,
+            "cooldown": 1
+          },
+          "deform": {
+            "type": "none",
+            "stiffness": 80,
+            "damping": 3
+          },
+          "light": {
+            "type": "none",
+            "enabled": true,
+            "color": "#ffe3b6",
+            "intensity": 8,
+            "distance": 20,
+            "decay": 1.5,
+            "angle": 52,
+            "penumbra": 0.35,
+            "shadows": false,
+            "flicker": 0,
+            "flickerSpeed": 7
+          },
+          "castShadow": true,
+          "receiveShadow": true,
+          "textureId": null,
+          "surface": null,
+          "friction": 0.3,
+          "terrain": false,
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "e7f8ae52-fcc4-463c-a400-eae5ef9e57f7",
+          "name": "Jogador articulado",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.5,
+            7
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.8,
+            1.8,
+            0.65
+          ],
+          "color": "#69a6ad",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 15,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 6,
+          "amplitude": 0.4
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "moveMultiplier": 1,
+    "sprintMultiplier": 1.5,
+    "jumpSpeed": 6.5,
+    "mouseSensitivity": 1.5,
+    "orbitSpeed": 1.5,
+    "panSpeed": 2.5,
+    "flySpeed": 12,
+    "editorLook": 1.5,
+    "zoomSpeed": 1.5,
+    "followSpeed": 8,
+    "fov": 78,
+    "physicsHz": 120,
+    "solverIterations": 15,
+    "background": "#202a30",
+    "gravity": -9.81,
+    "sky": {
+      "enabled": true,
+      "sunElevation": 50,
+      "sunAzimuth": 35,
+      "clouds": true
+    },
+    "gameCamera": "third",
+    "playerId": "e7f8ae52-fcc4-463c-a400-eae5ef9e57f7"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "procedural-platformer",
+  "productName": "Procedural Platformer",
+  "version": "1.0.0",
+  "description": "Jogo de plataformas procedural exportado do GameForge Studio",
+  "main": "main.cjs",
+  "author": "GameForge",
+  "license": "MIT",
+  "scripts": {
+    "pack:win": "electron-builder --config ../electron-builder.game.json --win --x64 --publish never",
+    "pack:win:installer": "electron-builder --config ../electron-builder.game.json --win nsis --x64 --publish never"
+  }
+}

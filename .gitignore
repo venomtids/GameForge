@@ -1,0 +1,17 @@
+node_modules/
+dist/
+release/
+test-results/
+*.log
+.DS_Store
+
+# Rebuilt by predev/build; do not publish generated bundles or local backups.
+public/player.html
+*.bak
+*.tmp
+
+# Legacy generated demo: retained in the supplied ZIP, rebuilt from project sources.
+examples/*.html
+
+# Generated user deliverables (source ZIPs and exported games).
+entregas/

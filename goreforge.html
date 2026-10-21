@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta
+      name="description"
+      content="GORE FORGE — sandbox de física destrutiva em primeira pessoa construído com a engine GameForge."
+    />
+    <title>GORE FORGE · Pátio da Forja</title>
+    <style>
+      /* Estilo de emergência: o jogo carrega a folha completa em goreforge.css. */
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #101014;
+        color: #e8e8ee;
+        font-family: "Segoe UI", system-ui, sans-serif;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="goreforge-boot">
+      <div class="gf-boot-card">
+        <h1>Gore Forge</h1>
+        <h2>Pátio da Forja · sandbox de física destrutiva</h2>
+        <ul class="gf-boot-grid">
+          <li><b>Mover</b>WASD · Shift corre e escorrega · Ctrl desliza</li>
+          <li><b>Combate</b>Mouse 1 atira · Mouse 2 mira · R recarrega</li>
+          <li><b>Armas</b>Teclas 1–9 · 0 cicla as ferramentas de física</li>
+          <li><b>Sandbox</b>Tab abre o menu de spawn · F5 reinicia o pátio</li>
+          <li><b>Extras</b>F lanterna · B troca o layout do HUD · Esc pausa</li>
+          <li><b>Gore</b>Escopeta e explosivos desmembram NPCs de verdade</li>
+        </ul>
+        <p class="gf-boot-note">
+          Tudo neste pátio roda na mesma simulação: gelatina deformável (malha com
+          tetraedros), ragdolls articulados, fratura de props, explosões em cadeia,
+          decalques e partículas. O menu de pausa edita o tema, o HUD e o gore ao
+          vivo — e exporta o tema em JSON.
+        </p>
+        <button id="gf-enter" type="button">Entrar no pátio</button>
+      </div>
+    </div>
+    <script type="module" src="/src/goreforge.ts"></script>
+  </body>
+</html>

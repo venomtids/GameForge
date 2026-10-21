@@ -1,0 +1,59 @@
+{
+  "appId": "com.gameforge.goreforge",
+  "productName": "GORE FORGE",
+  "electronVersion": "44.4.3",
+  "directories": {
+    "app": "dist/goreforge-desktop",
+    "output": "dist/windows-goreforge",
+    "buildResources": "packaging"
+  },
+  "files": [
+    "goreforge.html",
+    "desktop/**/*",
+    "packaging/gameforge.ico",
+    "package.json"
+  ],
+  "asar": true,
+  "npmRebuild": false,
+  "compression": "maximum",
+  "electronLanguages": ["pt-BR", "en-US"],
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "packaging/gameforge.ico",
+    "artifactName": "GORE-FORGE-${version}-Windows-x64-Setup.${ext}",
+    "signExecutable": false
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "GORE FORGE",
+    "installerLanguages": ["pt_BR"],
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false,
+    "installerIcon": "packaging/gameforge.ico",
+    "uninstallerIcon": "packaging/gameforge.ico"
+  },
+  "extraResources": [
+    {
+      "from": "entregas/goreforge.html",
+      "to": "goreforge.html"
+    },
+    {
+      "from": "packaging/LEIA-ME-GOREFORGE-WINDOWS.txt",
+      "to": "LEIA-ME.txt"
+    },
+    {
+      "from": "entregas/GORE-FORGE-Instalador.cmd",
+      "to": "Instalador leve (sem Electron).cmd"
+    }
+  ]
+}

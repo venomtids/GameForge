@@ -1,0 +1,149 @@
+{
+  "format": "gameforge",
+  "version": 3,
+  "name": "Procedural Platformer",
+  "activeScene": "platformer",
+  "scenes": [
+    {
+      "id": "platformer",
+      "name": "Procedural Platformer",
+      "nodes": [
+        {
+          "locked": false,
+          "script": {
+            "language": "javascript",
+            "source": "let platformsGenerated = false;\nlet crystals = [];\nlet nextZ = -100;\nfunction start() {\n  if (platformsGenerated) return;\n  platformsGenerated = true;\n  const seed = Math.random() * 10000;\n  const noise = (x, z) => {\n    const n = Math.sin(x * 12.7 + z * 31.1 + seed) * 43758.5453;\n    return n - Math.floor(n);\n  };\n  // Generate initial chunk (20 platforms)\n  for (let i = 1; i <= 20; i++) {\n    generatePlatform(i, seed, noise);\n  }\n  nextZ = -20 * 4 - 6;\n}\nfunction generatePlatform(i, seed, noise) {\n  const z = -i * 4 - 2;\n  const x = (noise(i, 0) - 0.5) * 6;\n  const y = i * 0.4 + (noise(i, 1) - 0.5) * 0.5;\n  const width = 2 + noise(i, 2) * 2;\n  const depth = 2 + noise(i, 3) * 2;\n  const id = 'platform-' + i;\n  engine.spawn(id, {\n    kind: 'box',\n    x: x,\n    y: y,\n    z: z,\n    scale: [width, 0.9, depth],\n    color: '#c7c6b2',\n    physics: 'static',\n    behavior: 'none',\n    visible: true\n  });\n  if (noise(i, 4) < 0.2) {\n    const crystalId = 'crystal-' + i;\n    crystals.push(crystalId);\n    engine.spawn(crystalId, {\n      kind: 'sphere',\n      x: x,\n      y: y + 1.5,\n      z: z,\n      scale: [0.48, 0.72, 0.48],\n      color: '#89eacf',\n      physics: 'none',\n      behavior: 'collectible'\n    });\n  }\n  if (i % 5 === 0) {\n    const cpId = 'checkpoint-' + i;\n    engine.spawn(cpId, {\n      kind: 'cylinder',\n      x: x,\n      y: y + 0.5,\n      z: z + 2,\n      scale: [2.7, 0.06, 2.7],\n      color: '#77dabc',\n      physics: 'none',\n      behavior: 'checkpoint'\n    });\n  }\n}\nfunction update(dt, time, input) {\n  const p = engine.get('player');\n  if (p) {\n    // Infinite generation: spawn ahead when player approaches end\n    if (p.z > nextZ + 30 || (nextZ > p.z + 30 && platformsGenerated)) {\n      // Generate new chunk of 5 platforms ahead\n      const chunkStart = Math.floor(p.z / 20) * 20 + 20;\n      const seed = Math.random() * 10000;\n      const noise = (x, z) => {\n        const n = Math.sin(x * 12.7 + z * 31.1 + seed) * 43758.5453;\n        return n - Math.floor(n);\n      };\n      for (let i = 1; i <= 5; i++) {\n        const idx = Math.floor(p.z / 20) + i + 20;\n        const id = 'platform-' + idx + '-' + Math.round(Math.random()*1000);\n        const z = -idx * 4 - 2;\n        const x = (noise(idx, 0) - 0.5) * 6;\n        const y = idx * 0.4 + (noise(idx, 1) - 0.5) * 0.5;\n        const width = 2 + noise(idx, 2) * 2;\n        const depth = 2 + noise(idx, 3) * 2;\n        engine.spawn(id, {\n          kind: 'box',\n          x: x,\n          y: y,\n          z: z,\n          scale: [width, 0.9, depth],\n          color: '#c7c6b2',\n          physics: 'static',\n          behavior: 'none',\n          visible: true\n        });\n        if (noise(idx, 4) < 0.2) {\n          const crystalId = 'crystal-' + idx + '-' + Math.round(Math.random()*1000);\n          crystals.push(crystalId);\n          engine.spawn(crystalId, {\n            kind: 'sphere',\n            x: x,\n            y: y + 1.5,\n            z: z,\n            scale: [0.48, 0.72, 0.48],\n            color: '#89eacf',\n            physics: 'none',\n            behavior: 'collectible'\n          });\n        }\n        if (idx % 5 === 0) {\n          const cpId = 'checkpoint-' + idx + '-' + Math.round(Math.random()*1000);\n          engine.spawn(cpId, {\n            kind: 'cylinder',\n            x: x,\n            y: y + 0.5,\n            z: z + 2,\n            scale: [2.7, 0.06, 2.7],\n            color: '#77dabc',\n            physics: 'none',\n            behavior: 'checkpoint'\n          });\n        }\n        nextZ = Math.min(nextZ, z);\n      }\n    }\n    // Update HUD\n    const collected = crystals.filter(id => {\n      const obj = engine.get(id);\n      return obj && !obj.visible;\n    }).length;\n    const dist = Math.round(Math.abs(p.z));\n    engine.ui('hud.score', { text: 'CRISTAIS: ' + collected + ' / 20+' });\n    engine.ui('hud.level', { text: 'DIST: ' + dist + ' m' });\n  }\n}\n",
+            "enabled": true
+          },
+          "id": "generator",
+          "name": "Generator",
+          "kind": "box",
+          "parent": null,
+          "visible": false,
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "color": "#ffffff",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "none",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "none",
+          "speed": 1,
+          "amplitude": 0.4
+        },
+        {
+          "locked": false,
+          "script": {
+            "language": "none",
+            "source": "",
+            "enabled": false
+          },
+          "id": "player",
+          "name": "Jogador",
+          "kind": "box",
+          "parent": null,
+          "visible": true,
+          "position": [
+            0,
+            1.1,
+            1.8
+          ],
+          "rotation": [
+            0,
+            0,
+            0
+          ],
+          "scale": [
+            0.6,
+            1.7,
+            0.6
+          ],
+          "color": "#eabf82",
+          "roughness": 0.6,
+          "metalness": 0.08,
+          "physics": "dynamic",
+          "mass": 1,
+          "restitution": 0,
+          "behavior": "player",
+          "speed": 5.4,
+          "amplitude": 0.4
+        }
+      ],
+      "ui": [
+        {
+          "id": "hud.score",
+          "name": "Pontuação",
+          "kind": "text",
+          "text": "CRISTAIS: 0",
+          "x": 3,
+          "y": 2,
+          "w": 30,
+          "h": 5,
+          "color": "#89eacf",
+          "background": "#00000000",
+          "fontSize": 16,
+          "textureId": null,
+          "binding": "none",
+          "action": "none",
+          "screen": "playing",
+          "visible": true
+        },
+        {
+          "id": "hud.level",
+          "name": "Distância",
+          "kind": "text",
+          "text": "DIST: 0",
+          "x": 3,
+          "y": 8,
+          "w": 30,
+          "h": 5,
+          "color": "#c7c6b2",
+          "background": "#00000000",
+          "fontSize": 16,
+          "textureId": null,
+          "binding": "none",
+          "action": "none",
+          "screen": "playing",
+          "visible": true
+        },
+        {
+          "id": "hud.info",
+          "name": "Info",
+          "kind": "text",
+          "text": "Procedural Platformer",
+          "x": 3,
+          "y": 14,
+          "w": 50,
+          "h": 5,
+          "color": "#ffffff",
+          "background": "#00000000",
+          "fontSize": 12,
+          "textureId": null,
+          "binding": "none",
+          "action": "none",
+          "screen": "playing",
+          "visible": true
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "background": "#526c7e",
+    "gravity": -9.81,
+    "gameCamera": "first"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "appId": "com.gameforge.procedural",
+  "productName": "Procedural Platformer",
+  "electronVersion": "44.4.3",
+  "directories": {
+    "app": "game-desktop",
+    "output": "dist/windows-game",
+    "buildResources": "packaging"
+  },
+  "files": [
+    "**/*",
+    "!node_modules{,/**/*}"
+  ],
+  "asar": false,
+  "npmRebuild": false,
+  "compression": "maximum",
+  "win": {
+    "target": [
+      {
+        "target": "dir",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "packaging/gameforge.ico",
+    "artifactName": "Procedural-Platformer-Setup.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": false,
+    "allowElevation": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "Procedural Platformer",
+    "installerLanguages": ["pt_BR"],
+    "runAfterFinish": true,
+    "deleteAppDataOnUninstall": false,
+    "installerIcon": "packaging/gameforge.ico",
+    "uninstallerIcon": "packaging/gameforge.ico"
+  },
+  "extraResources": [
+    {
+      "from": "THIRD-PARTY-NOTICES.txt",
+      "to": "THIRD-PARTY-NOTICES.txt"
+    }
+  ]
+}
