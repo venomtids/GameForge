@@ -30,6 +30,8 @@
     "test:desktop:studio06": "node tests/studio06-desktop.mjs",
     "test:studio08": "node tests/studio08-browser.mjs",
     "examples:studio08": "tsx scripts/generate-studio08.ts",
+    "export:game": "npm run build:player && node scripts/export-game.mjs Procedural-Platformer.gameforge.json entregas/procedural-platformer.html",
+    "pack:game": "npm run export:game && node scripts/stage-game-desktop.mjs && electron-builder --config electron-builder.game.json --win --x64 --publish never",
     "build:player": "vite build --config vite.player.config.ts",
     "build:goreforge": "vite build --config vite.goreforge.config.ts",
     "predev": "npm run build:player",
